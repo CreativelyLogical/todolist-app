@@ -23,29 +23,17 @@ class WeekView extends StatelessWidget {
         textBaseline: TextBaseline.alphabetic,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-//          Row(
-//            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//            children: <Widget>[
-//              IconButton(
-//                padding: EdgeInsets.only(left: SizeConfig.screenWidth * 0.05),
-//                icon: Icon(
-//                  Icons.menu,
-//                  color: kWhite,
-//                  size: SizeConfig.blockSizeVertical * 4,
-//                ),
-//              ),
-//              IconButton(
-//                padding: EdgeInsets.only(right: SizeConfig.screenWidth * 0.05),
-//                icon: Icon(
-//                  Icons.settings,
-//                  color: kWhite,
-//                  size: SizeConfig.blockSizeVertical * 4,
-//                ),
-//              ),
-//            ],
-//          ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
+              IconButton(
+                padding: EdgeInsets.only(left: SizeConfig.screenWidth * 0.05),
+                icon: Icon(
+                  Icons.menu,
+                  color: kWhite,
+                  size: SizeConfig.blockSizeVertical * 4,
+                ),
+              ),
               Expanded(
                 child: Padding(
                   padding: EdgeInsets.only(
@@ -62,7 +50,36 @@ class WeekView extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
                 ),
-              )
+              ),
+              IconButton(
+                padding: EdgeInsets.only(right: SizeConfig.screenWidth * 0.05),
+                icon: Icon(
+                  Icons.settings,
+                  color: kWhite,
+                  size: SizeConfig.blockSizeVertical * 4,
+                ),
+              ),
+            ],
+          ),
+          Row(
+            children: <Widget>[
+//              Expanded(
+//                child: Padding(
+//                  padding: EdgeInsets.only(
+////                    top: SizeConfig.screenHeight * 0.035,
+//                    bottom: SizeConfig.screenHeight * 0.015,
+////                    left: SizeConfig.screenWidth * 0.05,
+//                  ),
+//                  child: Text(
+//                    '${TaskScreen.selectedDay.month} ${TaskScreen.selectedDay.year}',
+//                    style: TextStyle(
+//                      color: kWhite,
+//                      fontSize: SizeConfig.blockSizeVertical * 4,
+//                    ),
+//                    textAlign: TextAlign.center,
+//                  ),
+//                ),
+//              )
             ],
           ),
           SizedBox(

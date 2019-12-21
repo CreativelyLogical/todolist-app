@@ -117,8 +117,9 @@ class _TaskScreenState extends State<TaskScreen> {
         bottomNavigationBar: BottomAppBar(
 //          notchMargin: 5.0,
           child: Container(
-            height: SizeConfig.screenHeight * 0.115,
+            height: SizeConfig.screenHeight * 0.105,
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
@@ -128,21 +129,22 @@ class _TaskScreenState extends State<TaskScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     IconButton(
+                      padding: EdgeInsets.all(0),
 //                      padding: EdgeInsets.only(
 //                          left: SizeConfig.blockSizeHorizontal * 10),
                       icon: Icon(
                         Icons.date_range,
                         color: kWhite.withOpacity(0.5),
                       ),
-                      iconSize: SizeConfig.screenHeight * 0.06,
+                      iconSize: SizeConfig.screenHeight * 0.045,
 
 //                color: kWhite,
                     ),
                     Text(
                       'Calendar',
                       style: TextStyle(
-                        color: kWhite.withOpacity(0.6),
-                      ),
+                          color: kWhite.withOpacity(0.6),
+                          fontSize: SizeConfig.screenHeight * 0.02),
                       textAlign: TextAlign.start,
                     )
                   ],
@@ -151,17 +153,18 @@ class _TaskScreenState extends State<TaskScreen> {
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     IconButton(
+                      padding: EdgeInsets.all(0),
                       icon: Icon(
                         Icons.format_list_bulleted,
                         color: kWhite.withOpacity(0.5),
                       ),
-                      iconSize: SizeConfig.screenHeight * 0.06,
+                      iconSize: SizeConfig.screenHeight * 0.045,
                     ),
                     Text(
                       'All tasks',
                       style: TextStyle(
-                        color: kWhite.withOpacity(0.6),
-                      ),
+                          color: kWhite.withOpacity(0.6),
+                          fontSize: SizeConfig.screenHeight * 0.02),
                     )
                   ],
                 ),
@@ -169,13 +172,14 @@ class _TaskScreenState extends State<TaskScreen> {
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     IconButton(
+                      padding: EdgeInsets.all(0),
 //                      padding: EdgeInsets.only(
 //                          right: SizeConfig.blockSizeHorizontal * 10),
                       icon: Icon(
                         Icons.view_week,
                         color: kWhite,
                       ),
-                      iconSize: SizeConfig.screenHeight * 0.06,
+                      iconSize: SizeConfig.screenHeight * 0.045,
                       onPressed: () {
                         print("You're already in the week view screen");
                       },
@@ -183,8 +187,8 @@ class _TaskScreenState extends State<TaskScreen> {
                     Text(
                       'Week View',
                       style: TextStyle(
-                        color: kWhite,
-                      ),
+                          color: kWhite,
+                          fontSize: SizeConfig.screenHeight * 0.02),
                     ),
                   ],
                 )
@@ -206,17 +210,17 @@ class _TaskScreenState extends State<TaskScreen> {
                 });
               },
             ),
-            Container(
-              padding: EdgeInsets.only(left: SizeConfig.screenWidth * 0.05),
-              alignment: Alignment.centerLeft,
-              child: Text(
-                '${TaskScreen.selectedDay.toString()}',
-                style: TextStyle(
-                  color: kWhite,
-                  fontSize: SizeConfig.screenHeight * 0.04,
-                ),
-              ),
-            ),
+//            Container(
+//              padding: EdgeInsets.only(left: SizeConfig.screenWidth * 0.05),
+//              alignment: Alignment.centerLeft,
+//              child: Text(
+//                '${TaskScreen.selectedDay.toString()}',
+//                style: TextStyle(
+//                  color: kWhite,
+//                  fontSize: SizeConfig.screenHeight * 0.04,
+//                ),
+//              ),
+//            ),
 
 //            Container(
 //              decoration: BoxDecoration(

@@ -8,6 +8,7 @@ import 'package:my_todo/constants.dart';
 import 'package:my_todo/screens/add_task_fullscreen.dart';
 import 'package:my_todo/screens/task_screen.dart';
 import 'custom_flag_icon_icons.dart';
+import 'notes_indicator_icons.dart';
 
 class TaskList extends StatelessWidget {
   @override
@@ -58,7 +59,7 @@ class TaskList extends StatelessWidget {
             Container(
               padding: EdgeInsets.symmetric(
                   vertical: SizeConfig.screenHeight * 0.01),
-              height: SizeConfig.screenHeight * 0.08,
+              height: SizeConfig.screenHeight * 0.085,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -117,7 +118,7 @@ class TaskList extends StatelessWidget {
                       },
                       separatorBuilder: (BuildContext context, int index) =>
                           Divider(
-                        height: SizeConfig.screenHeight * 0.02,
+                        height: SizeConfig.screenHeight * 0.01,
                         color: kWhite,
                       ),
                       itemCount: snapshot.data.length,
@@ -164,6 +165,9 @@ class ListTile extends StatelessWidget {
 //    else
 //      print('this task has no notes');
 
+    print('so the notes are $notes');
+//    print('the length of notes are ${notes.length}');
+
     SizeConfig().init(context);
     return Container(
       margin: EdgeInsets.only(
@@ -171,17 +175,11 @@ class ListTile extends StatelessWidget {
 //        top: SizeConfig.blockSizeVertical * 0.3,
           ),
       decoration: BoxDecoration(
-          color: kWhite,
-          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.shade400,
-              blurRadius: 10.0,
-              offset: Offset(1, 4),
-            ),
-          ]
+        color: kWhite,
+        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+        border: Border.all(color: kBlue, width: 2),
 //        color: isChecked ? Colors.grey.shade200 : null,
-          ),
+      ),
       padding: EdgeInsets.only(
           left: SizeConfig.screenWidth * 0.05,
           right: SizeConfig.screenWidth * 0.05,
@@ -213,7 +211,7 @@ class ListTile extends StatelessWidget {
                   Text(
                     text,
                     style: TextStyle(
-                      fontSize: 20.0,
+                      fontSize: 15.0,
 //                  color: isChecked ? kLightBlueAccent : kLightBlueAccent,
                       color: kBlue,
                       fontWeight: FontWeight.w600,
@@ -221,24 +219,59 @@ class ListTile extends StatelessWidget {
                       decoration: isChecked ? TextDecoration.lineThrough : null,
                     ),
                   ),
-                  Text(
-                    '${TaskScreen.selectedDay.day} ${TaskScreen.selectedDay.month}',
-                    style: TextStyle(
-                      color: kBlue,
-                      fontSize: 16,
-                    ),
+                  Row(
+                    children: <Widget>[
+                      notes == null
+                          ? Container()
+                          : Container(
+                              child: Icon(
+                                NotesIndicator.doc_text,
+                                color: notes.length == 0
+                                    ? kBlue.withOpacity(0)
+                                    : kBlue,
+                                size: 18,
+                              ),
+                            ),
+                      Container(
+                        alignment: Alignment.centerRight,
+                        child: Icon(
+                          CustomFlagIcon.flag,
+                          color: returnPriorityColor(),
+                          size: 18,
+                        ),
+                      )
+                    ],
                   ),
+
+//                  Text(
+//                    '${TaskScreen.selectedDay.day} ${TaskScreen.selectedDay.month}',
+//                    style: TextStyle(
+//                      color: kBlue,
+//                      fontSize: 16,
+//                    ),
+//                  ),
                 ],
               ),
-              Expanded(
-                child: Container(
-                  alignment: Alignment.centerRight,
-                  child: Icon(
-                    CustomFlagIcon.flag,
-                    color: returnPriorityColor(),
-                  ),
-                ),
-              ),
+//              notes == null
+//                  ? Container()
+//                  : Expanded(
+//                      child: Container(
+//                        child: Icon(
+//                          NotesIndicator.doc_text,
+//                          color:
+//                              notes.length == 0 ? kBlue.withOpacity(0) : kBlue,
+//                        ),
+//                      ),
+//                    ),
+//              Expanded(
+//                child: Container(
+//                  alignment: Alignment.centerRight,
+//                  child: Icon(
+//                    CustomFlagIcon.flag,
+//                    color: returnPriorityColor(),
+//                  ),
+//                ),
+//              ),
             ],
           ),
         ],

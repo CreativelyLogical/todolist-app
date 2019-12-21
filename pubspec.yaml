@@ -62,6 +62,9 @@ flutter:
     - family: CustomFlagIcon
       fonts:
         - asset: fonts/CustomFlagIcon.ttf
+    - family: NotesIndicator
+      fonts:
+        - asset: fonts/NotesIndicator.ttf
 
   assets:
     - assets/2_line_menu.png

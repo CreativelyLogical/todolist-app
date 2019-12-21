@@ -508,10 +508,13 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen> {
                     print(
                         'aaaaaaaaaaaaaaaaaaand, the selectedPriority was $selectedPriority');
                     Provider.of<TaskData>(context).addTask(
-                        taskNameController.text,
-                        addTaskDateSQL,
-                        selectedPriority,
-                        taskNotesController.text);
+                      taskNameController.text,
+                      addTaskDateSQL,
+                      selectedPriority,
+                      taskNotesController.text.length == 0
+                          ? 'no notes'
+                          : taskNotesController.text,
+                    );
                     Navigator.pop(context);
                   },
                   child: Text(
