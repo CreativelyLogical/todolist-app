@@ -61,6 +61,7 @@ class _TaskScreenState extends State<TaskScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print(context);
     SizeConfig().init(context);
     print('The height of this device is ${SizeConfig.screenHeight}');
     print('The width of this device is ${SizeConfig.screenWidth}');
@@ -82,63 +83,110 @@ class _TaskScreenState extends State<TaskScreen> {
     return Scaffold(
         floatingActionButton: Padding(
           padding: EdgeInsets.only(bottom: SizeConfig.blockSizeVertical * 1.5),
-          child: FloatingActionButton(
-            onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => AddTaskFullScreen()));
-//              showDialog(
-//                context: context,
-//                builder: (context) => AddTaskDialog(),
-//              );
-//              showModalBottomSheet(
-//                isScrollControlled: true,
-//                context: context,
-//                shape: RoundedRectangleBorder(
-//                  borderRadius: BorderRadius.only(
-//                      topLeft: Radius.circular(40.0),
-//                      topRight: Radius.circular(40.0)),
-//                ),
-//                builder: (context) => AddTaskScreen(),
-//              );
-//                backgroundColor: Colors.white);
-            },
-            backgroundColor: kBlue,
-            child: Icon(Icons.add, color: Colors.white),
-          ),
+//          child: FloatingActionButton(
+//            onPressed: () {
+//              Navigator.push(context,
+//                  MaterialPageRoute(builder: (context) => AddTaskFullScreen()));
+////              showDialog(
+////                context: context,
+////                builder: (context) => AddTaskDialog(),
+////              );
+////              showModalBottomSheet(
+////                isScrollControlled: true,
+////                context: context,
+////                shape: RoundedRectangleBorder(
+////                  borderRadius: BorderRadius.only(
+////                      topLeft: Radius.circular(40.0),
+////                      topRight: Radius.circular(40.0)),
+////                ),
+////                builder: (context) => AddTaskScreen(),
+////              );
+////                backgroundColor: Colors.white);
+//            },
+//            backgroundColor: kBlue,
+//            child: Icon(Icons.add, color: Colors.white),
+//          ),
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+//        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
 //        backgroundColor: Color.fromRGBO(66, 99, 236, 1.0),
 //        appBar: AppBar(
 //          title: Text('Todo'),
-        backgroundColor: kWhite,
+        backgroundColor: kBlue,
 //        backgroundColor: Colors.lightBlueAccent,
 //        ),
         bottomNavigationBar: BottomAppBar(
-          notchMargin: 5.0,
+//          notchMargin: 5.0,
           child: Container(
-            height: SizeConfig.blockSizeVertical * 9,
+            height: SizeConfig.screenHeight * 0.115,
             child: Row(
               mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
-                IconButton(
-                  padding: EdgeInsets.only(
-                      left: SizeConfig.blockSizeHorizontal * 10),
-                  icon: Icon(
-                    Icons.date_range,
-                    color: kWhite,
-                  ),
-                  iconSize: SizeConfig.blockSizeVertical * 6,
+                Column(
+//                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    IconButton(
+//                      padding: EdgeInsets.only(
+//                          left: SizeConfig.blockSizeHorizontal * 10),
+                      icon: Icon(
+                        Icons.date_range,
+                        color: kWhite.withOpacity(0.5),
+                      ),
+                      iconSize: SizeConfig.screenHeight * 0.06,
+
 //                color: kWhite,
+                    ),
+                    Text(
+                      'Calendar',
+                      style: TextStyle(
+                        color: kWhite.withOpacity(0.6),
+                      ),
+                      textAlign: TextAlign.start,
+                    )
+                  ],
                 ),
-                IconButton(
-                  padding: EdgeInsets.only(
-                      right: SizeConfig.blockSizeHorizontal * 10),
-                  icon: Icon(
-                    Icons.settings,
-                    color: kWhite,
-                  ),
-                  iconSize: SizeConfig.blockSizeVertical * 6,
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    IconButton(
+                      icon: Icon(
+                        Icons.format_list_bulleted,
+                        color: kWhite.withOpacity(0.5),
+                      ),
+                      iconSize: SizeConfig.screenHeight * 0.06,
+                    ),
+                    Text(
+                      'All tasks',
+                      style: TextStyle(
+                        color: kWhite.withOpacity(0.6),
+                      ),
+                    )
+                  ],
+                ),
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    IconButton(
+//                      padding: EdgeInsets.only(
+//                          right: SizeConfig.blockSizeHorizontal * 10),
+                      icon: Icon(
+                        Icons.view_week,
+                        color: kWhite,
+                      ),
+                      iconSize: SizeConfig.screenHeight * 0.06,
+                      onPressed: () {
+                        print("You're already in the week view screen");
+                      },
+                    ),
+                    Text(
+                      'Week View',
+                      style: TextStyle(
+                        color: kWhite,
+                      ),
+                    ),
+                  ],
                 )
               ],
             ),
@@ -149,7 +197,7 @@ class _TaskScreenState extends State<TaskScreen> {
           shape: CircularNotchedRectangle(),
         ),
         body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             WeekView(
               setStateCallback: () {
@@ -157,6 +205,17 @@ class _TaskScreenState extends State<TaskScreen> {
                   print('setState has been called in task screen');
                 });
               },
+            ),
+            Container(
+              padding: EdgeInsets.only(left: SizeConfig.screenWidth * 0.05),
+              alignment: Alignment.centerLeft,
+              child: Text(
+                '${TaskScreen.selectedDay.toString()}',
+                style: TextStyle(
+                  color: kWhite,
+                  fontSize: SizeConfig.screenHeight * 0.04,
+                ),
+              ),
             ),
 
 //            Container(
@@ -266,20 +325,21 @@ class _TaskScreenState extends State<TaskScreen> {
 //            ),
             Expanded(
               child: Container(
-                margin: EdgeInsets.only(
-//                    bottom: SizeConfig.screenHeight * 0.06,
-                    left: SizeConfig.screenWidth * 0.03,
-                    right: SizeConfig.screenWidth * 0.03),
+//                margin: EdgeInsets.only(
+////                    bottom: SizeConfig.screenHeight * 0.06,
+//                    left: SizeConfig.screenWidth * 0.03,
+//                    right: SizeConfig.screenWidth * 0.03),
+//                color: kWhite,
                 decoration: BoxDecoration(
-//                  color: kRallyGreen,
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(15.0),
+                  color: kWhite,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20.0),
                   ),
                 ),
                 padding: EdgeInsets.only(
 //                      bottom: SizeConfig.blockSizeVertical * 12,
-                    left: SizeConfig.blockSizeHorizontal * 3,
-                    right: SizeConfig.blockSizeHorizontal * 3),
+                    left: SizeConfig.screenWidth * 0.03,
+                    right: SizeConfig.screenWidth * 0.03),
                 child: TaskList(),
               ),
             )

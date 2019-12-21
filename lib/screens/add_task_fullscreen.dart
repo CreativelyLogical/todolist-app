@@ -413,7 +413,7 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      'Remind me about this:',
+                      'Remind me:',
                       style: TextStyle(
                         color: kGrey,
                         fontSize: SizeConfig.blockSizeVertical * 3.5,

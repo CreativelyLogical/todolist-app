@@ -5,6 +5,7 @@ import 'package:my_todo/size_config.dart';
 import 'package:circular_check_box/circular_check_box.dart';
 import 'package:my_todo/models/task.dart';
 import 'package:my_todo/constants.dart';
+import 'package:my_todo/screens/add_task_fullscreen.dart';
 
 class TaskList extends StatelessWidget {
   @override
@@ -52,6 +53,42 @@ class TaskList extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
+            Container(
+              padding: EdgeInsets.symmetric(
+                  vertical: SizeConfig.screenHeight * 0.01),
+              height: SizeConfig.screenHeight * 0.08,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    'Tasks: ',
+                    style: TextStyle(
+                      color: kBlue,
+                      fontSize: SizeConfig.screenHeight * 0.035,
+                    ),
+                  ),
+                  IconButton(
+                    icon: Icon(
+                      Icons.add_box,
+                      size: SizeConfig.screenHeight * 0.045,
+                      color: kBlue,
+                    ),
+                    iconSize: SizeConfig.screenHeight * 0.05,
+                    onPressed: () {
+                      print('add icon pressed');
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => AddTaskFullScreen()));
+                    },
+                  )
+                ],
+              ),
+            ),
+//            SizedBox(
+//              height: SizeConfig.screenHeight * 0.01,
+//            ),
             Expanded(
               child: snapshot.data == null
                   ? Container()
@@ -70,7 +107,7 @@ class TaskList extends StatelessWidget {
                       },
                       separatorBuilder: (BuildContext context, int index) =>
                           Divider(
-                        height: SizeConfig.blockSizeVertical * 1.8,
+                        height: SizeConfig.screenHeight * 0.02,
                         color: kWhite,
                       ),
                       itemCount: snapshot.data.length,
@@ -96,24 +133,26 @@ class ListTile extends StatelessWidget {
     SizeConfig().init(context);
     return Container(
       margin: EdgeInsets.only(
-          bottom: SizeConfig.blockSizeVertical * 0.3,
-          top: SizeConfig.blockSizeVertical * 0.3),
+//        bottom: SizeConfig.blockSizeVertical * 0.3,
+//        top: SizeConfig.blockSizeVertical * 0.3,
+          ),
       decoration: BoxDecoration(
-        color: kBlue,
-        borderRadius: BorderRadius.all(Radius.circular(15.0)),
-//          boxShadow: [
-//            BoxShadow(
-//              color: kDarkRallyGreen,
-//              blurRadius: 5.0,
-//            ),
-//          ]
+          color: kWhite,
+          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.shade400,
+              blurRadius: 10.0,
+              offset: Offset(1, 4),
+            ),
+          ]
 //        color: isChecked ? Colors.grey.shade200 : null,
-      ),
+          ),
       padding: EdgeInsets.only(
           left: SizeConfig.screenWidth * 0.05,
-          right: 20.0,
-          top: SizeConfig.screenHeight * 0.015,
-          bottom: SizeConfig.screenHeight * 0.015),
+          right: SizeConfig.screenWidth * 0.05,
+          top: SizeConfig.screenHeight * 0.008,
+          bottom: SizeConfig.screenHeight * 0.008),
       child: Column(
         children: <Widget>[
           Row(
@@ -125,7 +164,7 @@ class ListTile extends StatelessWidget {
                   icon: isChecked
                       ? Icon(
                           Icons.check,
-                          color: kWhite,
+                          color: kBlue,
                           size: SizeConfig.blockSizeVertical * 4,
                         )
                       : null,
@@ -139,7 +178,7 @@ class ListTile extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 20.0,
 //                  color: isChecked ? kLightBlueAccent : kLightBlueAccent,
-                  color: kWhite,
+                  color: kBlue,
                   fontWeight: FontWeight.w700,
                   fontFamily: 'Nunito',
                   decoration: isChecked ? TextDecoration.lineThrough : null,
@@ -162,11 +201,9 @@ class CircleCheckBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return CircleAvatar(
       radius: SizeConfig.blockSizeVertical * 2.4,
-      backgroundColor: icon == null
-          ? Colors.grey.shade400
-          : kLightBlueAccent.withOpacity(0.0),
+      backgroundColor: icon == null ? kBlue : kLightBlueAccent.withOpacity(0.0),
       child: CircleAvatar(
-        radius: SizeConfig.blockSizeVertical * 2.3,
+        radius: SizeConfig.blockSizeVertical * 2.2,
         backgroundColor:
             icon == null ? kWhite : kLightBlueAccent.withOpacity(0.0),
         child: icon,

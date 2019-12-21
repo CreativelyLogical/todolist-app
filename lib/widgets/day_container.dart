@@ -148,9 +148,7 @@ class _DayContainerState extends State<DayContainer> {
 //                          days: widget.inputWeekday - widget.today.weekday))
 //                      .day
 //                      .toString(),
-                  Date(DateTime.now()).dateCompare(inputDay)
-                      ? 'Today'
-                      : inputDay.day.toString(),
+                  inputDay.day.toString(),
                   style: TextStyle(
 //                    color: widget.today
 //                                .add(Duration(
