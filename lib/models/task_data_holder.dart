@@ -28,19 +28,26 @@ class TaskData extends ChangeNotifier {
     notifyListeners();
   }
 
-  void addTask(String newTaskTitle, Date selectedDay) async {
+  void addTask(
+    String newTaskTitle,
+    String taskDate,
+    String priority,
+    String notes,
+  ) async {
 //    taskList.add(Task(taskTitle: newTaskTitle, isChecked: false));
 //    notifyListeners();
     await todoDB.insert(new Task(
-      date: selectedDay.toStringSQL(),
+      date: taskDate,
       taskTitle: newTaskTitle,
       isChecked: false,
+      priority: priority,
+      notes: notes,
     ));
     notifyListeners();
   }
 
   void dropTable() {
-    todoDB.deleteAll();
+    todoDB.dropTable();
     notifyListeners();
   }
 

@@ -59,9 +59,13 @@ flutter:
         - asset: fonts/Nunito/Nunito-Bold.ttf
         - asset: fonts/Nunito/Nunito-Regular.ttf
         - asset: fonts/Nunito/Nunito-SemiBold.ttf
+    - family: CustomFlagIcon
+      fonts:
+        - asset: fonts/CustomFlagIcon.ttf
 
   assets:
     - assets/2_line_menu.png
+    - assets/flag-black-shape.svg
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

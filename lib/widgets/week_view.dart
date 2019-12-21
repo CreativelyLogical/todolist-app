@@ -23,40 +23,27 @@ class WeekView extends StatelessWidget {
         textBaseline: TextBaseline.alphabetic,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              IconButton(
-                padding: EdgeInsets.only(left: SizeConfig.screenWidth * 0.05),
-                icon: Icon(
-                  Icons.menu,
-                  color: kWhite,
-                  size: SizeConfig.blockSizeVertical * 4,
-                ),
-              ),
-              IconButton(
-                padding: EdgeInsets.only(right: SizeConfig.screenWidth * 0.05),
-                icon: Icon(
-                  Icons.settings,
-                  color: kWhite,
-                  size: SizeConfig.blockSizeVertical * 4,
-                ),
-              )
-//              Expanded(
-//                child: Align(
-//                  alignment: Alignment.center,
-//                  child: Text(
-//                    TaskScreen.selectedDay.month,
-//                    style: TextStyle(
-//                      color: kWhite,
-//                      fontSize: 30.0,
-//                    ),
-//                    textAlign: TextAlign.center,
-//                  ),
+//          Row(
+//            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//            children: <Widget>[
+//              IconButton(
+//                padding: EdgeInsets.only(left: SizeConfig.screenWidth * 0.05),
+//                icon: Icon(
+//                  Icons.menu,
+//                  color: kWhite,
+//                  size: SizeConfig.blockSizeVertical * 4,
 //                ),
-//              )
-            ],
-          ),
+//              ),
+//              IconButton(
+//                padding: EdgeInsets.only(right: SizeConfig.screenWidth * 0.05),
+//                icon: Icon(
+//                  Icons.settings,
+//                  color: kWhite,
+//                  size: SizeConfig.blockSizeVertical * 4,
+//                ),
+//              ),
+//            ],
+//          ),
           Row(
             children: <Widget>[
               Expanded(

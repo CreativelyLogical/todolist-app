@@ -9,7 +9,10 @@ class TodoDatabase {
 //
 //  static final TodoDatabase instance = TodoDatabase._privateConstructor();
 
-  TodoDatabase();
+  TodoDatabase() {
+//    _initDatabase();
+    print('this is ruuuuuuuuuuuuun');
+  }
 
   static final TodoDatabase todoDatabase = TodoDatabase();
 
@@ -25,7 +28,7 @@ class TodoDatabase {
         await db.execute(
           '''
           CREATE TABLE IF NOT EXISTS todo_table(
-          task_date TEXT, task_name TEXT, is_checked BIT)
+          task_date TEXT, task_name TEXT, is_checked BIT, priority TEXT, notes TEXT)
           ''',
         );
       },
@@ -37,12 +40,12 @@ class TodoDatabase {
   Future<void> insert(Task task) async {
     final Database db = await _initDatabase();
 
-    await db.execute(
-      '''
-          CREATE TABLE IF NOT EXISTS todo_table(
-          task_date TEXT, task_name TEXT, is_checked BIT)
-          ''',
-    );
+//    await db.execute(
+//      '''
+//          CREATE TABLE IF NOT EXISTS todo_table(
+//          task_date TEXT, task_name TEXT, is_checked BIT)
+//          ''',
+//    );
 
     await db.insert(
       'todo_table',
@@ -76,18 +79,26 @@ class TodoDatabase {
         'SELECT * FROM todo_table WHERE task_date=?',
         [selectedDay.toStringSQL()]);
 
+    final List<Map<String, dynamic>> allMaps =
+        await db.rawQuery('SELECT * FROM todo_table');
+
     print('-----------------------------------maps.length is ${maps.length}');
+
+    print(
+        '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ allMaps.length is ${allMaps.length}');
 
     return List.generate(maps.length, (int i) {
       return Task(
         date: maps[i]['task_date'],
         taskTitle: maps[i]['task_name'],
         isChecked: maps[i]['is_checked'] == 0 ? false : true,
+        priority: maps[i]['priority'],
+        notes: maps[i]['notes'],
       );
     });
   }
 
-  void deleteAll() async {
+  void dropTable() async {
     final Database db = await _initDatabase();
     await db.execute('DROP TABLE todo_table');
   }

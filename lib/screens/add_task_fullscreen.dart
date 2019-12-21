@@ -5,6 +5,8 @@ import 'task_screen.dart';
 import 'package:my_todo/constants.dart';
 import 'package:my_todo/size_config.dart';
 import 'package:my_todo/models/date.dart';
+import 'package:provider/provider.dart';
+import 'package:my_todo/models/task_data_holder.dart';
 
 class AddTaskFullScreen extends StatefulWidget {
   @override
@@ -63,6 +65,8 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen> {
 
   String addTaskDate = Date(DateTime.now()).toString();
 
+  String addTaskDateSQL = Date(DateTime.now()).toStringSQL();
+
   TimeOfDay _timePicked = null;
 
   Future<TimeOfDay> selectedTime;
@@ -71,12 +75,18 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen> {
 
   String selectedPriority = 'none';
 
+  TextEditingController taskNameController = TextEditingController();
+
+  TextEditingController taskNotesController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
 //    Future<TimeOfDay> selectedTime = showTimePicker(
 //      initialTime: TimeOfDay.now(),
 //      context: context,
 //    );
+
+    print('now selectedPriority is $selectedPriority');
 
     SizeConfig().init(context);
     return Scaffold(
@@ -109,7 +119,31 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen> {
 //            SizedBox(
 //              height: SizeConfig.screenHeight * 0.05,
 //            ),
-              CustomTextField(),
+              Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: SizeConfig.blockSizeHorizontal * 4.3),
+                child: TextFormField(
+                  controller: taskNameController,
+                  style:
+                      TextStyle(fontSize: SizeConfig.blockSizeHorizontal * 6),
+                  decoration: InputDecoration(
+                    hintText: 'eg. Read for 1 hour',
+                    hintStyle: TextStyle(
+                      fontSize: SizeConfig.blockSizeHorizontal * 4.5,
+                    ),
+                    labelText: "Task Name",
+                    labelStyle: TextStyle(
+                      fontSize: SizeConfig.blockSizeHorizontal * 6,
+                    ),
+//          fillColor: Colors.blue,
+                    border: OutlineInputBorder(
+                      borderSide: const BorderSide(color: kBlue, width: 2.0),
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                  ),
+                  autofocus: true,
+                ),
+              ),
               Padding(
                 padding: EdgeInsets.symmetric(
                   horizontal: SizeConfig.blockSizeHorizontal * 4.3,
@@ -223,6 +257,8 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen> {
                             print('today pressed');
                             setState(() {
                               addTaskDate = Date(DateTime.now()).toString();
+                              addTaskDateSQL =
+                                  Date(DateTime.now()).toStringSQL();
                             });
                           },
                         ),
@@ -257,6 +293,9 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen> {
                               addTaskDate =
                                   Date(DateTime.now().add(Duration(days: 1)))
                                       .toString();
+                              addTaskDateSQL =
+                                  Date(DateTime.now().add(Duration(days: 1)))
+                                      .toStringSQL();
                             });
                           },
                         ),
@@ -436,8 +475,9 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen> {
                     horizontal: SizeConfig.blockSizeHorizontal * 4.3,
                     vertical: SizeConfig.blockSizeVertical * 2.5),
                 child: TextField(
+                  controller: taskNotesController,
                   keyboardType: TextInputType.multiline,
-                  maxLines: 5,
+                  maxLines: null,
                   decoration: InputDecoration(
                     hintText: 'Tap here to add notes',
                     border: OutlineInputBorder(
@@ -460,6 +500,18 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen> {
                   color: kBlue,
                   onPressed: () {
                     print('add button pressed');
+//                    Provider.of<TaskData>(context).dropTable();
+                    print(
+                        'the taskNameController.text was ${taskNameController.text}');
+                    print(
+                        '************************* the addTaskDate was $addTaskDate');
+                    print(
+                        'aaaaaaaaaaaaaaaaaaand, the selectedPriority was $selectedPriority');
+                    Provider.of<TaskData>(context).addTask(
+                        taskNameController.text,
+                        addTaskDateSQL,
+                        selectedPriority,
+                        taskNotesController.text);
                     Navigator.pop(context);
                   },
                   child: Text(
@@ -482,34 +534,35 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen> {
   }
 }
 
-class CustomTextField extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(
-          horizontal: SizeConfig.blockSizeHorizontal * 4.3),
-      child: TextFormField(
-        style: TextStyle(fontSize: SizeConfig.blockSizeHorizontal * 6),
-        decoration: InputDecoration(
-          hintText: 'eg. Read for 1 hour',
-          hintStyle: TextStyle(
-            fontSize: SizeConfig.blockSizeHorizontal * 4.5,
-          ),
-          labelText: "Task Name",
-          labelStyle: TextStyle(
-            fontSize: SizeConfig.blockSizeHorizontal * 6,
-          ),
-//          fillColor: Colors.blue,
-          border: OutlineInputBorder(
-            borderSide: const BorderSide(color: kBlue, width: 2.0),
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-        ),
-        autofocus: true,
-      ),
-    );
-  }
-}
+//class CustomTextField extends StatelessWidget {
+//  @override
+//  Widget build(BuildContext context) {
+//    return Padding(
+//      padding: EdgeInsets.symmetric(
+//          horizontal: SizeConfig.blockSizeHorizontal * 4.3),
+//      child: TextFormField(
+//        controller: _AddTaskFullScreenState.taskNameController,
+//        style: TextStyle(fontSize: SizeConfig.blockSizeHorizontal * 6),
+//        decoration: InputDecoration(
+//          hintText: 'eg. Read for 1 hour',
+//          hintStyle: TextStyle(
+//            fontSize: SizeConfig.blockSizeHorizontal * 4.5,
+//          ),
+//          labelText: "Task Name",
+//          labelStyle: TextStyle(
+//            fontSize: SizeConfig.blockSizeHorizontal * 6,
+//          ),
+////          fillColor: Colors.blue,
+//          border: OutlineInputBorder(
+//            borderSide: const BorderSide(color: kBlue, width: 2.0),
+//            borderRadius: BorderRadius.circular(10.0),
+//          ),
+//        ),
+//        autofocus: true,
+//      ),
+//    );
+//  }
+//}
 
 class PriorityButtons extends StatelessWidget {
   PriorityButtons({this.selectedPriority, this.priority, this.onTap});

@@ -78,8 +78,8 @@ class AddTaskScreen extends StatelessWidget {
                   ),
                   onPressed: () {
                     String taskTitle = textEditingController.text;
-                    Provider.of<TaskData>(context)
-                        .addTask(taskTitle, TaskScreen.selectedDay);
+//                    Provider.of<TaskData>(context)
+//                        .addTask(taskTitle, TaskScreen.selectedDay);
                     Navigator.pop(context);
                   },
                   shape: RoundedRectangleBorder(

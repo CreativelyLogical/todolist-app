@@ -6,6 +6,8 @@ import 'package:circular_check_box/circular_check_box.dart';
 import 'package:my_todo/models/task.dart';
 import 'package:my_todo/constants.dart';
 import 'package:my_todo/screens/add_task_fullscreen.dart';
+import 'package:my_todo/screens/task_screen.dart';
+import 'custom_flag_icon_icons.dart';
 
 class TaskList extends StatelessWidget {
   @override
@@ -91,7 +93,13 @@ class TaskList extends StatelessWidget {
 //            ),
             Expanded(
               child: snapshot.data == null
-                  ? Container()
+                  ? Container(
+                      child: Center(
+                        child: Text(
+                          'snapshot was null',
+                        ),
+                      ),
+                    )
                   : ListView.separated(
                       padding: EdgeInsets.only(top: 10.0),
                       itemBuilder: (BuildContext context, int index) {
@@ -103,6 +111,8 @@ class TaskList extends StatelessWidget {
                           checkBoxCallback: () {
                             Provider.of<TaskData>(context).updateTask(task);
                           },
+                          priority: task.priority,
+                          notes: task.notes,
                         );
                       },
                       separatorBuilder: (BuildContext context, int index) =>
@@ -126,10 +136,34 @@ class ListTile extends StatelessWidget {
 
   final Function checkBoxCallback;
 
-  ListTile({this.text, this.isChecked, this.checkBoxCallback});
+  String priority;
+  String notes;
+
+  ListTile(
+      {this.text,
+      this.isChecked,
+      this.checkBoxCallback,
+      this.priority,
+      this.notes});
+
+  Color returnPriorityColor() {
+    print('in listview, priority is $priority');
+    if (priority == 'none')
+      return Colors.grey.shade500;
+    else if (priority == 'low')
+      return Colors.green;
+    else if (priority == 'medium')
+      return Colors.orange;
+    else if (priority == 'high') return Colors.red;
+  }
 
   @override
   Widget build(BuildContext context) {
+//    if (notes.length > 0)
+//      print('this task has notes');
+//    else
+//      print('this task has no notes');
+
     SizeConfig().init(context);
     return Container(
       margin: EdgeInsets.only(
@@ -173,15 +207,36 @@ class ListTile extends StatelessWidget {
               SizedBox(
                 width: SizeConfig.blockSizeHorizontal * 5,
               ),
-              Text(
-                text,
-                style: TextStyle(
-                  fontSize: 20.0,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    text,
+                    style: TextStyle(
+                      fontSize: 20.0,
 //                  color: isChecked ? kLightBlueAccent : kLightBlueAccent,
-                  color: kBlue,
-                  fontWeight: FontWeight.w700,
-                  fontFamily: 'Nunito',
-                  decoration: isChecked ? TextDecoration.lineThrough : null,
+                      color: kBlue,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: 'Nunito',
+                      decoration: isChecked ? TextDecoration.lineThrough : null,
+                    ),
+                  ),
+                  Text(
+                    '${TaskScreen.selectedDay.day} ${TaskScreen.selectedDay.month}',
+                    style: TextStyle(
+                      color: kBlue,
+                      fontSize: 16,
+                    ),
+                  ),
+                ],
+              ),
+              Expanded(
+                child: Container(
+                  alignment: Alignment.centerRight,
+                  child: Icon(
+                    CustomFlagIcon.flag,
+                    color: returnPriorityColor(),
+                  ),
                 ),
               ),
             ],
