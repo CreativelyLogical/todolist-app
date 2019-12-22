@@ -65,6 +65,12 @@ flutter:
     - family: NotesIndicator
       fonts:
         - asset: fonts/NotesIndicator.ttf
+    - family: TaskDate
+      fonts:
+        - asset: fonts/TaskDate.ttf
+    - family: TaskCategory
+      fonts:
+        - asset: fonts/TaskCategory.ttf
 
   assets:
     - assets/2_line_menu.png

@@ -117,7 +117,8 @@ class _TaskScreenState extends State<TaskScreen> {
         bottomNavigationBar: BottomAppBar(
 //          notchMargin: 5.0,
           child: Container(
-            height: SizeConfig.screenHeight * 0.105,
+            padding: EdgeInsets.only(bottom: 5),
+//            height: SizeConfig.screenHeight * 0.105,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.max,

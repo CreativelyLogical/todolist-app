@@ -7,6 +7,8 @@ import 'package:my_todo/size_config.dart';
 import 'package:my_todo/models/date.dart';
 import 'package:provider/provider.dart';
 import 'package:my_todo/models/task_data_holder.dart';
+import 'custom_flag_icon_icons.dart';
+import 'task_date_icons.dart';
 
 class AddTaskFullScreen extends StatefulWidget {
   @override
@@ -150,17 +152,23 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen> {
                   vertical: SizeConfig.screenHeight * 0.01,
                 ),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
-                    Text(
-                      'Priority:   ',
-                      style: TextStyle(
-                        fontSize: SizeConfig.blockSizeVertical * 3.5,
-                        color: kGrey,
-                      ),
-                    ),
+//                    Text(
+//                      'Priority:   ',
+//                      style: TextStyle(
+//                        fontSize: SizeConfig.blockSizeVertical * 3.5,
+//                        color: kGrey,
+//                      ),
+//                    ),
+//                    Icon(
+//                      CustomFlagIcon.flag,
+//                      size: SizeConfig.blockSizeVertical * 3.3,
+//                      color: Colors.grey.shade400,
+//                    ),
                     Expanded(
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           PriorityButtons(
                             selectedPriority: selectedPriority,
@@ -216,116 +224,283 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen> {
               Padding(
                 padding: EdgeInsets.only(
                   left: SizeConfig.blockSizeHorizontal * 4.3,
+                  top: SizeConfig.screenHeight * 0.01,
+                  right: SizeConfig.blockSizeHorizontal * 4.3,
                 ),
-                child: Text(
-                  'Date:  $addTaskDate',
-                  style: TextStyle(
-                    fontSize: SizeConfig.blockSizeVertical * 3.5,
-                    color: kGrey,
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      FlatButton(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                        ),
+                        color: addTaskDate == Date(DateTime.now()).toString()
+                            ? kBlue
+                            : Colors.grey.shade300,
+                        child: Text(
+                          'Today',
+                          style: TextStyle(
+                            color:
+                                addTaskDate == Date(DateTime.now()).toString()
+                                    ? kWhite
+                                    : kGrey,
+                            fontSize: 20,
+                          ),
+                        ),
+                        onPressed: () {
+                          print('today pressed');
+                          setState(() {
+                            addTaskDate = Date(DateTime.now()).toString();
+                            addTaskDateSQL = Date(DateTime.now()).toStringSQL();
+                          });
+                        },
+                      ),
+                      SizedBox(
+                        width: SizeConfig.screenWidth * 0.025,
+                      ),
+                      FlatButton(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(
+                          Radius.circular(10.0),
+                        )),
+                        color: Colors.grey.shade300,
+                        child: Text(
+                          'Tonight',
+                          style: TextStyle(
+                            color: kGrey,
+                            fontSize: 20,
+                          ),
+                        ),
+                        onPressed: () {
+                          print('tonight pressed');
+                        },
+                      ),
+                      SizedBox(
+                        width: SizeConfig.screenWidth * 0.025,
+                      ),
+                      FlatButton(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                        ),
+                        color: addTaskDate ==
+                                Date(DateTime.now().add(Duration(days: 1)))
+                                    .toString()
+                            ? kBlue
+                            : Colors.grey.shade300,
+                        child: Text(
+                          'Tomorrow',
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: addTaskDate ==
+                                    Date(DateTime.now().add(Duration(days: 1)))
+                                        .toString()
+                                ? kWhite
+                                : kGrey,
+                          ),
+                        ),
+                        onPressed: () {
+                          print('tomorrow pressed');
+                          setState(() {
+                            addTaskDate =
+                                Date(DateTime.now().add(Duration(days: 1)))
+                                    .toString();
+                            addTaskDateSQL =
+                                Date(DateTime.now().add(Duration(days: 1)))
+                                    .toStringSQL();
+                          });
+                        },
+                      ),
+                      SizedBox(
+                        width: SizeConfig.screenWidth * 0.025,
+                      ),
+                    ],
                   ),
                 ),
               ),
               Padding(
-                  padding: EdgeInsets.only(
-                    left: SizeConfig.blockSizeHorizontal * 4.3,
-                    top: SizeConfig.blockSizeVertical * 1.5,
+                padding: EdgeInsets.only(
+                  left: SizeConfig.blockSizeHorizontal * 4.3,
+                  top: SizeConfig.screenHeight * 0.01,
+                  right: SizeConfig.blockSizeHorizontal * 4.3,
+                ),
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      FlatButton(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                        ),
+                        color: Colors.grey.shade300,
+                        child: Text(
+                          'Next Week',
+                          style: TextStyle(
+                            color: kGrey,
+                            fontSize: 20,
+                          ),
+                        ),
+                        onPressed: () {
+                          print('next week pressed pressed');
+                        },
+                      ),
+                      SizedBox(
+                        width: SizeConfig.screenWidth * 0.025,
+                      ),
+                      FlatButton(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(
+                          Radius.circular(10.0),
+                        )),
+                        color: Colors.grey.shade300,
+                        child: Text(
+                          'Custom',
+                          style: TextStyle(
+                            color: kGrey,
+                            fontSize: 20,
+                          ),
+                        ),
+                        onPressed: () {
+                          print('Custom pressed');
+                        },
+                      ),
+                      SizedBox(
+                        width: SizeConfig.screenWidth * 0.025,
+                      ),
+//                      FlatButton(
+//                        shape: RoundedRectangleBorder(
+//                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+//                        ),
+//                        color: Colors.grey.shade300,
+//                        child: Text(
+//                          'Tomorrow',
+//                          style: TextStyle(
+//                            fontSize: 20,
+//                            color: addTaskDate ==
+//                                    Date(DateTime.now().add(Duration(days: 1)))
+//                                        .toString()
+//                                ? kWhite
+//                                : kGrey,
+//                          ),
+//                        ),
+//                        onPressed: () {
+//                          print('tomorrow pressed');
+//                          setState(() {
+//                            addTaskDate =
+//                                Date(DateTime.now().add(Duration(days: 1)))
+//                                    .toString();
+//                            addTaskDateSQL =
+//                                Date(DateTime.now().add(Duration(days: 1)))
+//                                    .toStringSQL();
+//                          });
+//                        },
+//                      ),
+                      SizedBox(
+                        width: SizeConfig.screenWidth * 0.025,
+                      ),
+                    ],
                   ),
-                  child: SizedBox(
-                    height: SizeConfig.screenHeight * 0.05,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: <Widget>[
-                        FlatButton(
-                          shape: RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10.0)),
-                          ),
-                          color: addTaskDate == Date(DateTime.now()).toString()
-                              ? kBlue
-                              : Colors.grey.shade300,
-                          child: Text(
-                            'Today',
-                            style: TextStyle(
-                              fontSize: SizeConfig.blockSizeVertical * 2.5,
-                              color:
-                                  addTaskDate == Date(DateTime.now()).toString()
-                                      ? kWhite
-                                      : kGrey,
-                            ),
-                          ),
-                          onPressed: () {
-                            print('today pressed');
-                            setState(() {
-                              addTaskDate = Date(DateTime.now()).toString();
-                              addTaskDateSQL =
-                                  Date(DateTime.now()).toStringSQL();
-                            });
-                          },
-                        ),
-                        SizedBox(
-                          width: SizeConfig.blockSizeHorizontal * 4.3,
-                        ),
-                        FlatButton(
-                          shape: RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10.0)),
-                          ),
-                          color: addTaskDate ==
-                                  Date(DateTime.now().add(Duration(days: 1)))
-                                      .toString()
-                              ? kBlue
-                              : Colors.grey.shade300,
-                          child: Text(
-                            'Tomorrow',
-                            style: TextStyle(
-                              fontSize: SizeConfig.blockSizeVertical * 2.5,
-                              color: addTaskDate ==
-                                      Date(DateTime.now()
-                                              .add(Duration(days: 1)))
-                                          .toString()
-                                  ? kWhite
-                                  : kGrey,
-                            ),
-                          ),
-                          onPressed: () {
-                            print('tomorrow pressed');
-                            setState(() {
-                              addTaskDate =
-                                  Date(DateTime.now().add(Duration(days: 1)))
-                                      .toString();
-                              addTaskDateSQL =
-                                  Date(DateTime.now().add(Duration(days: 1)))
-                                      .toStringSQL();
-                            });
-                          },
-                        ),
-                        SizedBox(
-                          width: SizeConfig.blockSizeHorizontal * 4.3,
-                        ),
-                        FlatButton.icon(
-                          color: Colors.grey.shade300,
-                          shape: RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10.0)),
-                          ),
-                          onPressed: () {
-                            print('custom pressed');
-                          },
-                          icon: Icon(
-                            Icons.date_range,
-                            color: Colors.grey.shade700,
-                          ),
-                          label: Text(
-                            'Custom',
-                            style: TextStyle(
-                              fontSize: SizeConfig.blockSizeVertical * 2.5,
-                              color: Colors.grey.shade700,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  )),
+                ),
+              ),
+//              Padding(
+//                padding: EdgeInsets.only(
+//                  left: SizeConfig.blockSizeHorizontal * 4.3,
+//                  top: SizeConfig.blockSizeVertical * 1.5,
+//                ),
+//                child: SizedBox(
+//                  height: SizeConfig.screenHeight * 0.05,
+//                  child: ListView(
+//                    scrollDirection: Axis.horizontal,
+//                    children: <Widget>[
+//                      FlatButton(
+//                        shape: RoundedRectangleBorder(
+//                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+//                        ),
+//                        color: addTaskDate == Date(DateTime.now()).toString()
+//                            ? kBlue
+//                            : Colors.grey.shade300,
+//                        child: Text(
+//                          'Today',
+//                          style: TextStyle(
+//                            fontSize: SizeConfig.blockSizeVertical * 2.5,
+//                            color:
+//                                addTaskDate == Date(DateTime.now()).toString()
+//                                    ? kWhite
+//                                    : kGrey,
+//                          ),
+//                        ),
+//                        onPressed: () {
+//                          print('today pressed');
+//                          setState(() {
+//                            addTaskDate = Date(DateTime.now()).toString();
+//                            addTaskDateSQL = Date(DateTime.now()).toStringSQL();
+//                          });
+//                        },
+//                      ),
+//                      SizedBox(
+//                        width: SizeConfig.blockSizeHorizontal * 4.3,
+//                      ),
+//                      FlatButton(
+//                        shape: RoundedRectangleBorder(
+//                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+//                        ),
+//                        color: addTaskDate ==
+//                                Date(DateTime.now().add(Duration(days: 1)))
+//                                    .toString()
+//                            ? kBlue
+//                            : Colors.grey.shade300,
+//                        child: Text(
+//                          'Tomorrow',
+//                          style: TextStyle(
+//                            fontSize: SizeConfig.blockSizeVertical * 2.5,
+//                            color: addTaskDate ==
+//                                    Date(DateTime.now().add(Duration(days: 1)))
+//                                        .toString()
+//                                ? kWhite
+//                                : kGrey,
+//                          ),
+//                        ),
+//                        onPressed: () {
+//                          print('tomorrow pressed');
+//                          setState(() {
+//                            addTaskDate =
+//                                Date(DateTime.now().add(Duration(days: 1)))
+//                                    .toString();
+//                            addTaskDateSQL =
+//                                Date(DateTime.now().add(Duration(days: 1)))
+//                                    .toStringSQL();
+//                          });
+//                        },
+//                      ),
+//                      SizedBox(
+//                        width: SizeConfig.blockSizeHorizontal * 4.3,
+//                      ),
+//                      FlatButton.icon(
+//                        color: Colors.grey.shade300,
+//                        shape: RoundedRectangleBorder(
+//                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+//                        ),
+//                        onPressed: () {
+//                          print('custom pressed');
+//                        },
+//                        icon: Icon(
+//                          Icons.date_range,
+//                          color: Colors.grey.shade700,
+//                        ),
+//                        label: Text(
+//                          'Custom',
+//                          style: TextStyle(
+//                            fontSize: SizeConfig.blockSizeVertical * 2.5,
+//                            color: Colors.grey.shade700,
+//                          ),
+//                        ),
+//                      ),
+//                    ],
+//                  ),
+//                ),
+//              ),
 //            Padding(
 //              padding: EdgeInsets.symmetric(
 //                horizontal: SizeConfig.blockSizeHorizontal * 4.3,
@@ -590,13 +765,17 @@ class PriorityButtons extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: CircleAvatar(
-        backgroundColor: getPriorityColor(),
-        radius: SizeConfig.blockSizeVertical * 2.5,
-        child: Icon(
-          Icons.check,
-          color: selectedPriority == priority ? kWhite : kWhite.withOpacity(0),
-          size: SizeConfig.blockSizeVertical * 3.5,
+      child: Padding(
+        padding: EdgeInsets.only(right: SizeConfig.screenWidth * 0.08),
+        child: CircleAvatar(
+          backgroundColor: getPriorityColor(),
+          radius: SizeConfig.blockSizeVertical * 2.0,
+          child: Icon(
+            CustomFlagIcon.flag,
+            color:
+                selectedPriority == priority ? kWhite : kWhite.withOpacity(0),
+            size: SizeConfig.blockSizeVertical * 2.5,
+          ),
         ),
       ),
     );
