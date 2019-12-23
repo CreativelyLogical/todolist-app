@@ -9,6 +9,11 @@ import 'package:provider/provider.dart';
 import 'package:my_todo/models/task_data_holder.dart';
 import 'custom_flag_icon_icons.dart';
 import 'task_date_icons.dart';
+import 'task_category_icons.dart';
+import 'notification_bell_icons.dart';
+import 'package:my_todo/widgets/duration_picker_dialog.dart';
+import 'set_time_icon_icons.dart';
+import 'package:my_todo/models/time.dart';
 
 class AddTaskFullScreen extends StatefulWidget {
   @override
@@ -16,51 +21,94 @@ class AddTaskFullScreen extends StatefulWidget {
 }
 
 class _AddTaskFullScreenState extends State<AddTaskFullScreen> {
-  List<DropdownMenuItem> prioritiesList = [
+//  List<DropdownMenuItem> prioritiesList = [
+//    DropdownMenuItem(
+//      child: Text(
+//        'None',
+//        style: TextStyle(
+//          color: kGrey,
+//          fontWeight: FontWeight.w800,
+//          fontSize: SizeConfig.blockSizeVertical * 3.5,
+//        ),
+//      ),
+//      value: 'None',
+//    ),
+//    DropdownMenuItem(
+//      child: Text(
+//        'Low',
+//        style: TextStyle(
+//          color: Colors.green,
+//          fontWeight: FontWeight.w800,
+//          fontSize: SizeConfig.blockSizeVertical * 3.5,
+//        ),
+//      ),
+//      value: 'Low',
+//    ),
+//    DropdownMenuItem(
+//      child: Text(
+//        'Medium',
+//        style: TextStyle(
+//          color: Colors.orange,
+//          fontWeight: FontWeight.w800,
+//          fontSize: SizeConfig.blockSizeVertical * 3.5,
+//        ),
+//      ),
+//      value: 'Medium',
+//    ),
+//    DropdownMenuItem(
+//      child: Text(
+//        'High',
+//        style: TextStyle(
+//          color: Colors.red,
+//          fontWeight: FontWeight.w800,
+//          fontSize: SizeConfig.blockSizeVertical * 3.5,
+//        ),
+//      ),
+//      value: 'High',
+//    )
+//  ];
+
+  List<DropdownMenuItem> categoriesList = [
     DropdownMenuItem(
       child: Text(
-        'None',
+        'Personal',
         style: TextStyle(
+          fontSize: SizeConfig.blockSizeVertical * 3,
           color: kGrey,
-          fontWeight: FontWeight.w800,
-          fontSize: SizeConfig.blockSizeVertical * 3.5,
         ),
       ),
-      value: 'None',
+      value: 'Personal',
     ),
     DropdownMenuItem(
       child: Text(
-        'Low',
+        'Work',
         style: TextStyle(
-          color: Colors.green,
-          fontWeight: FontWeight.w800,
-          fontSize: SizeConfig.blockSizeVertical * 3.5,
+          fontSize: SizeConfig.blockSizeVertical * 3,
+          color: kGrey,
         ),
       ),
-      value: 'Low',
+      value: 'Work',
     ),
     DropdownMenuItem(
       child: Text(
-        'Medium',
+        'School',
         style: TextStyle(
-          color: Colors.orange,
-          fontWeight: FontWeight.w800,
-          fontSize: SizeConfig.blockSizeVertical * 3.5,
+          fontSize: SizeConfig.blockSizeVertical * 3,
+          color: kGrey,
         ),
       ),
-      value: 'Medium',
+      value: 'School',
     ),
     DropdownMenuItem(
       child: Text(
-        'High',
+        'Business',
         style: TextStyle(
-          color: Colors.red,
-          fontWeight: FontWeight.w800,
-          fontSize: SizeConfig.blockSizeVertical * 3.5,
+          fontSize: SizeConfig.blockSizeVertical * 3,
+          color: kGrey,
         ),
       ),
-      value: 'High',
-    )
+      value: 'Business',
+    ),
   ];
 
   String _selectedPriority = 'None';
@@ -71,15 +119,71 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen> {
 
   TimeOfDay _timePicked = null;
 
-  Future<TimeOfDay> selectedTime;
+  String selectedTime = 'Set time';
 
   bool isSwitched = false;
 
   String selectedPriority = 'none';
 
+  String selectedCategory = 'Personal';
+
   TextEditingController taskNameController = TextEditingController();
 
   TextEditingController taskNotesController = TextEditingController();
+
+  String selectedReminder = "Set alert time";
+
+  String selectedDate = 'Custom';
+
+  String selectedTag = 'Today';
+
+  String selectedDateSQL;
+
+  Color getSelectedTagColor(String tag) {
+    return selectedTag == tag ? kBlue : Colors.grey.shade300;
+  }
+
+  Color getSelectedTagTextColor(String tag) {
+    return selectedTag == tag ? kWhite : kGrey;
+  }
+
+  String getAppropriateDate() {
+    if (selectedTag == 'Today' ||
+        selectedTag == 'Tomorrow' ||
+        selectedTag == 'Next Week') {
+      return addTaskDateSQL;
+    } else if (selectedTag == 'Custom') {
+      return selectedDateSQL;
+    }
+  }
+
+  Future<Null> _selectDate(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2010),
+      lastDate: DateTime(2101),
+    );
+    if (picked != null &&
+        Date(picked).toString() != Date(DateTime.now()).toString()) {
+      setState(() {
+        selectedDate = Date(picked).toString();
+        selectedDateSQL = Date(picked).toStringSQL();
+      });
+    }
+  }
+
+  Future<Null> _selectTime(BuildContext context) async {
+    final TimeOfDay picked = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+    );
+    if (picked.toString() != selectedTime && picked != null) {
+      setState(() {
+        selectedTime = picked.format(context);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +192,7 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen> {
 //      context: context,
 //    );
 
-    print('now selectedPriority is $selectedPriority');
+//    print('now selectedPriority is $selectedPriority');
 
     SizeConfig().init(context);
     return Scaffold(
@@ -147,9 +251,10 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: SizeConfig.blockSizeHorizontal * 4.3,
-                  vertical: SizeConfig.screenHeight * 0.01,
+                padding: EdgeInsets.only(
+                  left: SizeConfig.blockSizeHorizontal * 4.3,
+                  top: SizeConfig.screenHeight * 0.025,
+                  bottom: SizeConfig.screenHeight * 0.01,
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -236,22 +341,25 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
                         ),
-                        color: addTaskDate == Date(DateTime.now()).toString()
-                            ? kBlue
-                            : Colors.grey.shade300,
+//                        color: addTaskDate == Date(DateTime.now()).toString()
+//                            ? kBlue
+//                            : Colors.grey.shade300,
+                        color: getSelectedTagColor('Today'),
                         child: Text(
                           'Today',
                           style: TextStyle(
                             color:
-                                addTaskDate == Date(DateTime.now()).toString()
-                                    ? kWhite
-                                    : kGrey,
+//                                addTaskDate == Date(DateTime.now()).toString()
+//                                    ? kWhite
+//                                    : kGrey,
+                                getSelectedTagTextColor('Today'),
                             fontSize: 20,
                           ),
                         ),
                         onPressed: () {
                           print('today pressed');
                           setState(() {
+                            selectedTag = 'Today';
                             addTaskDate = Date(DateTime.now()).toString();
                             addTaskDateSQL = Date(DateTime.now()).toStringSQL();
                           });
@@ -265,16 +373,19 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen> {
                             borderRadius: BorderRadius.all(
                           Radius.circular(10.0),
                         )),
-                        color: Colors.grey.shade300,
+                        color: getSelectedTagColor('Tonight'),
                         child: Text(
                           'Tonight',
                           style: TextStyle(
-                            color: kGrey,
+                            color: getSelectedTagTextColor('Tonight'),
                             fontSize: 20,
                           ),
                         ),
                         onPressed: () {
                           print('tonight pressed');
+                          setState(() {
+                            selectedTag = 'Tonight';
+                          });
                         },
                       ),
                       SizedBox(
@@ -284,25 +395,28 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
                         ),
-                        color: addTaskDate ==
-                                Date(DateTime.now().add(Duration(days: 1)))
-                                    .toString()
-                            ? kBlue
-                            : Colors.grey.shade300,
+//                        color: addTaskDate ==
+//                                Date(DateTime.now().add(Duration(days: 1)))
+//                                    .toString()
+//                            ? kBlue
+//                            : Colors.grey.shade300,
+                        color: getSelectedTagColor('Tomorrow'),
                         child: Text(
                           'Tomorrow',
                           style: TextStyle(
                             fontSize: 20,
-                            color: addTaskDate ==
-                                    Date(DateTime.now().add(Duration(days: 1)))
-                                        .toString()
-                                ? kWhite
-                                : kGrey,
+                            color: getSelectedTagTextColor('Tomorrow'),
+//                            color: addTaskDate ==
+//                                    Date(DateTime.now().add(Duration(days: 1)))
+//                                        .toString()
+//                                ? kWhite
+//                                : kGrey,
                           ),
                         ),
                         onPressed: () {
                           print('tomorrow pressed');
                           setState(() {
+                            selectedTag = 'Tomorrow';
                             addTaskDate =
                                 Date(DateTime.now().add(Duration(days: 1)))
                                     .toString();
@@ -334,16 +448,19 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
                         ),
-                        color: Colors.grey.shade300,
+                        color: getSelectedTagColor('Next Week'),
                         child: Text(
                           'Next Week',
                           style: TextStyle(
-                            color: kGrey,
+                            color: getSelectedTagTextColor('Next Week'),
                             fontSize: 20,
                           ),
                         ),
                         onPressed: () {
                           print('next week pressed pressed');
+                          setState(() {
+                            selectedTag = 'Next Week';
+                          });
                         },
                       ),
                       SizedBox(
@@ -354,54 +471,90 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen> {
                             borderRadius: BorderRadius.all(
                           Radius.circular(10.0),
                         )),
-                        color: Colors.grey.shade300,
+                        color: getSelectedTagColor('Custom'),
                         child: Text(
-                          'Custom',
+                          selectedDate,
                           style: TextStyle(
-                            color: kGrey,
+                            color: getSelectedTagTextColor('Custom'),
                             fontSize: 20,
                           ),
                         ),
-                        onPressed: () {
+                        onPressed: () async {
                           print('Custom pressed');
+                          await _selectDate(context);
+                          setState(() {
+                            if (selectedDate != 'Custom') {
+                              selectedTag = 'Custom';
+                              print('it has reached here');
+                            }
+                          });
                         },
                       ),
                       SizedBox(
                         width: SizeConfig.screenWidth * 0.025,
                       ),
-//                      FlatButton(
-//                        shape: RoundedRectangleBorder(
-//                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-//                        ),
-//                        color: Colors.grey.shade300,
-//                        child: Text(
-//                          'Tomorrow',
-//                          style: TextStyle(
-//                            fontSize: 20,
-//                            color: addTaskDate ==
-//                                    Date(DateTime.now().add(Duration(days: 1)))
-//                                        .toString()
-//                                ? kWhite
-//                                : kGrey,
-//                          ),
-//                        ),
-//                        onPressed: () {
-//                          print('tomorrow pressed');
-//                          setState(() {
-//                            addTaskDate =
-//                                Date(DateTime.now().add(Duration(days: 1)))
-//                                    .toString();
-//                            addTaskDateSQL =
-//                                Date(DateTime.now().add(Duration(days: 1)))
-//                                    .toStringSQL();
-//                          });
-//                        },
-//                      ),
                       SizedBox(
                         width: SizeConfig.screenWidth * 0.025,
                       ),
                     ],
                   ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(
+                  left: SizeConfig.blockSizeHorizontal * 4.3,
+                  top: SizeConfig.screenHeight * 0.02,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    Icon(
+                      TaskCategory.tag,
+                      color: kBlue,
+                    ),
+                    SizedBox(
+                      width: SizeConfig.screenWidth * 0.05,
+                    ),
+                    DropdownButton(
+                      value: selectedCategory,
+                      items: categoriesList,
+                      onChanged: (newCategory) {
+                        setState(() {
+                          selectedCategory = newCategory;
+                        });
+                      },
+                    ),
+                    SizedBox(
+                      width: SizeConfig.screenWidth * 0.05,
+                    ),
+                    Icon(
+                      SetTimeIcon.clock,
+                      color: kBlue,
+                    ),
+                    SizedBox(
+                      width: SizeConfig.screenWidth * 0.05,
+                    ),
+                    FlatButton(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                      ),
+                      color: selectedTime == 'Set time'
+                          ? Colors.grey.shade300
+                          : kBlue,
+                      child: Text(
+                        selectedTime,
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: selectedTime == 'Set time' ? kGrey : kWhite,
+                        ),
+                      ),
+                      onPressed: () async {
+                        print('Time picker selected');
+                        await _selectTime(context);
+                        print('selectedTime is $selectedTime');
+                      },
+                    ),
+                  ],
                 ),
               ),
 //              Padding(
@@ -545,50 +698,91 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen> {
 //                ],
 //              ),
 //            ),
+//              Padding(
+//                padding: EdgeInsets.only(
+//                  top: SizeConfig.blockSizeVertical * 2.5,
+//                  left: SizeConfig.blockSizeHorizontal * 4.3,
+//                ),
+//                child: Row(
+//                  children: <Widget>[
+//                    Text(
+//                      'Time: ',
+//                      style: TextStyle(
+//                        fontSize: SizeConfig.blockSizeVertical * 3.5,
+//                        color: kGrey,
+//                      ),
+//                    ),
+//                  ],
+//                ),
+//              ),
+//              Padding(
+//                padding: EdgeInsets.symmetric(
+//                  horizontal: SizeConfig.blockSizeHorizontal * 4.3,
+//                ),
+//                child: Row(
+//                  children: <Widget>[
+//                    FlatButton(
+//                      shape: RoundedRectangleBorder(
+//                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+//                      ),
+//                      color: _timePicked == null ? kBlue : Colors.grey.shade300,
+//                      child: Text(
+//                        'No Time',
+//                        style: TextStyle(
+//                          fontSize: SizeConfig.blockSizeVertical * 2.5,
+//                          color: _timePicked == null ? kWhite : kGrey,
+//                        ),
+//                      ),
+//                      onPressed: () {
+//                        print('time is set');
+//                        setState(() {
+//                          _timePicked = null;
+//                        });
+//                      },
+//                    ),
+//                    SizedBox(
+//                      width: SizeConfig.blockSizeHorizontal * 4.3,
+//                    ),
+//                    FlatButton(
+//                      shape: RoundedRectangleBorder(
+//                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+//                      ),
+//                      color: Colors.grey.shade300,
+//                      child: Text(
+//                        'Set Time',
+//                        style: TextStyle(
+//                          fontSize: SizeConfig.blockSizeVertical * 2.5,
+//                          color: Colors.grey.shade700,
+//                        ),
+//                      ),
+//                      onPressed: () {
+//                        print('time is set');
+//                        setState(() {
+//                          selectedTime = showTimePicker(
+//                            initialTime: TimeOfDay.now(),
+//                            context: context,
+//                          );
+//                        });
+//                        print(selectedTime);
+//                      },
+//                    ),
+//                  ],
+//                ),
+//              ),
               Padding(
                 padding: EdgeInsets.only(
-                  top: SizeConfig.blockSizeVertical * 2.5,
                   left: SizeConfig.blockSizeHorizontal * 4.3,
+                  top: SizeConfig.blockSizeVertical * 2,
                 ),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
-                    Text(
-                      'Time: ',
-                      style: TextStyle(
-                        fontSize: SizeConfig.blockSizeVertical * 3.5,
-                        color: kGrey,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: SizeConfig.blockSizeHorizontal * 4.3,
-                ),
-                child: Row(
-                  children: <Widget>[
-                    FlatButton(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                      ),
-                      color: _timePicked == null ? kBlue : Colors.grey.shade300,
-                      child: Text(
-                        'No Time',
-                        style: TextStyle(
-                          fontSize: SizeConfig.blockSizeVertical * 2.5,
-                          color: _timePicked == null ? kWhite : kGrey,
-                        ),
-                      ),
-                      onPressed: () {
-                        print('time is set');
-                        setState(() {
-                          _timePicked = null;
-                        });
-                      },
+                    Icon(
+                      NotificationBell.bell,
+                      color: kBlue,
                     ),
                     SizedBox(
-                      width: SizeConfig.blockSizeHorizontal * 4.3,
+                      width: SizeConfig.screenWidth * 0.05,
                     ),
                     FlatButton(
                       shape: RoundedRectangleBorder(
@@ -596,55 +790,75 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen> {
                       ),
                       color: Colors.grey.shade300,
                       child: Text(
-                        'Set Time',
+                        selectedReminder,
                         style: TextStyle(
-                          fontSize: SizeConfig.blockSizeVertical * 2.5,
-                          color: Colors.grey.shade700,
+                          color: kGrey,
+                          fontSize: 20,
                         ),
                       ),
                       onPressed: () {
-                        print('time is set');
-                        setState(() {
-                          selectedTime = showTimePicker(
-                            initialTime: TimeOfDay.now(),
-                            context: context,
-                          );
-                        });
-                        print(selectedTime);
+                        showDialog(
+                          context: context,
+                          builder: (context) => DurationPicker(
+                            setReminderCallback: (dialogReminder) {
+                              setState(() {
+                                selectedReminder = dialogReminder;
+                              });
+                            },
+                          ),
+                        );
                       },
                     ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                  left: SizeConfig.blockSizeHorizontal * 4.3,
-                  top: SizeConfig.blockSizeVertical * 1,
-                  bottom: SizeConfig.blockSizeVertical * 0,
-                  right: SizeConfig.blockSizeHorizontal * 4.3,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text(
-                      'Remind me:',
-                      style: TextStyle(
-                        color: kGrey,
-                        fontSize: SizeConfig.blockSizeVertical * 3.5,
+                    Expanded(
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                              right: SizeConfig.blockSizeHorizontal * 4.3),
+                          child: Switch(
+                            value: isSwitched,
+                            onChanged: (newValue) {
+                              setState(() {
+                                isSwitched = newValue;
+                              });
+                            },
+                            activeColor: kBlue,
+                          ),
+                        ),
                       ),
-                    ),
-                    Switch(
-                      value: isSwitched,
-                      onChanged: (newValue) {
-                        setState(() {
-                          isSwitched = newValue;
-                        });
-                      },
-                      activeColor: kBlue,
                     )
                   ],
                 ),
               ),
+//              Padding(
+//                padding: EdgeInsets.only(
+//                  left: SizeConfig.blockSizeHorizontal * 4.3,
+//                  top: SizeConfig.blockSizeVertical * 1,
+//                  bottom: SizeConfig.blockSizeVertical * 0,
+//                  right: SizeConfig.blockSizeHorizontal * 4.3,
+//                ),
+//                child: Row(
+//                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                  children: <Widget>[
+//                    Text(
+//                      'Remind me:',
+//                      style: TextStyle(
+//                        color: kGrey,
+//                        fontSize: SizeConfig.blockSizeVertical * 3.5,
+//                      ),
+//                    ),
+//                    Switch(
+//                      value: isSwitched,
+//                      onChanged: (newValue) {
+//                        setState(() {
+//                          isSwitched = newValue;
+//                        });
+//                      },
+//                      activeColor: kBlue,
+//                    )
+//                  ],
+//                ),
+//              ),
               Padding(
                 padding: EdgeInsets.symmetric(
                     horizontal: SizeConfig.blockSizeHorizontal * 4.3,
@@ -684,11 +898,16 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen> {
                         'aaaaaaaaaaaaaaaaaaand, the selectedPriority was $selectedPriority');
                     Provider.of<TaskData>(context).addTask(
                       taskNameController.text,
-                      addTaskDateSQL,
+                      getAppropriateDate(),
                       selectedPriority,
                       taskNotesController.text.length == 0
                           ? 'no notes'
                           : taskNotesController.text,
+                      selectedCategory,
+                      selectedReminder == 'Set alert time'
+                          ? 'no reminders'
+                          : selectedReminder,
+                      selectedTime == 'Set time' ? 'no time' : selectedTime,
                     );
                     Navigator.pop(context);
                   },

@@ -1,13 +1,24 @@
 import 'date.dart';
 
 class Task {
-  Task({this.taskTitle, this.isChecked, this.date, this.priority, this.notes});
+  Task(
+      {this.taskTitle,
+      this.isChecked,
+      this.date,
+      this.priority,
+      this.notes,
+      this.category,
+      this.alert,
+      this.time});
 
   String taskTitle;
   bool isChecked;
   String date;
   String priority;
   String notes;
+  String category;
+  String alert;
+  String time;
 
   void toggleChecked() {
     isChecked = !isChecked;
@@ -20,6 +31,9 @@ class Task {
       'is_checked': !isChecked ? false : true,
       'priority': priority,
       'notes': notes,
+      'category': category,
+      'alert': alert,
+      'task_time': time,
     };
   }
 }

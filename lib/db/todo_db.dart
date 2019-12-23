@@ -28,7 +28,7 @@ class TodoDatabase {
         await db.execute(
           '''
           CREATE TABLE IF NOT EXISTS todo_table(
-          task_date TEXT, task_name TEXT, is_checked BIT, priority TEXT, notes TEXT)
+          task_date TEXT, task_name TEXT, is_checked BIT, priority TEXT, notes TEXT, category TEXT, alert TEXT, task_time TEXT)
           ''',
         );
       },
@@ -94,6 +94,9 @@ class TodoDatabase {
         isChecked: maps[i]['is_checked'] == 0 ? false : true,
         priority: maps[i]['priority'],
         notes: maps[i]['notes'],
+        category: maps[i]['category'],
+        alert: maps[i]['alert'],
+        time: maps[i]['task_time'],
       );
     });
   }

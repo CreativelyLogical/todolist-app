@@ -33,16 +33,21 @@ class TaskData extends ChangeNotifier {
     String taskDate,
     String priority,
     String notes,
+    String category,
+    String alert,
+    String time,
   ) async {
 //    taskList.add(Task(taskTitle: newTaskTitle, isChecked: false));
 //    notifyListeners();
     await todoDB.insert(new Task(
-      date: taskDate,
-      taskTitle: newTaskTitle,
-      isChecked: false,
-      priority: priority,
-      notes: notes,
-    ));
+        date: taskDate,
+        taskTitle: newTaskTitle,
+        isChecked: false,
+        priority: priority,
+        notes: notes,
+        category: category,
+        alert: alert,
+        time: time));
     notifyListeners();
   }
 

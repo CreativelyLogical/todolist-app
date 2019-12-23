@@ -9,6 +9,8 @@ import 'package:my_todo/screens/add_task_fullscreen.dart';
 import 'package:my_todo/screens/task_screen.dart';
 import 'custom_flag_icon_icons.dart';
 import 'notes_indicator_icons.dart';
+import 'package:my_todo/screens/task_category_icons.dart';
+import 'package:my_todo/screens/notification_bell_icons.dart';
 
 class TaskList extends StatelessWidget {
   @override
@@ -114,6 +116,9 @@ class TaskList extends StatelessWidget {
                           },
                           priority: task.priority,
                           notes: task.notes,
+                          category: task.category,
+                          alert: task.alert,
+                          time: task.time,
                         );
                       },
                       separatorBuilder: (BuildContext context, int index) =>
@@ -137,15 +142,21 @@ class ListTile extends StatelessWidget {
 
   final Function checkBoxCallback;
 
-  String priority;
-  String notes;
+  final String priority;
+  final String notes;
+  final String category;
+  final String alert;
+  final String time;
 
   ListTile(
       {this.text,
       this.isChecked,
       this.checkBoxCallback,
       this.priority,
-      this.notes});
+      this.notes,
+      this.category,
+      this.alert,
+      this.time});
 
   Color returnPriorityColor() {
     print('in listview, priority is $priority');
@@ -167,6 +178,7 @@ class ListTile extends StatelessWidget {
 
     print('so the notes are $notes');
 //    print('the length of notes are ${notes.length}');
+    print('the alert is $alert');
 
     SizeConfig().init(context);
     return Container(
@@ -218,29 +230,107 @@ class ListTile extends StatelessWidget {
                       fontFamily: 'Nunito',
                       decoration: isChecked ? TextDecoration.lineThrough : null,
                     ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                  Row(
-                    children: <Widget>[
-                      notes == null
-                          ? Container()
-                          : Container(
-                              child: Icon(
-                                NotesIndicator.doc_text,
-                                color: notes.length == 0
-                                    ? kBlue.withOpacity(0)
-                                    : kBlue,
-                                size: 18,
+                  SizedBox(
+                    height: SizeConfig.screenHeight * 0.035,
+                    width: SizeConfig.screenWidth * 0.67,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.max,
+                      children: <Widget>[
+                        Container(
+                          alignment: Alignment.centerRight,
+                          child: Icon(
+                            CustomFlagIcon.flag,
+                            color: returnPriorityColor(),
+                            size: 18,
+                          ),
+                        ),
+                        SizedBox(
+                          width: SizeConfig.screenWidth * 0.01,
+                        ),
+                        notes == 'no notes'
+                            ? Container()
+                            : Container(
+                                child: Icon(
+                                  NotesIndicator.doc_text,
+                                  color: notes.length == 0
+                                      ? kBlue.withOpacity(0)
+                                      : kBlue,
+                                  size: 18,
+                                ),
+                              ),
+                        SizedBox(
+                          width: SizeConfig.screenWidth * 0.01,
+                        ),
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: SizeConfig.blockSizeHorizontal * 1.5,
+                              vertical: SizeConfig.blockSizeVertical * 0.4),
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: kBlue,
+                              width: 1,
+                            ),
+                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                          ),
+                          child: Row(
+                            children: <Widget>[
+                              Icon(
+                                TaskCategory.tag,
+                                size: SizeConfig.blockSizeVertical * 2,
+                                color: kBlue,
+                              ),
+                              SizedBox(
+                                width: 2,
+                              ),
+                              Text(
+                                category,
+                                style: TextStyle(
+                                  color: kBlue,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          width: SizeConfig.screenWidth * 0.01,
+                        ),
+                        alert == 'no reminders'
+                            ? Container()
+                            : Icon(
+                                NotificationBell.bell,
+                                size: SizeConfig.blockSizeVertical * 2,
+                                color: kBlue,
+                              ),
+                        Spacer(),
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: SizeConfig.blockSizeHorizontal * 1.5,
+                            ),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: kBlue, width: 1),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(
+                                  20.0,
+                                ),
                               ),
                             ),
-                      Container(
-                        alignment: Alignment.centerRight,
-                        child: Icon(
-                          CustomFlagIcon.flag,
-                          color: returnPriorityColor(),
-                          size: 18,
-                        ),
-                      )
-                    ],
+                            child: Text(
+                              time == 'no time' ? '' : time,
+                              style: TextStyle(
+                                color: kBlue,
+                              ),
+                              textAlign: TextAlign.right,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
 
 //                  Text(

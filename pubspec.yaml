@@ -71,6 +71,12 @@ flutter:
     - family: TaskCategory
       fonts:
         - asset: fonts/TaskCategory.ttf
+    - family: NotificationBell
+      fonts:
+        - asset: fonts/NotificationBell.ttf
+    - family: SetTimeIcon
+      fonts:
+        - asset: fonts/SetTimeIcon.ttf
 
   assets:
     - assets/2_line_menu.png
