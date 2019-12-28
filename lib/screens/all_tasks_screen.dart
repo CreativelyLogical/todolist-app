@@ -14,7 +14,7 @@ class AllTasksScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
-      backgroundColor: kWhite,
+      backgroundColor: Colors.grey.shade200,
       bottomNavigationBar: BottomAppBar(
 //          notchMargin: 5.0,
         child: Container(
@@ -226,7 +226,7 @@ class _ListObjectsState extends State<ListObjects> {
                   separatorBuilder: (BuildContext context, int index) {
                     return Divider(
                       height: SizeConfig.screenHeight * 0.01,
-                      color: kWhite,
+                      color: Color.fromRGBO(234, 234, 234, 1),
                     );
                   },
                   itemCount: taskList.length)
@@ -285,8 +285,16 @@ class TodayListTile extends StatelessWidget {
         ),
         decoration: BoxDecoration(
 //          color: Colors.grey.shade200,
-          border: Border.all(color: kBlue, width: 2),
-          borderRadius: BorderRadius.all(Radius.circular(20.0)),
+//          border: Border.all(color: kBlue, width: 2),
+          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+          color: kWhite,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey,
+              blurRadius: 2,
+              offset: Offset(0, 1),
+            ),
+          ],
 //          color: Colors.grey[200],
         ),
         child: IntrinsicWidth(
@@ -333,6 +341,8 @@ class TodayListTile extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Container(
+                          padding: EdgeInsets.only(
+                              bottom: SizeConfig.screenHeight * 0.003),
                           child: Row(
                             children: <Widget>[
                               Icon(
@@ -356,13 +366,21 @@ class TodayListTile extends StatelessWidget {
                               Container(
                                 padding: EdgeInsets.symmetric(
                                     horizontal:
-                                        SizeConfig.blockSizeHorizontal * 1.5,
+                                        SizeConfig.blockSizeHorizontal * 1.8,
                                     vertical:
-                                        SizeConfig.blockSizeVertical * 0.4),
+                                        SizeConfig.blockSizeVertical * 0.5),
                                 decoration: BoxDecoration(
-                                  border: Border.all(color: kBlue, width: 1),
+//                                  border: Border.all(color: kBlue, width: 1),
+                                  color: Colors.grey.shade100,
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(20.0)),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.shade500,
+                                      blurRadius: 1.5,
+                                      offset: Offset(0, 1),
+                                    )
+                                  ],
                                 ),
                                 child: Row(
                                   children: <Widget>[
@@ -394,9 +412,17 @@ class TodayListTile extends StatelessWidget {
                                     horizontal:
                                         SizeConfig.blockSizeHorizontal * 1.5),
                                 decoration: BoxDecoration(
-                                  border: Border.all(color: kBlue, width: 1),
+//                                  border: Border.all(color: kBlue, width: 1),
+                                  color: Colors.grey.shade100,
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(20.0)),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey,
+                                      blurRadius: 1.5,
+                                      offset: Offset(0, 1),
+                                    )
+                                  ],
                                 ),
                                 child: Text(
                                   time,
@@ -410,44 +436,6 @@ class TodayListTile extends StatelessWidget {
                   ],
                 ),
               ),
-//              Expanded(
-//                child: Row(
-//                  mainAxisSize: MainAxisSize.max,
-//                  mainAxisAlignment: MainAxisAlignment.end,
-//                  crossAxisAlignment: CrossAxisAlignment.end,
-//                  children: <Widget>[
-//                    IntrinsicHeight(
-//                      child: Column(
-////                        mainAxisAlignment: MainAxisAlignment.end,
-//                        children: <Widget>[
-//                          (time == 'no time' || time == null)
-//                              ? Container()
-//                              : Container(
-//                                  padding: EdgeInsets.symmetric(
-//                                    horizontal:
-//                                        SizeConfig.blockSizeHorizontal * 1.5,
-//                                  ),
-//                                  decoration: BoxDecoration(
-//                                    border: Border.all(
-//                                      color: kBlue,
-//                                      width: 1,
-//                                    ),
-//                                    borderRadius:
-//                                        BorderRadius.all(Radius.circular(20.0)),
-//                                  ),
-//                                  child: Text(
-//                                    time,
-//                                    style: TextStyle(
-//                                      color: kBlue,
-//                                    ),
-//                                  ),
-//                                ),
-//                        ],
-//                      ),
-//                    ),
-//                  ],
-//                ),
-//              ),
             ],
           ),
         ));
@@ -461,15 +449,48 @@ class CircleCheckBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CircleAvatar(
-      radius: SizeConfig.blockSizeVertical * 2.4,
-      backgroundColor: icon == null ? kBlue : kLightBlueAccent.withOpacity(0.0),
+    return Container(
+//      radius: SizeConfig.blockSizeVertical * 2.4,
+      decoration: BoxDecoration(
+        color: icon == null
+            ? Colors.grey.shade400
+            : kLightBlueAccent.withOpacity(0.0),
+        shape: BoxShape.circle,
+        boxShadow: icon == null
+            ? [
+                BoxShadow(
+                  color: Colors.grey.shade600,
+                  blurRadius: 0.8,
+                )
+              ]
+            : null,
+      ),
       child: CircleAvatar(
-        radius: SizeConfig.blockSizeVertical * 2.2,
-        backgroundColor:
-            icon == null ? kWhite : kLightBlueAccent.withOpacity(0.0),
+        radius: SizeConfig.blockSizeVertical * 2.3,
+        backgroundColor: icon == null
+            ? Colors.grey.shade200
+            : kLightBlueAccent.withOpacity(0.0),
         child: icon,
       ),
     );
   }
 }
+//class CircleCheckBox extends StatelessWidget {
+//  CircleCheckBox({this.icon});
+//
+//  final icon;
+//
+//  @override
+//  Widget build(BuildContext context) {
+//    return CircleAvatar(
+//      radius: SizeConfig.blockSizeVertical * 2.4,
+//      backgroundColor: icon == null ? kBlue : kLightBlueAccent.withOpacity(0.0),
+//      child: CircleAvatar(
+//        radius: SizeConfig.blockSizeVertical * 2.2,
+//        backgroundColor:
+//            icon == null ? kWhite : kLightBlueAccent.withOpacity(0.0),
+//        child: icon,
+//      ),
+//    );
+//  }
+//}

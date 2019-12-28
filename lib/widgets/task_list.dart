@@ -138,7 +138,7 @@ class TaskList extends StatelessWidget {
                         final task = snapshot.data[index];
                         print('so the title is ${task.taskTitle}');
                         return TaskListTile(
-                          text: task.taskTitle,
+                          taskName: task.taskTitle,
                           isChecked: task.isChecked,
                           checkBoxCallback: () {
                             if (!task.isChecked) {
@@ -159,7 +159,7 @@ class TaskList extends StatelessWidget {
                       separatorBuilder: (BuildContext context, int index) =>
                           Divider(
                         height: SizeConfig.screenHeight * 0.01,
-                        color: kWhite,
+                        color: Color.fromRGBO(234, 234, 234, 1),
                       ),
                       itemCount: snapshot.data.length,
                     ),
@@ -172,30 +172,35 @@ class TaskList extends StatelessWidget {
 }
 
 class TaskListTile extends StatelessWidget {
-  final String text;
-  final bool isChecked;
-
-  final Function checkBoxCallback;
-
-  final String priority;
-  final String notes;
-  final String category;
-  final String alert;
-  final String time;
-
-  final Task task;
-
   TaskListTile({
-    this.text,
-    this.isChecked,
-    this.checkBoxCallback,
+    this.taskName,
     this.priority,
     this.notes,
     this.category,
-    this.alert,
     this.time,
+    this.checkBoxCallback,
+    this.isChecked,
+    this.alert,
     this.task,
   });
+
+  final String taskName;
+
+  final String priority;
+
+  final String notes;
+
+  final String category;
+
+  final String time;
+
+  final Function checkBoxCallback;
+
+  final bool isChecked;
+
+  final String alert;
+
+  final Task task;
 
   Color returnPriorityColor() {
     print('in listview, priority is $priority');
@@ -211,15 +216,6 @@ class TaskListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-//    if (notes.length > 0)
-//      print('this task has notes');
-//    else
-//      print('this task has no notes');
-
-    print('so the notes are $notes');
-//    print('the length of notes are ${notes.length}');
-    print('the alert is $alert');
-
     SizeConfig().init(context);
     return GestureDetector(
       onTap: () {
@@ -238,221 +234,457 @@ class TaskListTile extends StatelessWidget {
         );
       },
       child: Container(
-        margin: EdgeInsets.only(
-          left: SizeConfig.screenWidth * 0.03,
-          right: SizeConfig.screenWidth * 0.03,
-//        bottom: SizeConfig.blockSizeVertical * 0.3,
-//        top: SizeConfig.blockSizeVertical * 0.3,
-        ),
-        decoration: BoxDecoration(
-          color: kWhite,
-          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey,
-              blurRadius: 2,
-              offset: Offset(0, 1),
-            ),
-          ],
+          margin: EdgeInsets.symmetric(
+            horizontal: SizeConfig.screenWidth * 0.03,
+          ),
+          padding: EdgeInsets.only(
+            left: SizeConfig.screenWidth * 0.05,
+            right: SizeConfig.screenWidth * 0.05,
+            top: SizeConfig.screenHeight * 0.005,
+            bottom: SizeConfig.screenHeight * 0.005,
+          ),
+          decoration: BoxDecoration(
+//          color: Colors.grey.shade200,
 //          border: Border.all(color: kBlue, width: 2),
-//        color: isChecked ? Colors.grey.shade200 : null,
-        ),
-        padding: EdgeInsets.only(
-          left: SizeConfig.screenWidth * 0.05,
-          right: SizeConfig.screenWidth * 0.05,
-          top: SizeConfig.screenHeight * 0.008,
-          bottom: SizeConfig.screenHeight * 0.008,
-        ),
-        child: Column(
-          children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
+            borderRadius: BorderRadius.all(Radius.circular(10.0)),
+            color: kWhite,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey,
+                blurRadius: 2,
+                offset: Offset(0, 1),
+              ),
+            ],
+//          color: Colors.grey[200],
+          ),
+          child: IntrinsicWidth(
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 GestureDetector(
                   onTap: checkBoxCallback,
-                  child: CircleCheckBox(
-                    icon: isChecked
-                        ? Icon(
-                            Icons.check,
-                            color: kBlue,
-                            size: SizeConfig.blockSizeVertical * 4,
-                          )
-                        : null,
+                  child: Container(
+//              constraints: BoxConstraints.expand(),
+//              height: SizeConfig.screenHeight,
+//              height: 60,
+                    alignment: Alignment.centerLeft,
+                    child: CircleCheckBox(
+                      icon: isChecked
+                          ? Icon(
+                              Icons.check,
+                              color: kBlue,
+                              size: SizeConfig.blockSizeVertical * 4,
+                            )
+                          : null,
+                    ),
                   ),
                 ),
                 SizedBox(
                   width: SizeConfig.blockSizeHorizontal * 5,
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      text == null ? '' : text,
-                      style: TextStyle(
-                        fontSize: 15.0,
-//                  color: isChecked ? kLightBlueAccent : kLightBlueAccent,
-                        color: kBlue,
-                        fontWeight: FontWeight.w600,
-                        fontFamily: 'Nunito',
-                        decoration:
-                            isChecked ? TextDecoration.lineThrough : null,
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        taskName,
+                        style: TextStyle(
+                          fontSize: SizeConfig.blockSizeHorizontal * 4.5,
+                          color: kBlue,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    SizedBox(
-                      height: SizeConfig.screenHeight * 0.035,
-                      width: SizeConfig.screenWidth * 0.67,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.max,
+                      SizedBox(
+                        height: SizeConfig.blockSizeVertical * 0.4,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Container(
-                            alignment: Alignment.centerRight,
-                            child: Icon(
-                              CustomFlagIcon.flag,
-                              color: returnPriorityColor(),
-                              size: 18,
-                            ),
-                          ),
-                          SizedBox(
-                            width: SizeConfig.screenWidth * 0.02,
-                          ),
-                          notes == 'no notes'
-                              ? Container()
-                              : Container(
-                                  child: Icon(
-                                    NotesIndicator.doc_text,
-                                    color: kBlue,
-                                    size: 18,
-                                  ),
-                                ),
-                          SizedBox(
-                            width: SizeConfig.screenWidth * 0.02,
-                          ),
-                          Container(
-                            padding: EdgeInsets.symmetric(
-                                horizontal:
-                                    SizeConfig.blockSizeHorizontal * 1.5,
-                                vertical: SizeConfig.blockSizeVertical * 0.4),
-                            decoration: BoxDecoration(
-                              color: Colors.grey.shade100,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.shade500,
-                                  blurRadius: 1.5,
-                                  offset: Offset(0, 1),
-                                )
-                              ],
-//                              border: Border.all(
-//                                color: kBlue,
-//                                width: 1,
-//                              ),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20)),
-                            ),
+                            padding: EdgeInsets.only(
+                                bottom: SizeConfig.screenHeight * 0.003),
                             child: Row(
                               children: <Widget>[
                                 Icon(
-                                  TaskCategory.tag,
-                                  size: SizeConfig.blockSizeVertical * 2,
-                                  color: kBlue,
+                                  CustomFlagIcon.flag,
+                                  color: returnPriorityColor(),
+                                  size: SizeConfig.blockSizeVertical * 2.5,
                                 ),
                                 SizedBox(
-                                  width: 2,
+                                  width: SizeConfig.screenWidth * 0.01,
                                 ),
-                                Text(
-                                  category == null ? 'something' : category,
-                                  style: TextStyle(
-                                    color: kBlue,
+                                notes == 'no notes'
+                                    ? Container()
+                                    : Icon(
+                                        NotesIndicator.doc_text,
+                                        color: kBlue,
+                                        size:
+                                            SizeConfig.blockSizeVertical * 2.5,
+                                      ),
+                                SizedBox(
+                                  width: SizeConfig.screenWidth * 0.01,
+                                ),
+                                Container(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal:
+                                          SizeConfig.blockSizeHorizontal * 1.8,
+                                      vertical:
+                                          SizeConfig.blockSizeVertical * 0.5),
+                                  decoration: BoxDecoration(
+//                                  border: Border.all(color: kBlue, width: 1),
+                                    color: Colors.grey.shade100,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(20.0)),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.grey.shade500,
+                                        blurRadius: 1.5,
+                                        offset: Offset(0, 1),
+                                      )
+                                    ],
+                                  ),
+                                  child: Row(
+                                    children: <Widget>[
+                                      Icon(
+                                        TaskCategory.tag,
+                                        size: SizeConfig.blockSizeVertical * 2,
+                                        color: kBlue,
+                                      ),
+                                      SizedBox(
+                                        width: SizeConfig.screenWidth * 0.01,
+                                      ),
+                                      Text(
+                                        category,
+                                        style: TextStyle(
+                                          color: kBlue,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ],
                             ),
                           ),
-                          SizedBox(
-                            width: SizeConfig.screenWidth * 0.02,
-                          ),
-                          alert == 'no reminders'
+//                      Spacer(),
+                          (time == 'no time' || time == null)
                               ? Container()
-                              : Icon(
-                                  NotificationBell.bell,
-                                  size: SizeConfig.blockSizeVertical * 2,
-                                  color: kBlue,
-                                ),
-                          Spacer(),
-                          Align(
-                            alignment: Alignment.centerRight,
-                            child: (time == 'no time' || time == null)
-                                ? Container()
-                                : Container(
-                                    padding: EdgeInsets.symmetric(
+                              : Container(
+                                  padding: EdgeInsets.symmetric(
                                       horizontal:
-                                          SizeConfig.blockSizeHorizontal * 1.5,
-                                    ),
-                                    decoration: BoxDecoration(
-                                        color: Colors.grey.shade100,
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(
-                                            20.0,
-                                          ),
-                                        ),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.grey,
-                                            blurRadius: 1.5,
-                                            offset: Offset(0, 1),
-                                          )
-                                        ]),
-                                    child: Text(
-                                      time,
-                                      style: TextStyle(
-                                        color: kBlue,
-                                      ),
-                                      textAlign: TextAlign.right,
+                                          SizeConfig.blockSizeHorizontal * 1.5),
+                                  decoration: BoxDecoration(
+//                                  border: Border.all(color: kBlue, width: 1),
+                                    color: Colors.grey.shade100,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(20.0)),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.grey,
+                                        blurRadius: 1.5,
+                                        offset: Offset(0, 1),
+                                      )
+                                    ],
+                                  ),
+                                  child: Text(
+                                    time,
+                                    style: TextStyle(
+                                      color: kBlue,
                                     ),
                                   ),
-                          )
+                                ),
                         ],
                       ),
-                    ),
-
-//                  Text(
-//                    '${TaskScreen.selectedDay.day} ${TaskScreen.selectedDay.month}',
-//                    style: TextStyle(
-//                      color: kBlue,
-//                      fontSize: 16,
-//                    ),
-//                  ),
-                  ],
+                    ],
+                  ),
                 ),
-//              notes == null
-//                  ? Container()
-//                  : Expanded(
-//                      child: Container(
-//                        child: Icon(
-//                          NotesIndicator.doc_text,
-//                          color:
-//                              notes.length == 0 ? kBlue.withOpacity(0) : kBlue,
-//                        ),
-//                      ),
-//                    ),
-//              Expanded(
-//                child: Container(
-//                  alignment: Alignment.centerRight,
-//                  child: Icon(
-//                    CustomFlagIcon.flag,
-//                    color: returnPriorityColor(),
-//                  ),
-//                ),
-//              ),
               ],
             ),
-          ],
-        ),
-      ),
+          )),
     );
   }
+//  final String text;
+//  final bool isChecked;
+//
+//  final Function checkBoxCallback;
+//
+//  final String priority;
+//  final String notes;
+//  final String category;
+//  final String alert;
+//  final String time;
+//
+//  final Task task;
+//
+//  TaskListTile({
+//    this.text,
+//    this.isChecked,
+//    this.checkBoxCallback,
+//    this.priority,
+//    this.notes,
+//    this.category,
+//    this.alert,
+//    this.time,
+//    this.task,
+//  });
+//
+//  Color returnPriorityColor() {
+//    print('in listview, priority is $priority');
+//    if (priority == 'none')
+//      return Colors.grey.shade500;
+//    else if (priority == 'low')
+//      return Colors.green;
+//    else if (priority == 'medium')
+//      return Colors.orange;
+//    else
+//      return Colors.red;
+//  }
+//
+//  @override
+//  Widget build(BuildContext context) {
+////    if (notes.length > 0)
+////      print('this task has notes');
+////    else
+////      print('this task has no notes');
+//
+//    print('so the notes are $notes');
+////    print('the length of notes are ${notes.length}');
+//    print('the alert is $alert');
+//
+//    SizeConfig().init(context);
+//    return GestureDetector(
+//      onTap: () {
+//        showModalBottomSheet(
+//          context: context,
+//          builder: (context) => Container(
+//            height: SizeConfig.screenHeight * 0.7,
+//            child: EditTaskSheet(task),
+//          ),
+//          shape: RoundedRectangleBorder(
+//            borderRadius: BorderRadius.only(
+//                topLeft: Radius.circular(30.0),
+//                topRight: Radius.circular(30.0)),
+//          ),
+//          isScrollControlled: true,
+//        );
+//      },
+//      child: Container(
+//        margin: EdgeInsets.only(
+//          left: SizeConfig.screenWidth * 0.03,
+//          right: SizeConfig.screenWidth * 0.03,
+////        bottom: SizeConfig.blockSizeVertical * 0.3,
+////        top: SizeConfig.blockSizeVertical * 0.3,
+//        ),
+//        decoration: BoxDecoration(
+//          color: kWhite,
+//          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+//          boxShadow: [
+//            BoxShadow(
+//              color: Colors.grey,
+//              blurRadius: 2,
+//              offset: Offset(0, 1),
+//            ),
+//          ],
+////          border: Border.all(color: kBlue, width: 2),
+////        color: isChecked ? Colors.grey.shade200 : null,
+//        ),
+//        padding: EdgeInsets.only(
+//          left: SizeConfig.screenWidth * 0.05,
+//          right: SizeConfig.screenWidth * 0.05,
+//          top: SizeConfig.screenHeight * 0.008,
+//          bottom: SizeConfig.screenHeight * 0.008,
+//        ),
+//        child: Column(
+//          children: <Widget>[
+//            Row(
+//              mainAxisAlignment: MainAxisAlignment.start,
+//              children: <Widget>[
+//                GestureDetector(
+//                  onTap: checkBoxCallback,
+//                  child: CircleCheckBox(
+//                    icon: isChecked
+//                        ? Icon(
+//                            Icons.check,
+//                            color: kBlue,
+//                            size: SizeConfig.blockSizeVertical * 4,
+//                          )
+//                        : null,
+//                  ),
+//                ),
+//                SizedBox(
+//                  width: SizeConfig.blockSizeHorizontal * 5,
+//                ),
+//                Column(
+//                  crossAxisAlignment: CrossAxisAlignment.start,
+//                  children: <Widget>[
+//                    Text(
+//                      text == null ? '' : text,
+//                      style: TextStyle(
+//                        fontSize: 15.0,
+////                  color: isChecked ? kLightBlueAccent : kLightBlueAccent,
+//                        color: kBlue,
+//                        fontWeight: FontWeight.w600,
+//                        fontFamily: 'Nunito',
+//                        decoration:
+//                            isChecked ? TextDecoration.lineThrough : null,
+//                      ),
+//                      maxLines: 2,
+//                      overflow: TextOverflow.ellipsis,
+//                    ),
+//                    SizedBox(
+//                      height: SizeConfig.screenHeight * 0.035,
+//                      width: SizeConfig.screenWidth * 0.67,
+//                      child: Row(
+//                        mainAxisAlignment: MainAxisAlignment.start,
+//                        mainAxisSize: MainAxisSize.max,
+//                        children: <Widget>[
+//                          Container(
+//                            alignment: Alignment.centerRight,
+//                            child: Icon(
+//                              CustomFlagIcon.flag,
+//                              color: returnPriorityColor(),
+//                              size: 18,
+//                            ),
+//                          ),
+//                          SizedBox(
+//                            width: SizeConfig.screenWidth * 0.02,
+//                          ),
+//                          notes == 'no notes'
+//                              ? Container()
+//                              : Container(
+//                                  child: Icon(
+//                                    NotesIndicator.doc_text,
+//                                    color: kBlue,
+//                                    size: 18,
+//                                  ),
+//                                ),
+//                          SizedBox(
+//                            width: SizeConfig.screenWidth * 0.02,
+//                          ),
+//                          Container(
+//                            padding: EdgeInsets.symmetric(
+//                                horizontal:
+//                                    SizeConfig.blockSizeHorizontal * 1.5,
+//                                vertical: SizeConfig.blockSizeVertical * 0.4),
+//                            decoration: BoxDecoration(
+//                              color: Colors.grey.shade100,
+//                              boxShadow: [
+//                                BoxShadow(
+//                                  color: Colors.grey.shade500,
+//                                  blurRadius: 1.5,
+//                                  offset: Offset(0, 1),
+//                                )
+//                              ],
+////                              border: Border.all(
+////                                color: kBlue,
+////                                width: 1,
+////                              ),
+//                              borderRadius:
+//                                  BorderRadius.all(Radius.circular(20)),
+//                            ),
+//                            child: Row(
+//                              children: <Widget>[
+//                                Icon(
+//                                  TaskCategory.tag,
+//                                  size: SizeConfig.blockSizeVertical * 2,
+//                                  color: kBlue,
+//                                ),
+//                                SizedBox(
+//                                  width: 2,
+//                                ),
+//                                Text(
+//                                  category == null ? 'something' : category,
+//                                  style: TextStyle(
+//                                    color: kBlue,
+//                                  ),
+//                                ),
+//                              ],
+//                            ),
+//                          ),
+//                          SizedBox(
+//                            width: SizeConfig.screenWidth * 0.02,
+//                          ),
+//                          alert == 'no reminders'
+//                              ? Container()
+//                              : Icon(
+//                                  NotificationBell.bell,
+//                                  size: SizeConfig.blockSizeVertical * 2,
+//                                  color: kBlue,
+//                                ),
+//                          Spacer(),
+//                          Align(
+//                            alignment: Alignment.centerRight,
+//                            child: (time == 'no time' || time == null)
+//                                ? Container()
+//                                : Container(
+//                                    padding: EdgeInsets.symmetric(
+//                                      horizontal:
+//                                          SizeConfig.blockSizeHorizontal * 1.5,
+//                                    ),
+//                                    decoration: BoxDecoration(
+//                                      color: Colors.grey.shade100,
+//                                      borderRadius: BorderRadius.all(
+//                                        Radius.circular(
+//                                          20.0,
+//                                        ),
+//                                      ),
+//                                      boxShadow: [
+//                                        BoxShadow(
+//                                          color: Colors.grey,
+//                                          blurRadius: 1.5,
+//                                          offset: Offset(0, 1),
+//                                        )
+//                                      ],
+//                                    ),
+//                                    child: Text(
+//                                      time,
+//                                      style: TextStyle(
+//                                        color: kBlue,
+//                                      ),
+//                                      textAlign: TextAlign.right,
+//                                    ),
+//                                  ),
+//                          )
+//                        ],
+//                      ),
+//                    ),
+//
+////                  Text(
+////                    '${TaskScreen.selectedDay.day} ${TaskScreen.selectedDay.month}',
+////                    style: TextStyle(
+////                      color: kBlue,
+////                      fontSize: 16,
+////                    ),
+////                  ),
+//                  ],
+//                ),
+////              notes == null
+////                  ? Container()
+////                  : Expanded(
+////                      child: Container(
+////                        child: Icon(
+////                          NotesIndicator.doc_text,
+////                          color:
+////                              notes.length == 0 ? kBlue.withOpacity(0) : kBlue,
+////                        ),
+////                      ),
+////                    ),
+////              Expanded(
+////                child: Container(
+////                  alignment: Alignment.centerRight,
+////                  child: Icon(
+////                    CustomFlagIcon.flag,
+////                    color: returnPriorityColor(),
+////                  ),
+////                ),
+////              ),
+//              ],
+//            ),
+//          ],
+//        ),
+//      ),
+//    );
+//  }
 }
 
 class EditTaskSheet extends StatefulWidget {
