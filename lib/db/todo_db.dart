@@ -57,27 +57,20 @@ class TodoDatabase {
   Future<void> update(Task task) async {
     final Database db = await _initDatabase();
 
-    if (!task.isChecked) {
-      task.isChecked = true;
-    } else {
-      task.isChecked = false;
-    }
-
     await db.update(
       'todo_table',
       task.toMap(),
-      where: "task_name = ?",
-      whereArgs: [task.taskTitle],
+      where: "task_name = ? and task_date = ?",
+      whereArgs: [task.taskTitle, task.date],
     );
   }
 
-  Future<List<Task>> getTaskList(Date selectedDay) async {
+  Future<List<Task>> getTaskList(Date inputDay) async {
     final Database db = await _initDatabase();
 
 //    final List<Map<String, dynamic>> maps = await db.query('todo_table');
     final List<Map<String, dynamic>> maps = await db.rawQuery(
-        'SELECT * FROM todo_table WHERE task_date=?',
-        [selectedDay.toStringSQL()]);
+        'SELECT * FROM todo_table WHERE task_date=?', [inputDay.toStringSQL()]);
 
     final List<Map<String, dynamic>> allMaps =
         await db.rawQuery('SELECT * FROM todo_table');

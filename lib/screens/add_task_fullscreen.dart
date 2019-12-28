@@ -14,6 +14,7 @@ import 'notification_bell_icons.dart';
 import 'package:my_todo/widgets/duration_picker_dialog.dart';
 import 'set_time_icon_icons.dart';
 import 'package:my_todo/models/time.dart';
+import 'package:my_todo/widgets/priority_buttons.dart';
 
 class AddTaskFullScreen extends StatefulWidget {
   @override
@@ -283,6 +284,7 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen> {
                                 selectedPriority = 'none';
                               });
                             },
+                            screen: 'add_task',
                           ),
                           PriorityButtons(
                             selectedPriority: selectedPriority,
@@ -292,6 +294,7 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen> {
                                 selectedPriority = 'low';
                               });
                             },
+                            screen: 'add_task',
                           ),
                           PriorityButtons(
                             selectedPriority: selectedPriority,
@@ -301,6 +304,7 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen> {
                                 selectedPriority = 'medium';
                               });
                             },
+                            screen: 'add_task',
                           ),
                           PriorityButtons(
                             selectedPriority: selectedPriority,
@@ -310,6 +314,7 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen> {
                                 selectedPriority = 'high';
                               });
                             },
+                            screen: 'add_task',
                           ),
                         ],
                       ),
@@ -960,43 +965,3 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen> {
 //    );
 //  }
 //}
-
-class PriorityButtons extends StatelessWidget {
-  PriorityButtons({this.selectedPriority, this.priority, this.onTap});
-
-  final String priority;
-
-  final String selectedPriority;
-
-  final Function onTap;
-
-  Color getPriorityColor() {
-    if (priority == 'none')
-      return Colors.grey.shade500;
-    else if (priority == 'low')
-      return Colors.green;
-    else if (priority == 'medium')
-      return Colors.orange;
-    else if (priority == 'high') return Colors.red;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Padding(
-        padding: EdgeInsets.only(right: SizeConfig.screenWidth * 0.08),
-        child: CircleAvatar(
-          backgroundColor: getPriorityColor(),
-          radius: SizeConfig.blockSizeVertical * 2.0,
-          child: Icon(
-            CustomFlagIcon.flag,
-            color:
-                selectedPriority == priority ? kWhite : kWhite.withOpacity(0),
-            size: SizeConfig.blockSizeVertical * 2.5,
-          ),
-        ),
-      ),
-    );
-  }
-}

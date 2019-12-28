@@ -11,9 +11,9 @@ class TaskData extends ChangeNotifier {
 
 //  List<Task> taskList;
 
-  Future<List<Task>> getTaskList() async {
+  Future<List<Task>> getTaskList(Date inputDay) async {
 //    print(await todoDB.getTaskList());
-    return await todoDB.getTaskList(TaskScreen.selectedDay);
+    return await todoDB.getTaskList(inputDay);
   }
 
 //  List<Task> taskList = [

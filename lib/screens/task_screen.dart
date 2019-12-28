@@ -12,6 +12,7 @@ import 'package:my_todo/models/date.dart';
 import 'package:my_todo/screens/add_task_fullscreen.dart';
 import 'package:my_todo/widgets/day_container.dart';
 import 'package:my_todo/widgets/week_view.dart';
+import 'all_tasks_screen.dart';
 
 class TaskScreen extends StatefulWidget {
   @override
@@ -160,6 +161,12 @@ class _TaskScreenState extends State<TaskScreen> {
                         color: kWhite.withOpacity(0.5),
                       ),
                       iconSize: SizeConfig.screenHeight * 0.045,
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => AllTasksScreen()));
+                      },
                     ),
                     Text(
                       'All tasks',
@@ -328,26 +335,42 @@ class _TaskScreenState extends State<TaskScreen> {
 //                ],
 //              ),
 //            ),
+//
             Expanded(
               child: Container(
-//                margin: EdgeInsets.only(
-////                    bottom: SizeConfig.screenHeight * 0.06,
-//                    left: SizeConfig.screenWidth * 0.03,
-//                    right: SizeConfig.screenWidth * 0.03),
-//                color: kWhite,
                 decoration: BoxDecoration(
-                  color: kWhite,
+                  color: Colors.grey.shade200,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(20.0),
                   ),
                 ),
-                padding: EdgeInsets.only(
-//                      bottom: SizeConfig.blockSizeVertical * 12,
-                    left: SizeConfig.screenWidth * 0.03,
-                    right: SizeConfig.screenWidth * 0.03),
+//                padding: EdgeInsets.only(
+////                      bottom: SizeConfig.blockSizeVertical * 12,
+//                    left: SizeConfig.screenWidth * 0.03,
+//                    right: SizeConfig.screenWidth * 0.03),
                 child: TaskList(),
               ),
-            )
+            ),
+//            Expanded(
+//              child: Container(
+////                margin: EdgeInsets.only(
+//////                    bottom: SizeConfig.screenHeight * 0.06,
+////                    left: SizeConfig.screenWidth * 0.03,
+////                    right: SizeConfig.screenWidth * 0.03),
+////                color: kWhite,
+//                decoration: BoxDecoration(
+//                  color: kWhite,
+//                  borderRadius: BorderRadius.only(
+//                    topLeft: Radius.circular(20.0),
+//                  ),
+//                ),
+//                padding: EdgeInsets.only(
+////                      bottom: SizeConfig.blockSizeVertical * 12,
+//                    left: SizeConfig.screenWidth * 0.03,
+//                    right: SizeConfig.screenWidth * 0.03),
+//                child: TaskList(),
+//              ),
+//            ),
           ],
         ));
   }
