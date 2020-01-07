@@ -9,7 +9,27 @@ import 'custom_flag_icon_icons.dart';
 import 'package:my_todo/widgets/notes_indicator_icons.dart';
 import 'task_category_icons.dart';
 
-class AllTasksScreen extends StatelessWidget {
+class AllTasksScreen extends StatefulWidget {
+  @override
+  _AllTasksScreenState createState() => _AllTasksScreenState();
+}
+
+class _AllTasksScreenState extends State<AllTasksScreen> {
+  List<Task> allTasksList;
+
+  Future _getAllTasksList() async {
+    allTasksList = await Provider.of<TaskData>(context).getAllTaskList();
+    setState(() {});
+  }
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    _getAllTasksList();
+//    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -110,16 +130,44 @@ class AllTasksScreen extends StatelessWidget {
           left: SizeConfig.screenWidth * 0.03,
           right: SizeConfig.screenWidth * 0.03,
         ),
-        child: Column(
-          children: <Widget>[
-            ListObjects(
-              day: 'today',
-            ),
-            ListObjects(
-              day: 'tomorrow',
-            )
-          ],
-        ),
+        child: allTasksList == null
+            ? Container(
+                child: Center(
+                  child: Text(
+                    'nothing yet lol',
+                  ),
+                ),
+              )
+            : ListView.separated(
+//                reverse: true,
+                itemBuilder: (BuildContext context, int index) {
+                  final task = allTasksList[index];
+//                  print('the type here is ${widget.type}');
+                  return VersatileListTile(
+                    taskName: task.taskTitle,
+                    priority: task.priority,
+                    notes: task.notes,
+                    category: task.category,
+                    time: task.time,
+                    checkBoxCallback: () {
+                      if (!task.isChecked) {
+                        task.isChecked = true;
+                      } else {
+                        task.isChecked = false;
+                      }
+                      Provider.of<TaskData>(context).updateTask(task);
+                    },
+                    isChecked: task.isChecked,
+                    taskDate: task.date,
+                  );
+                },
+                separatorBuilder: (BuildContext context, int index) {
+                  return Divider(
+                    height: SizeConfig.screenHeight * 0.01,
+                    color: Color.fromRGBO(234, 234, 234, 1),
+                  );
+                },
+                itemCount: allTasksList.length),
       ),
     );
   }
@@ -129,9 +177,9 @@ class ListObjects extends StatefulWidget {
   @override
   _ListObjectsState createState() => _ListObjectsState();
 
-  ListObjects({this.day});
+  ListObjects({this.type});
 
-  final String day;
+  final String type;
 }
 
 class _ListObjectsState extends State<ListObjects> {
@@ -144,11 +192,17 @@ class _ListObjectsState extends State<ListObjects> {
 
   Future _getTodayTaskList() async {
     Date listDay;
-    if (widget.day == 'today')
+    if (widget.type == 'today')
       listDay = Date(DateTime.now());
-    else if (widget.day == 'tomorrow')
+    else if (widget.type == 'tomorrow')
       listDay = Date(DateTime.now().add(Duration(days: 1)));
-    taskList = await Provider.of<TaskData>(context).getTaskList(listDay);
+//    print('listday is ${listDay.toStringSQL()}');
+    if (widget.type == 'today' || widget.type == 'tomorrow') {
+      taskList = await Provider.of<TaskData>(context).getTaskList(listDay);
+    } else if (widget.type == 'uncompleted') {
+      taskList = await Provider.of<TaskData>(context).getUncompletedTaskList();
+    }
+
     setState(() {});
 //    if (taskList != null) {
 //      setState(() {
@@ -158,10 +212,23 @@ class _ListObjectsState extends State<ListObjects> {
   }
 
   @override
-  void didChangeDependencies() async {
+  void didChangeDependencies() {
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
     _getTodayTaskList();
+  }
+
+  String getListType() {
+    String listType = widget.type;
+    if (listType == 'today') {
+      return 'Today';
+    } else if (listType == 'tomorrow') {
+      return 'Tomorrow';
+    } else if (listType == 'uncompleted') {
+      return 'Uncompleted';
+    } else {
+      return 'Undefined';
+    }
   }
 
   @override
@@ -171,31 +238,7 @@ class _ListObjectsState extends State<ListObjects> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(
-//                  left: SizeConfig.screenWidth * 0.04,
-//                  bottom: SizeConfig.screenHeight * 0.01,
-                    ),
-                child: Text(
-                  widget.day == 'today' ? 'Today' : 'Tomorrow',
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                    fontSize: SizeConfig.blockSizeVertical * 3.5,
-                    color: kBlue,
-                  ),
-                ),
-              ),
-              Icon(
-                Icons.add_circle_outline,
-                color: kBlue,
-                size: 30,
-              ),
-            ],
-          ),
-          taskList == null
+          (taskList == null)
               ? Container(
                   child: Center(
                     child: Text('no data currently'),
@@ -206,7 +249,8 @@ class _ListObjectsState extends State<ListObjects> {
                   shrinkWrap: true,
                   itemBuilder: (BuildContext context, int index) {
                     final task = taskList[index];
-                    return TodayListTile(
+                    print('the type here is ${widget.type}');
+                    return VersatileListTile(
                       taskName: task.taskTitle,
                       priority: task.priority,
                       notes: task.notes,
@@ -236,8 +280,8 @@ class _ListObjectsState extends State<ListObjects> {
   }
 }
 
-class TodayListTile extends StatelessWidget {
-  TodayListTile({
+class VersatileListTile extends StatelessWidget {
+  VersatileListTile({
     this.taskName,
     this.priority,
     this.notes,
@@ -245,6 +289,7 @@ class TodayListTile extends StatelessWidget {
     this.time,
     this.checkBoxCallback,
     this.isChecked,
+    this.taskDate,
   });
 
   final String taskName;
@@ -261,6 +306,8 @@ class TodayListTile extends StatelessWidget {
 
   final bool isChecked;
 
+  final String taskDate;
+
   Color returnPriorityColor() {
     print('in listview, priority is $priority');
     if (priority == 'none')
@@ -273,172 +320,251 @@ class TodayListTile extends StatelessWidget {
       return Colors.red;
   }
 
+  String dateParser() {
+    final Map<int, String> intToMonth = {
+      1: 'Jan',
+      2: 'Feb',
+      3: 'Mar',
+      4: 'Apr',
+      5: 'May',
+      6: 'Jun',
+      7: 'Jul',
+      8: 'Aug',
+      9: 'Sep',
+      10: 'Oct',
+      11: 'Nov',
+      12: 'Dec',
+    };
+
+    int year = int.parse(taskDate.substring(0, 4));
+    int month = int.parse(taskDate.substring(5, 7));
+    int day = int.parse(taskDate.substring(8, 10));
+
+    DateTime now = DateTime.now();
+    if (year + month + day == now.year + now.month + now.day) {
+      return 'Today';
+    } else if (year + month + day == now.year + now.month + now.day + 1) {
+      return 'Tomorrow';
+    } else {
+      return "$day ${intToMonth[month]} $year";
+    }
+  }
+
+  bool DateBeforeOrAfter(String currTaskDate) {
+    int taskYear = int.parse(taskDate.substring(0, 4));
+    int taskMonth = int.parse(taskDate.substring(5, 7));
+    int taskDay = int.parse(taskDate.substring(8, 10));
+
+    DateTime taskDateTime = DateTime(taskYear, taskMonth, taskDay);
+
+    int todayYear = DateTime.now().year;
+    int todayMonth = DateTime.now().month;
+    int todayDay = DateTime.now().day;
+
+    DateTime todayDateTime = DateTime(todayYear, todayMonth, todayDay);
+
+    if (taskDateTime.isAtSameMomentAs(todayDateTime) ||
+        taskDateTime.isAfter(todayDateTime)) {
+      return true;
+    } else if (taskDateTime.isBefore(todayDateTime)) {
+      return false;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    return Container(
-        padding: EdgeInsets.only(
-          left: SizeConfig.screenWidth * 0.05,
-          right: SizeConfig.screenWidth * 0.05,
-          top: SizeConfig.screenHeight * 0.005,
-          bottom: SizeConfig.screenHeight * 0.005,
-        ),
-        decoration: BoxDecoration(
+    return GestureDetector(
+      onTap: () {},
+      child: Container(
+          padding: EdgeInsets.only(
+            left: SizeConfig.screenWidth * 0.05,
+            right: SizeConfig.screenWidth * 0.05,
+            top: SizeConfig.screenHeight * 0.005,
+            bottom: SizeConfig.screenHeight * 0.005,
+          ),
+          decoration: BoxDecoration(
 //          color: Colors.grey.shade200,
 //          border: Border.all(color: kBlue, width: 2),
-          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-          color: kWhite,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey,
-              blurRadius: 2,
-              offset: Offset(0, 1),
-            ),
-          ],
+            borderRadius: BorderRadius.all(Radius.circular(10.0)),
+            color: kWhite,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey,
+                blurRadius: 2,
+                offset: Offset(0, 1),
+              ),
+            ],
 //          color: Colors.grey[200],
-        ),
-        child: IntrinsicWidth(
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              GestureDetector(
-                onTap: checkBoxCallback,
-                child: Container(
+          ),
+          child: IntrinsicWidth(
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                GestureDetector(
+                  onTap: checkBoxCallback,
+                  child: Container(
 //              constraints: BoxConstraints.expand(),
 //              height: SizeConfig.screenHeight,
 //              height: 60,
-                  alignment: Alignment.centerLeft,
-                  child: CircleCheckBox(
-                    icon: isChecked
-                        ? Icon(
-                            Icons.check,
-                            color: kBlue,
-                            size: SizeConfig.blockSizeVertical * 4,
-                          )
-                        : null,
+                    alignment: Alignment.centerLeft,
+                    child: CircleCheckBox(
+                      icon: isChecked
+                          ? Icon(
+                              Icons.check,
+                              color: kBlue,
+                              size: SizeConfig.blockSizeVertical * 4,
+                            )
+                          : null,
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(
-                width: SizeConfig.blockSizeHorizontal * 5,
-              ),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      taskName,
-                      style: TextStyle(
-                        fontSize: SizeConfig.blockSizeHorizontal * 5,
-                        color: kBlue,
+                SizedBox(
+                  width: SizeConfig.blockSizeHorizontal * 5,
+                ),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Row(
+//                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Flexible(
+                            child: Text(
+                              taskName,
+                              softWrap: true,
+                              style: TextStyle(
+                                fontSize: SizeConfig.blockSizeHorizontal * 4.5,
+                                color: isChecked ? Colors.grey : kBlue,
+                                decoration: isChecked
+                                    ? TextDecoration.lineThrough
+                                    : null,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(left: 5.0),
+                            child: Text(
+                              dateParser(),
+                              style: TextStyle(
+                                color: DateBeforeOrAfter(taskDate)
+                                    ? kBlue
+                                    : Colors.red,
+                                fontSize: 15,
+                              ),
+                            ),
+                          )
+                        ],
                       ),
-                    ),
-                    SizedBox(
-                      height: SizeConfig.blockSizeVertical * 0.4,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Container(
-                          padding: EdgeInsets.only(
-                              bottom: SizeConfig.screenHeight * 0.003),
-                          child: Row(
-                            children: <Widget>[
-                              Icon(
-                                CustomFlagIcon.flag,
-                                color: returnPriorityColor(),
-                                size: SizeConfig.blockSizeVertical * 2.5,
-                              ),
-                              SizedBox(
-                                width: SizeConfig.screenWidth * 0.01,
-                              ),
-                              notes == 'no notes'
-                                  ? Container()
-                                  : Icon(
-                                      NotesIndicator.doc_text,
-                                      color: kBlue,
-                                      size: SizeConfig.blockSizeVertical * 2.5,
-                                    ),
-                              SizedBox(
-                                width: SizeConfig.screenWidth * 0.01,
-                              ),
-                              Container(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal:
-                                        SizeConfig.blockSizeHorizontal * 1.8,
-                                    vertical:
-                                        SizeConfig.blockSizeVertical * 0.5),
-                                decoration: BoxDecoration(
-//                                  border: Border.all(color: kBlue, width: 1),
-                                  color: Colors.grey.shade100,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(20.0)),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.shade500,
-                                      blurRadius: 1.5,
-                                      offset: Offset(0, 1),
-                                    )
-                                  ],
+                      SizedBox(
+                        height: SizeConfig.blockSizeVertical * 0.4,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Container(
+                            padding: EdgeInsets.only(
+                                bottom: SizeConfig.screenHeight * 0.003),
+                            child: Row(
+                              children: <Widget>[
+                                Icon(
+                                  CustomFlagIcon.flag,
+                                  color: returnPriorityColor(),
+                                  size: SizeConfig.blockSizeVertical * 2.5,
                                 ),
-                                child: Row(
-                                  children: <Widget>[
-                                    Icon(
-                                      TaskCategory.tag,
-                                      size: SizeConfig.blockSizeVertical * 2,
-                                      color: kBlue,
-                                    ),
-                                    SizedBox(
-                                      width: SizeConfig.screenWidth * 0.01,
-                                    ),
-                                    Text(
-                                      category,
-                                      style: TextStyle(
+                                SizedBox(
+                                  width: SizeConfig.screenWidth * 0.01,
+                                ),
+                                notes == 'no notes'
+                                    ? Container()
+                                    : Icon(
+                                        NotesIndicator.doc_text,
+                                        color: kBlue,
+                                        size:
+                                            SizeConfig.blockSizeVertical * 2.5,
+                                      ),
+                                SizedBox(
+                                  width: SizeConfig.screenWidth * 0.01,
+                                ),
+                                Container(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal:
+                                          SizeConfig.blockSizeHorizontal * 1.8,
+                                      vertical:
+                                          SizeConfig.blockSizeVertical * 0.5),
+                                  decoration: BoxDecoration(
+//                                  border: Border.all(color: kBlue, width: 1),
+                                    color: Colors.grey.shade100,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(20.0)),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.grey.shade500,
+                                        blurRadius: 1.5,
+                                        offset: Offset(0, 1),
+                                      )
+                                    ],
+                                  ),
+                                  child: Row(
+                                    children: <Widget>[
+                                      Icon(
+                                        TaskCategory.tag,
+                                        size: SizeConfig.blockSizeVertical * 2,
                                         color: kBlue,
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-//                      Spacer(),
-                        (time == 'no time' || time == null)
-                            ? Container()
-                            : Container(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal:
-                                        SizeConfig.blockSizeHorizontal * 1.5),
-                                decoration: BoxDecoration(
-//                                  border: Border.all(color: kBlue, width: 1),
-                                  color: Colors.grey.shade100,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(20.0)),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey,
-                                      blurRadius: 1.5,
-                                      offset: Offset(0, 1),
-                                    )
-                                  ],
-                                ),
-                                child: Text(
-                                  time,
-                                  style: TextStyle(
-                                    color: kBlue,
+                                      SizedBox(
+                                        width: SizeConfig.screenWidth * 0.01,
+                                      ),
+                                      Text(
+                                        category,
+                                        style: TextStyle(
+                                          color: kBlue,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                              ),
-                      ],
-                    ),
-                  ],
+                              ],
+                            ),
+                          ),
+//                      Spacer(),
+                          (time == 'no time' || time == null)
+                              ? Container()
+                              : Container(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal:
+                                          SizeConfig.blockSizeHorizontal * 1.5),
+                                  decoration: BoxDecoration(
+//                                  border: Border.all(color: kBlue, width: 1),
+                                    color: Colors.grey.shade100,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(20.0)),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.grey,
+                                        blurRadius: 1.5,
+                                        offset: Offset(0, 1),
+                                      )
+                                    ],
+                                  ),
+                                  child: Text(
+                                    time,
+                                    style: TextStyle(
+                                      color: kBlue,
+                                    ),
+                                  ),
+                                ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          ),
-        ));
+              ],
+            ),
+          )),
+    );
   }
 }
 

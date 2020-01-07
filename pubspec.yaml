@@ -77,6 +77,12 @@ flutter:
     - family: SetTimeIcon
       fonts:
         - asset: fonts/SetTimeIcon.ttf
+    - family: NotificationBells
+      fonts:
+        - asset: fonts/NotificationBells.ttf
+    - family: EditScreenCalendar
+      fonts:
+        - asset: fonts/EditScreenCalendar.ttf
 
   assets:
     - assets/2_line_menu.png

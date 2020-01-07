@@ -3,6 +3,7 @@ class Date {
   String month;
   int day;
   int year;
+  String weekday;
 
   static final Map<int, String> intToMonth = {
     1: 'Jan',
@@ -19,6 +20,16 @@ class Date {
     12: 'Dec',
   };
 
+  static final Map<int, String> intToWeekday = {
+    1: 'Monday',
+    2: 'Tuesday',
+    3: 'Wednesday',
+    4: 'Thursday',
+    5: 'Friday',
+    6: 'Saturday',
+    7: 'Sunday',
+  };
+
   @override
   Date(DateTime dateTime) {
     this.dateTime = dateTime;
@@ -29,6 +40,7 @@ class Date {
     month = intToMonth[dateTime.month];
     day = dateTime.day;
     year = dateTime.year;
+    weekday = intToWeekday[dateTime.weekday];
   }
 
   bool dateCompare(Date inputDate) {
@@ -41,8 +53,12 @@ class Date {
     }
   }
 
+  DateTime getDateTime() {
+    return dateTime;
+  }
+
   String toString() {
-    return '$month $day, $year';
+    return '$weekday, $month $day';
   }
 
   String toStringSQL() {

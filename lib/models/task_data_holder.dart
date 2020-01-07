@@ -16,6 +16,14 @@ class TaskData extends ChangeNotifier {
     return await todoDB.getTaskList(inputDay);
   }
 
+  Future<List<Task>> getUncompletedTaskList() async {
+    return await todoDB.getUncompletedTaskList();
+  }
+
+  Future<List<Task>> getAllTaskList() async {
+    return await todoDB.getAllTaskList();
+  }
+
 //  List<Task> taskList = [
 //    Task(taskTitle: 'Go to the gym', isChecked: false),
 //    Task(taskTitle: 'Finish Flutter course', isChecked: false),
@@ -28,7 +36,7 @@ class TaskData extends ChangeNotifier {
     notifyListeners();
   }
 
-  void addTask(
+  void addTask({
     String newTaskTitle,
     String taskDate,
     String priority,
@@ -36,23 +44,30 @@ class TaskData extends ChangeNotifier {
     String category,
     String alert,
     String time,
-  ) async {
+  }) async {
 //    taskList.add(Task(taskTitle: newTaskTitle, isChecked: false));
 //    notifyListeners();
     await todoDB.insert(new Task(
-        date: taskDate,
-        taskTitle: newTaskTitle,
-        isChecked: false,
-        priority: priority,
-        notes: notes,
-        category: category,
-        alert: alert,
-        time: time));
+      date: taskDate,
+      taskTitle: newTaskTitle,
+      isChecked: false,
+      priority: priority,
+      notes: notes,
+      category: category,
+      alert: alert,
+      time: time,
+      id: 0,
+    ));
     notifyListeners();
   }
 
   void dropTable() {
     todoDB.dropTable();
+    notifyListeners();
+  }
+
+  void deleteTask(task) {
+    todoDB.deleteTask(task);
     notifyListeners();
   }
 

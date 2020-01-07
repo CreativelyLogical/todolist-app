@@ -31,18 +31,18 @@ class PriorityButtons extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Padding(
-        padding: EdgeInsets.only(right: SizeConfig.screenWidth * 0.08),
+        padding: EdgeInsets.only(bottom: 3.0),
         child: CircleAvatar(
           backgroundColor: getPriorityColor(),
           radius: screen == 'add_task'
-              ? SizeConfig.blockSizeVertical * 2.0
+              ? SizeConfig.blockSizeVertical * 3.0
               : SizeConfig.blockSizeVertical * 3.0,
           child: Icon(
             CustomFlagIcon.flag,
             color:
                 selectedPriority == priority ? kWhite : kWhite.withOpacity(0),
             size: screen == 'add_task'
-                ? SizeConfig.blockSizeVertical * 2.5
+                ? SizeConfig.blockSizeVertical * 3.5
                 : SizeConfig.blockSizeVertical * 3.5,
           ),
         ),
