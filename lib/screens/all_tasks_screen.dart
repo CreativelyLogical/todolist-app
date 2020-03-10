@@ -8,6 +8,7 @@ import 'package:my_todo/models/date.dart';
 import 'custom_flag_icon_icons.dart';
 import 'package:my_todo/widgets/notes_indicator_icons.dart';
 import 'task_category_icons.dart';
+import 'calendar_screen.dart';
 
 class AllTasksScreen extends StatefulWidget {
   @override
@@ -59,6 +60,14 @@ class _AllTasksScreenState extends State<AllTasksScreen> {
                       color: kWhite.withOpacity(0.5),
                     ),
                     iconSize: SizeConfig.screenHeight * 0.045,
+                    onPressed: () {
+                      print('wtf is going on');
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  CalendarScreen()));
+                    },
 
 //                color: kWhite,
                   ),

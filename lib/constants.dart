@@ -19,6 +19,30 @@ const weekdayColor = {
   7: Color(0xfffc0303),
 };
 
+const kCalendarSelectedDayStyle = TextStyle(
+  color: kBlue,
+  fontWeight: FontWeight.w700,
+  fontSize: 20,
+);
+
+const kCalendarWeekdayStyle = TextStyle(
+  color: kWhite,
+  fontWeight: FontWeight.w700,
+  fontSize: 20,
+);
+
+const kCalendarTodayStyle = TextStyle(
+  color: Colors.orange,
+  fontWeight: FontWeight.w700,
+  fontSize: 20,
+);
+
+const kCalendarWeekendStyle = TextStyle(
+  color: Colors.yellow,
+  fontWeight: FontWeight.w700,
+  fontSize: 20,
+);
+
 const kLightBlueAccent = Colors.lightBlueAccent;
 
 const kWhite = Colors.white;
