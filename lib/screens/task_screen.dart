@@ -148,7 +148,7 @@ class _TaskScreenState extends State<TaskScreen> {
                           color: kWhite.withOpacity(0.6),
                           fontSize: SizeConfig.screenHeight * 0.02),
                       textAlign: TextAlign.start,
-                    )
+                    ),
                   ],
                 ),
                 Column(

@@ -67,134 +67,79 @@ class _DayContainerState extends State<DayContainer> {
     print('check ${Date(widget.today).toString()}');
 
     SizeConfig().init(context);
-    return Column(
-      children: <Widget>[
-        Padding(
-          padding: EdgeInsets.only(bottom: 4),
-          child: Text(
-//            intToWeekday[widget.today
-//                .add(Duration(days: widget.inputWeekday - todayWeekday))
-//                .weekday],
-            intToWeekday[widget.inputWeekday],
-            style: TextStyle(
-//                    color: widget.today
-//                                .add(Duration(
-//                                    days: widget.inputWeekday - todayWeekday))
-//                                .weekday ==
-//                            3
-//                        ? kLightBlueAccent
-//                        : Colors.white,
-//            color: TaskScreen.selectedDay.dateCompare(inputDay)
-//                ? Colors.white
-//                : kLightBlueAccent,
-              color: Colors.white,
-              fontWeight: FontWeight.w900,
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 0, horizontal: 8),
+      child: Column(
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.only(bottom: 4),
+            child: Text(
+              intToWeekday[widget.inputWeekday],
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.w900,
+              ),
             ),
           ),
-        ),
-        GestureDetector(
-          onTap: () {
-            showFlutterToast(widget.today
-                .add(Duration(days: widget.inputWeekday - todayWeekday))
-                .toString());
-            TaskScreen.selectedDay = inputDay;
-            widget.setStateCallback();
+          GestureDetector(
+            onTap: () {
+              showFlutterToast(widget.today
+                  .add(Duration(days: widget.inputWeekday - todayWeekday))
+                  .toString());
+              TaskScreen.selectedDay = inputDay;
+              widget.setStateCallback();
 //            print(today.add(Duration(days: inputWeekday - todayWeekday + 1)));
-          },
-          child: Container(
-            padding: EdgeInsets.only(
-              top: 10.0,
-              bottom: 5.0,
-              left: SizeConfig.blockSizeHorizontal * 1.2,
-              right: SizeConfig.blockSizeHorizontal * 1.2,
-            ),
-            margin: EdgeInsets.symmetric(horizontal: 5.0),
-            decoration: BoxDecoration(
+            },
+            child: Container(
+              padding: EdgeInsets.only(
+                top: 10.0,
+                bottom: 5.0,
+                left: SizeConfig.blockSizeHorizontal * 1.2,
+                right: SizeConfig.blockSizeHorizontal * 1.2,
+              ),
+              margin: EdgeInsets.symmetric(horizontal: 5.0),
+              decoration: BoxDecoration(
 //              color: weekdayColor[widget.today
 //                  .add(Duration(days: widget.inputWeekday - todayWeekday))
 //                  .weekday],
-              color: TaskScreen.selectedDay.dateCompare(inputDay)
-                  ? Colors.white
-                  : kLightBlueAccent.withOpacity(0.0),
+                color: TaskScreen.selectedDay.dateCompare(inputDay)
+                    ? Colors.white
+                    : kLightBlueAccent.withOpacity(0.0),
 
 //            color: kLightBlueAccent,
 //        color: diff == 0 ? Color(0xffe3681b) : Color(0xff585866),
-              borderRadius: BorderRadius.all(Radius.circular(5.0)),
-            ),
-            child: Column(
-              children: <Widget>[
-//                Text(
-//                  intToMonth[widget.today
-//                      .add(Duration(days: widget.inputWeekday - todayWeekday))
-//                      .month],
-//                  style: TextStyle(
-////                      color: widget.today
-////                                  .add(Duration(
-////                                      days: widget.inputWeekday - todayWeekday))
-////                                  .weekday ==
-////                              3
-////                          ? kLightBlueAccent
-////                          : Colors.white,
-//                      color: TaskScreen.selectedDay.dateCompare(inputDay)
-//                          ? kLightBlueAccent
-//                          : Colors.white,
-////                color: Colors.white,
-//                      fontWeight: FontWeight.w300,
-//                      fontSize: SizeConfig.blockSizeVertical * 2.3),
-//                ),
-                Text(
+                borderRadius: BorderRadius.all(Radius.circular(5.0)),
+              ),
+              child: Column(
+                children: <Widget>[
+                  Text(
 //                  widget.today
 //                      .add(Duration(
 //                          days: widget.inputWeekday - widget.today.weekday))
 //                      .day
 //                      .toString(),
-                  inputDay.day.toString(),
-                  style: TextStyle(
-//                    color: widget.today
-//                                .add(Duration(
-//                                    days: widget.inputWeekday - todayWeekday))
-//                                .weekday ==
-//                            3
-//                        ? kLightBlueAccent
-//                        : Colors.white,
-                    color: TaskScreen.selectedDay.dateCompare(inputDay)
-                        ? kBlue
-                        : Colors.white.withOpacity(0.5),
+                    inputDay.day.toString(),
+                    style: TextStyle(
+                      color: TaskScreen.selectedDay.dateCompare(inputDay)
+                          ? kBlue
+                          : Colors.white.withOpacity(0.5),
 //              color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: SizeConfig.blockSizeVertical * 4,
+                      fontWeight: FontWeight.bold,
+                      fontSize: SizeConfig.blockSizeVertical * 4,
+                    ),
                   ),
-                ),
-//                Text(
-//                  intToWeekday[widget.today
-//                      .add(Duration(days: widget.inputWeekday - todayWeekday))
-//                      .weekday],
-//                  style: TextStyle(
-////                    color: widget.today
-////                                .add(Duration(
-////                                    days: widget.inputWeekday - todayWeekday))
-////                                .weekday ==
-////                            3
-////                        ? kLightBlueAccent
-////                        : Colors.white,
-//                    color: TaskScreen.selectedDay.dateCompare(inputDay)
-//                        ? Colors.white
-//                        : kLightBlueAccent,
-////              color: Colors.white,
-//                    fontWeight: FontWeight.w900,
-//                  ),
-//                )
-              ],
+                ],
+              ),
             ),
           ),
-        ),
 //        TaskScreen.selectedDay.dateCompare(inputDay)
 //            ? Icon(
 //                Icons.arrow_drop_up,
 //                color: kRallyGreen,
 //              )
 //            : Icon(null),
-      ],
+        ],
+      ),
     );
   }
 }

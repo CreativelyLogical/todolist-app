@@ -321,8 +321,8 @@ class _CalendarScreenState extends State<CalendarScreen> {
   }
 
   Future _retrieveCalendarEvents(Calendar calendar) async {
-    final startDate = DateTime.now().add(Duration(days: -30));
-    final endDate = DateTime.now().add(Duration(days: 30));
+    final startDate = DateTime.now().add(Duration(days: -60));
+    final endDate = DateTime.now().add(Duration(days: 60));
     var calendarEventsResult = await _deviceCalendarPlugin.retrieveEvents(
         calendar.id,
         RetrieveEventsParams(startDate: startDate, endDate: endDate));
