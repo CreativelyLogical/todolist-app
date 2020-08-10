@@ -8,7 +8,7 @@ import 'package:my_todo/models/date.dart';
 import 'custom_flag_icon_icons.dart';
 import 'package:my_todo/widgets/notes_indicator_icons.dart';
 import 'task_category_icons.dart';
-import 'calendar_screen.dart';
+//import 'calendar_screen.dart';
 
 class AllTasksScreen extends StatefulWidget {
   @override
@@ -35,7 +35,8 @@ class _AllTasksScreenState extends State<AllTasksScreen> {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
-      backgroundColor: Colors.grey.shade200,
+//      backgroundColor: Colors.grey.shade200,
+      backgroundColor: kBlue,
       bottomNavigationBar: BottomAppBar(
 //          notchMargin: 5.0,
         child: Container(
@@ -46,59 +47,6 @@ class _AllTasksScreenState extends State<AllTasksScreen> {
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
-              Column(
-//                  crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  IconButton(
-                    padding: EdgeInsets.all(0),
-//                      padding: EdgeInsets.only(
-//                          left: SizeConfig.blockSizeHorizontal * 10),
-                    icon: Icon(
-                      Icons.date_range,
-                      color: kWhite.withOpacity(0.5),
-                    ),
-                    iconSize: SizeConfig.screenHeight * 0.045,
-                    onPressed: () {
-                      print('wtf is going on');
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (BuildContext context) =>
-                                  CalendarScreen()));
-                    },
-
-//                color: kWhite,
-                  ),
-                  Text(
-                    'Calendar',
-                    style: TextStyle(
-                        color: kWhite.withOpacity(0.6),
-                        fontSize: SizeConfig.screenHeight * 0.02),
-                    textAlign: TextAlign.start,
-                  )
-                ],
-              ),
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  IconButton(
-                    padding: EdgeInsets.all(0),
-                    icon: Icon(
-                      Icons.format_list_bulleted,
-                      color: kWhite,
-                    ),
-                    iconSize: SizeConfig.screenHeight * 0.045,
-                  ),
-                  Text(
-                    'All tasks',
-                    style: TextStyle(
-                        color: kWhite,
-                        fontSize: SizeConfig.screenHeight * 0.02),
-                  )
-                ],
-              ),
               Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
@@ -122,7 +70,55 @@ class _AllTasksScreenState extends State<AllTasksScreen> {
                         fontSize: SizeConfig.screenHeight * 0.02),
                   ),
                 ],
-              )
+              ),
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  IconButton(
+                    padding: EdgeInsets.all(0),
+                    icon: Icon(
+                      Icons.format_list_bulleted,
+                      color: kWhite,
+                    ),
+                    iconSize: SizeConfig.screenHeight * 0.045,
+                    onPressed: () {
+                      print("You're already in the all tasks page");
+                    },
+                  ),
+                  Text(
+                    'All Tasks',
+                    style: TextStyle(
+                        color: kWhite,
+                        fontSize: SizeConfig.screenHeight * 0.02),
+                  )
+                ],
+              ),
+              Column(
+//                  crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  IconButton(
+                    padding: EdgeInsets.all(0),
+//                      padding: EdgeInsets.only(
+//                          left: SizeConfig.blockSizeHorizontal * 10),
+                    icon: Icon(
+                      Icons.info_outline,
+                      color: kWhite.withOpacity(0.5),
+                    ),
+                    iconSize: SizeConfig.screenHeight * 0.045,
+
+//                color: kWhite,
+                  ),
+                  Text(
+                    'About',
+                    style: TextStyle(
+                        color: kWhite.withOpacity(0.6),
+                        fontSize: SizeConfig.screenHeight * 0.02),
+                    textAlign: TextAlign.start,
+                  ),
+                ],
+              ),
             ],
           ),
         ),
@@ -131,163 +127,195 @@ class _AllTasksScreenState extends State<AllTasksScreen> {
 //          child: Padding(padding: EdgeInsets.all(20.0)),
         shape: CircularNotchedRectangle(),
       ),
-      body: Container(
-        width: SizeConfig.screenWidth,
-        height: SizeConfig.screenHeight,
-        padding: EdgeInsets.only(
-          top: SizeConfig.screenHeight * 0.1,
-          left: SizeConfig.screenWidth * 0.03,
-          right: SizeConfig.screenWidth * 0.03,
-        ),
-        child: allTasksList == null
-            ? Container(
-                child: Center(
-                  child: Text(
-                    'nothing yet lol',
-                  ),
-                ),
-              )
-            : ListView.separated(
-//                reverse: true,
-                itemBuilder: (BuildContext context, int index) {
-                  final task = allTasksList[index];
-//                  print('the type here is ${widget.type}');
-                  return VersatileListTile(
-                    taskName: task.taskTitle,
-                    priority: task.priority,
-                    notes: task.notes,
-                    category: task.category,
-                    time: task.time,
-                    checkBoxCallback: () {
-                      if (!task.isChecked) {
-                        task.isChecked = true;
-                      } else {
-                        task.isChecked = false;
-                      }
-                      Provider.of<TaskData>(context).updateTask(task);
-                    },
-                    isChecked: task.isChecked,
-                    taskDate: task.date,
-                  );
-                },
-                separatorBuilder: (BuildContext context, int index) {
-                  return Divider(
-                    height: SizeConfig.screenHeight * 0.01,
-                    color: Color.fromRGBO(234, 234, 234, 1),
-                  );
-                },
-                itemCount: allTasksList.length),
-      ),
-    );
-  }
-}
+      body: SafeArea(
+        child: Container(
+          margin: EdgeInsets.only(top: SizeConfig.screenHeight * 0.02),
+//        color: kWhite,
+          width: SizeConfig.screenWidth,
+          height: SizeConfig.screenHeight,
 
-class ListObjects extends StatefulWidget {
-  @override
-  _ListObjectsState createState() => _ListObjectsState();
-
-  ListObjects({this.type});
-
-  final String type;
-}
-
-class _ListObjectsState extends State<ListObjects> {
-  List<Task> taskList;
-
-//  Future getTaskList() async {
-//    taskList =  await Provider.of<TaskData>(context)
-//        .getTaskList(Date(DateTime.now()));
-//  }
-
-  Future _getTodayTaskList() async {
-    Date listDay;
-    if (widget.type == 'today')
-      listDay = Date(DateTime.now());
-    else if (widget.type == 'tomorrow')
-      listDay = Date(DateTime.now().add(Duration(days: 1)));
-//    print('listday is ${listDay.toStringSQL()}');
-    if (widget.type == 'today' || widget.type == 'tomorrow') {
-      taskList = await Provider.of<TaskData>(context).getTaskList(listDay);
-    } else if (widget.type == 'uncompleted') {
-      taskList = await Provider.of<TaskData>(context).getUncompletedTaskList();
-    }
-
-    setState(() {});
-//    if (taskList != null) {
-//      setState(() {
-//        print('taskList.length is ${taskList.length}');
-//      });
-//    }
-  }
-
-  @override
-  void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
-    super.didChangeDependencies();
-    _getTodayTaskList();
-  }
-
-  String getListType() {
-    String listType = widget.type;
-    if (listType == 'today') {
-      return 'Today';
-    } else if (listType == 'tomorrow') {
-      return 'Tomorrow';
-    } else if (listType == 'uncompleted') {
-      return 'Uncompleted';
-    } else {
-      return 'Undefined';
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.only(bottom: SizeConfig.screenHeight * 0.04),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          (taskList == null)
+          child: allTasksList == null
               ? Container(
                   child: Center(
-                    child: Text('no data currently'),
+                    child: Text(
+                      'nothing yet lol',
+                    ),
                   ),
                 )
-              : ListView.separated(
-                  padding: EdgeInsets.only(top: 10.0),
-                  shrinkWrap: true,
-                  itemBuilder: (BuildContext context, int index) {
-                    final task = taskList[index];
-                    print('the type here is ${widget.type}');
-                    return VersatileListTile(
-                      taskName: task.taskTitle,
-                      priority: task.priority,
-                      notes: task.notes,
-                      category: task.category,
-                      time: task.time,
-                      checkBoxCallback: () {
-                        if (!task.isChecked) {
-                          task.isChecked = true;
-                        } else {
-                          task.isChecked = false;
-                        }
-                        Provider.of<TaskData>(context).updateTask(task);
-                      },
-                      isChecked: task.isChecked,
-                    );
-                  },
-                  separatorBuilder: (BuildContext context, int index) {
-                    return Divider(
-                      height: SizeConfig.screenHeight * 0.01,
-                      color: Color.fromRGBO(234, 234, 234, 1),
-                    );
-                  },
-                  itemCount: taskList.length)
-        ],
+              : Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.only(
+                          left: SizeConfig.screenWidth * 0.03,
+                          bottom: SizeConfig.screenHeight * 0.01),
+                      child: Text(
+                        "All Tasks",
+                        style: TextStyle(
+                          fontSize: SizeConfig.blockSizeVertical * 4,
+                          color: kWhite,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: Colors.grey.shade200,
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(20.0))),
+                        padding: EdgeInsets.only(
+                          top: SizeConfig.screenHeight * 0.03,
+                          left: SizeConfig.screenWidth * 0.03,
+                          right: SizeConfig.screenWidth * 0.03,
+                        ),
+                        child: ListView.separated(
+//                reverse: true,
+                            itemBuilder: (BuildContext context, int index) {
+                              final task = allTasksList[index];
+//                  print('the type here is ${widget.type}');
+                              return VersatileListTile(
+                                taskName: task.taskTitle,
+                                priority: task.priority,
+                                notes: task.notes,
+                                category: task.category,
+                                time: task.time,
+                                checkBoxCallback: () {
+                                  if (!task.isChecked) {
+                                    task.isChecked = true;
+                                  } else {
+                                    task.isChecked = false;
+                                  }
+                                  Provider.of<TaskData>(context)
+                                      .updateTask(task);
+                                },
+                                isChecked: task.isChecked,
+                                taskDate: task.date,
+                              );
+                            },
+                            separatorBuilder:
+                                (BuildContext context, int index) {
+                              return Divider(
+                                height: SizeConfig.screenHeight * 0.01,
+                                color: Color.fromRGBO(234, 234, 234, 1),
+                              );
+                            },
+                            itemCount: allTasksList.length),
+                      ),
+                    ),
+                  ],
+                ),
+        ),
       ),
     );
   }
 }
+
+//class ListObjects extends StatefulWidget {
+//  @override
+//  _ListObjectsState createState() => _ListObjectsState();
+//
+//  ListObjects({this.type});
+//
+//  final String type;
+//}
+//
+//class _ListObjectsState extends State<ListObjects> {
+//  List<Task> taskList;
+//
+////  Future getTaskList() async {
+////    taskList =  await Provider.of<TaskData>(context)
+////        .getTaskList(Date(DateTime.now()));
+////  }
+//
+//  Future _getTodayTaskList() async {
+//    Date listDay;
+//    if (widget.type == 'today')
+//      listDay = Date(DateTime.now());
+//    else if (widget.type == 'tomorrow')
+//      listDay = Date(DateTime.now().add(Duration(days: 1)));
+////    print('listday is ${listDay.toStringSQL()}');
+//    if (widget.type == 'today' || widget.type == 'tomorrow') {
+//      taskList = await Provider.of<TaskData>(context).getTaskList(listDay);
+//    } else if (widget.type == 'uncompleted') {
+//      taskList = await Provider.of<TaskData>(context).getUncompletedTaskList();
+//    }
+//
+//    setState(() {});
+////    if (taskList != null) {
+////      setState(() {
+////        print('taskList.length is ${taskList.length}');
+////      });
+////    }
+//  }
+//
+//  @override
+//  void didChangeDependencies() {
+//    // TODO: implement didChangeDependencies
+//    super.didChangeDependencies();
+//    _getTodayTaskList();
+//  }
+//
+//  String getListType() {
+//    String listType = widget.type;
+//    if (listType == 'today') {
+//      return 'Today';
+//    } else if (listType == 'tomorrow') {
+//      return 'Tomorrow';
+//    } else if (listType == 'uncompleted') {
+//      return 'Uncompleted';
+//    } else {
+//      return 'Undefined';
+//    }
+//  }
+//
+//  @override
+//  Widget build(BuildContext context) {
+//    return Container(
+//      padding: EdgeInsets.only(bottom: SizeConfig.screenHeight * 0.04),
+//      child: Column(
+//        crossAxisAlignment: CrossAxisAlignment.start,
+//        children: <Widget>[
+//          (taskList == null)
+//              ? Container(
+//                  child: Center(
+//                    child: Text('no data currently'),
+//                  ),
+//                )
+//              : ListView.separated(
+//                  padding: EdgeInsets.only(top: 10.0),
+//                  shrinkWrap: true,
+//                  itemBuilder: (BuildContext context, int index) {
+//                    final task = taskList[index];
+//                    print('the type here is ${widget.type}');
+//                    return VersatileListTile(
+//                      taskName: task.taskTitle,
+//                      priority: task.priority,
+//                      notes: task.notes,
+//                      category: task.category,
+//                      time: task.time,
+//                      checkBoxCallback: () {
+//                        if (!task.isChecked) {
+//                          task.isChecked = true;
+//                        } else {
+//                          task.isChecked = false;
+//                        }
+//                        Provider.of<TaskData>(context).updateTask(task);
+//                      },
+//                      isChecked: task.isChecked,
+//                    );
+//                  },
+//                  separatorBuilder: (BuildContext context, int index) {
+//                    return Divider(
+//                      height: SizeConfig.screenHeight * 0.01,
+//                      color: Color.fromRGBO(234, 234, 234, 1),
+//                    );
+//                  },
+//                  itemCount: taskList.length)
+//        ],
+//      ),
+//    );
+//  }
+//}
 
 class VersatileListTile extends StatelessWidget {
   VersatileListTile({

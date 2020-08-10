@@ -9,8 +9,11 @@ class WeekView extends StatelessWidget {
 
   final Function setStateCallback;
 
+  var days = [1, 2, 3, 4, 5, 6];
+
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return Container(
       padding: EdgeInsets.only(top: SizeConfig.screenHeight * 0.04),
       decoration: BoxDecoration(
@@ -24,16 +27,7 @@ class WeekView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-//              IconButton(
-//                padding: EdgeInsets.only(left: SizeConfig.screenWidth * 0.05),
-//                icon: Icon(
-//                  Icons.menu,
-//                  color: kWhite,
-//                  size: SizeConfig.blockSizeVertical * 4,
-//                ),
-//              ),
               Expanded(
                 child: Padding(
                   padding: EdgeInsets.only(
@@ -51,90 +45,52 @@ class WeekView extends StatelessWidget {
                   ),
                 ),
               ),
-//              IconButton(
-//                padding: EdgeInsets.only(right: SizeConfig.screenWidth * 0.05),
-//                icon: Icon(
-//                  Icons.settings,
-//                  color: kWhite,
-//                  size: SizeConfig.blockSizeVertical * 4,
-//                ),
-//              ),
             ],
           ),
-//          Row(
-//            children: <Widget>[
-////              Expanded(
-////                child: Padding(
-////                  padding: EdgeInsets.only(
-//////                    top: SizeConfig.screenHeight * 0.035,
-////                    bottom: SizeConfig.screenHeight * 0.015,
-//////                    left: SizeConfig.screenWidth * 0.05,
-////                  ),
-////                  child: Text(
-////                    '${TaskScreen.selectedDay.month} ${TaskScreen.selectedDay.year}',
-////                    style: TextStyle(
-////                      color: kWhite,
-////                      fontSize: SizeConfig.blockSizeVertical * 4,
-////                    ),
-////                    textAlign: TextAlign.center,
-////                  ),
-////                ),
-////              )
-//            ],
-//          ),
           SizedBox(
-            height: SizeConfig.screenHeight * 0.115,
-            child: Container(
-//                          color: kLightBlueAccent,
-//                    margin: EdgeInsets.only(bottom: 10.0),
-//                    padding: EdgeInsets.only(bottom: 15.0),
-                child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-//                crossAxisAlignment: CrossAxisAlignment.center,
-//                mainAxisAlignment: MainAxisAlignment.center,
-//                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-//                  padding: EdgeInsets.only(bottom: 20),
-//                        scrollDirection: Axis.horizontal,
-              child: Row(
-                children: <Widget>[
-                  DayContainer(
-                    today: DateTime.now(),
-                    inputWeekday: 0,
-                    setStateCallback: setStateCallback,
-                  ),
-                  DayContainer(
-                    today: DateTime.now(),
-                    inputWeekday: 1,
-                    setStateCallback: setStateCallback,
-                  ),
-                  DayContainer(
-                    today: DateTime.now(),
-                    inputWeekday: 2,
-                    setStateCallback: setStateCallback,
-                  ),
-                  DayContainer(
-                    today: DateTime.now(),
-                    inputWeekday: 3,
-                    setStateCallback: setStateCallback,
-                  ),
-                  DayContainer(
-                    today: DateTime.now(),
-                    inputWeekday: 4,
-                    setStateCallback: setStateCallback,
-                  ),
-                  DayContainer(
-                    today: DateTime.now(),
-                    inputWeekday: 5,
-                    setStateCallback: setStateCallback,
-                  ),
-                  DayContainer(
-                    today: DateTime.now(),
-                    inputWeekday: 6,
-                    setStateCallback: setStateCallback,
-                  ),
-                ],
-              ),
-            )),
+//            height: SizeConfig.screenHeight * 0.115,
+            child: Row(
+//              scrollDirection: Axis.horizontal,
+//              shrinkWrap: false,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                DayContainer(
+                  today: DateTime.now(),
+                  inputWeekday: 0,
+                  setStateCallback: setStateCallback,
+                ),
+                DayContainer(
+                  today: DateTime.now(),
+                  inputWeekday: 1,
+                  setStateCallback: setStateCallback,
+                ),
+                DayContainer(
+                  today: DateTime.now(),
+                  inputWeekday: 2,
+                  setStateCallback: setStateCallback,
+                ),
+                DayContainer(
+                  today: DateTime.now(),
+                  inputWeekday: 3,
+                  setStateCallback: setStateCallback,
+                ),
+                DayContainer(
+                  today: DateTime.now(),
+                  inputWeekday: 4,
+                  setStateCallback: setStateCallback,
+                ),
+                DayContainer(
+                  today: DateTime.now(),
+                  inputWeekday: 5,
+                  setStateCallback: setStateCallback,
+                ),
+                DayContainer(
+                  today: DateTime.now(),
+                  inputWeekday: 6,
+                  setStateCallback: setStateCallback,
+                ),
+              ],
+            ),
           ),
         ],
       ),

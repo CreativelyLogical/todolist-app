@@ -1,16 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:my_todo/widgets/task_list.dart';
-import 'package:flutter_picker/flutter_picker.dart';
 import 'package:my_todo/size_config.dart';
-import 'package:provider/provider.dart';
-import 'package:my_todo/models/task_data_holder.dart';
-import 'add_task_dialog.dart';
-import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:my_todo/constants.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:my_todo/models/date.dart';
-import 'package:my_todo/screens/add_task_fullscreen.dart';
-import 'package:my_todo/widgets/day_container.dart';
 import 'package:my_todo/widgets/week_view.dart';
 import 'all_tasks_screen.dart';
 
@@ -126,57 +118,6 @@ class _TaskScreenState extends State<TaskScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 Column(
-//                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    IconButton(
-                      padding: EdgeInsets.all(0),
-//                      padding: EdgeInsets.only(
-//                          left: SizeConfig.blockSizeHorizontal * 10),
-                      icon: Icon(
-                        Icons.date_range,
-                        color: kWhite.withOpacity(0.5),
-                      ),
-                      iconSize: SizeConfig.screenHeight * 0.045,
-
-//                color: kWhite,
-                    ),
-                    Text(
-                      'Calendar',
-                      style: TextStyle(
-                          color: kWhite.withOpacity(0.6),
-                          fontSize: SizeConfig.screenHeight * 0.02),
-                      textAlign: TextAlign.start,
-                    ),
-                  ],
-                ),
-                Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    IconButton(
-                      padding: EdgeInsets.all(0),
-                      icon: Icon(
-                        Icons.format_list_bulleted,
-                        color: kWhite.withOpacity(0.5),
-                      ),
-                      iconSize: SizeConfig.screenHeight * 0.045,
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => AllTasksScreen()));
-                      },
-                    ),
-                    Text(
-                      'All tasks',
-                      style: TextStyle(
-                          color: kWhite.withOpacity(0.6),
-                          fontSize: SizeConfig.screenHeight * 0.02),
-                    )
-                  ],
-                ),
-                Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     IconButton(
@@ -199,7 +140,58 @@ class _TaskScreenState extends State<TaskScreen> {
                           fontSize: SizeConfig.screenHeight * 0.02),
                     ),
                   ],
-                )
+                ),
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    IconButton(
+                      padding: EdgeInsets.all(0),
+                      icon: Icon(
+                        Icons.format_list_bulleted,
+                        color: kWhite.withOpacity(0.5),
+                      ),
+                      iconSize: SizeConfig.screenHeight * 0.045,
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => AllTasksScreen()));
+                      },
+                    ),
+                    Text(
+                      'All Tasks',
+                      style: TextStyle(
+                          color: kWhite.withOpacity(0.6),
+                          fontSize: SizeConfig.screenHeight * 0.02),
+                    )
+                  ],
+                ),
+                Column(
+//                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    IconButton(
+                      padding: EdgeInsets.all(0),
+//                      padding: EdgeInsets.only(
+//                          left: SizeConfig.blockSizeHorizontal * 10),
+                      icon: Icon(
+                        Icons.info_outline,
+                        color: kWhite.withOpacity(0.5),
+                      ),
+                      iconSize: SizeConfig.screenHeight * 0.045,
+
+//                color: kWhite,
+                    ),
+                    Text(
+                      'About',
+                      style: TextStyle(
+                          color: kWhite.withOpacity(0.6),
+                          fontSize: SizeConfig.screenHeight * 0.02),
+                      textAlign: TextAlign.start,
+                    ),
+                  ],
+                ),
               ],
             ),
           ),

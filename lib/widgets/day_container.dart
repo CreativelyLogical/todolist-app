@@ -68,7 +68,8 @@ class _DayContainerState extends State<DayContainer> {
 
     SizeConfig().init(context);
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 0, horizontal: 8),
+      margin: EdgeInsets.only(bottom: 10),
+//      padding: EdgeInsets.symmetric(vertical: 0, horizontal: 4),
       child: Column(
         children: <Widget>[
           Padding(
@@ -83,9 +84,9 @@ class _DayContainerState extends State<DayContainer> {
           ),
           GestureDetector(
             onTap: () {
-              showFlutterToast(widget.today
-                  .add(Duration(days: widget.inputWeekday - todayWeekday))
-                  .toString());
+//              showFlutterToast(widget.today
+//                  .add(Duration(days: widget.inputWeekday - todayWeekday))
+//                  .toString());
               TaskScreen.selectedDay = inputDay;
               widget.setStateCallback();
 //            print(today.add(Duration(days: inputWeekday - todayWeekday + 1)));
@@ -97,7 +98,7 @@ class _DayContainerState extends State<DayContainer> {
                 left: SizeConfig.blockSizeHorizontal * 1.2,
                 right: SizeConfig.blockSizeHorizontal * 1.2,
               ),
-              margin: EdgeInsets.symmetric(horizontal: 5.0),
+//              margin: EdgeInsets.symmetric(horizontal: 5.0),
               decoration: BoxDecoration(
 //              color: weekdayColor[widget.today
 //                  .add(Duration(days: widget.inputWeekday - todayWeekday))
@@ -108,7 +109,7 @@ class _DayContainerState extends State<DayContainer> {
 
 //            color: kLightBlueAccent,
 //        color: diff == 0 ? Color(0xffe3681b) : Color(0xff585866),
-                borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                borderRadius: BorderRadius.all(Radius.circular(10.0)),
               ),
               child: Column(
                 children: <Widget>[
@@ -124,7 +125,7 @@ class _DayContainerState extends State<DayContainer> {
                           ? kBlue
                           : Colors.white.withOpacity(0.5),
 //              color: Colors.white,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w500,
                       fontSize: SizeConfig.blockSizeVertical * 4,
                     ),
                   ),

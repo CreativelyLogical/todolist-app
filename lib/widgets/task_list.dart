@@ -101,7 +101,7 @@ class TaskList extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        'Tasks: ',
+                        'Tasks ',
                         style: TextStyle(
                           color: kBlue,
                           fontSize: SizeConfig.screenHeight * 0.035,
