@@ -162,7 +162,8 @@ class _AllTasksScreenState extends State<AllTasksScreen> {
                         decoration: BoxDecoration(
                             color: Colors.grey.shade200,
                             borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(20.0))),
+                                topLeft: Radius.circular(20.0),
+                                topRight: Radius.circular(20.0))),
                         padding: EdgeInsets.only(
                           top: SizeConfig.screenHeight * 0.03,
                           left: SizeConfig.screenWidth * 0.03,
@@ -412,7 +413,9 @@ class VersatileListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        print("You clicked on $taskName");
+      },
       child: Container(
           padding: EdgeInsets.only(
             left: SizeConfig.screenWidth * 0.05,
