@@ -9,6 +9,7 @@ import 'custom_flag_icon_icons.dart';
 import 'package:my_todo/widgets/notes_indicator_icons.dart';
 import 'task_category_icons.dart';
 //import 'calendar_screen.dart';
+import 'package:my_todo/widgets/edit_task_sheet.dart';
 
 class AllTasksScreen extends StatefulWidget {
   @override
@@ -191,6 +192,7 @@ class _AllTasksScreenState extends State<AllTasksScreen> {
                                 },
                                 isChecked: task.isChecked,
                                 taskDate: task.date,
+                                task: task,
                               );
                             },
                             separatorBuilder:
@@ -328,6 +330,7 @@ class VersatileListTile extends StatelessWidget {
     this.checkBoxCallback,
     this.isChecked,
     this.taskDate,
+    this.task,
   });
 
   final String taskName;
@@ -345,6 +348,8 @@ class VersatileListTile extends StatelessWidget {
   final bool isChecked;
 
   final String taskDate;
+
+  final Task task;
 
   Color returnPriorityColor() {
     print('in listview, priority is $priority');
@@ -414,7 +419,27 @@ class VersatileListTile extends StatelessWidget {
     SizeConfig().init(context);
     return GestureDetector(
       onTap: () {
-        print("You clicked on $taskName");
+        showModalBottomSheet(
+          context: context,
+          builder: (context) => Container(
+            height: SizeConfig.screenHeight * 0.75,
+            child: EditTaskSheet(
+              task: task,
+//              dateChangedCallback: (String newSelectedDate) {
+//                setState(() {
+//                  widget.task.date = newSelectedDate;
+//                  Provider.of<TaskData>(context).updateTask(widget.task);
+//                });
+//              },
+            ),
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(30.0),
+                topRight: Radius.circular(30.0)),
+          ),
+          isScrollControlled: true,
+        );
       },
       child: Container(
           padding: EdgeInsets.only(
