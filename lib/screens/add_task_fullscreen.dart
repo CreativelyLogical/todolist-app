@@ -18,6 +18,7 @@ import 'package:my_todo/widgets/priority_buttons.dart';
 import 'notification_bells_icons.dart';
 import 'dart:io' show Platform;
 import 'package:flutter/cupertino.dart';
+import 'package:my_todo/notifications/todo_notifications.dart';
 
 class AddTaskFullScreen extends StatefulWidget {
   @override
@@ -159,6 +160,7 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen>
         CupertinoDatePicker(
 //        minimumDate: DateTime.now().add(Duration(days: -1)),
 //        maximumDate: DateTime(2101),
+          backgroundColor: Colors.white,
           minimumDate: DateTime.now().add(Duration(days: -1)),
           maximumDate: DateTime(2101),
           mode: CupertinoDatePickerMode.date,
@@ -222,11 +224,13 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen>
         builder: (BuildContext context) => _buildBottomSheet(
           CupertinoDatePicker(
             mode: CupertinoDatePickerMode.time,
+            backgroundColor: Colors.white,
             onDateTimeChanged: (DateTime picked) {
               setState(() {
                 selectedTimeOfDay = TimeOfDay.fromDateTime(picked);
                 selectedTime = selectedTimeOfDay.format(context);
               });
+              print(selectedTime);
             },
           ),
         ),
@@ -861,461 +865,37 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen>
                             ),
                           ),
                           color: kBlue,
-                          onPressed: () {
-                            Provider.of<TaskData>(context).addTask(
-                              newTaskTitle: taskNameController.text,
-                              taskDate: selectedDateSQL,
-                              priority: selectedPriority,
-                              notes: 'no notes',
-                              category: selectedCategory,
-                              alert:
-                                  (remind == true && selectedReminder != null)
-                                      ? selectedReminder
-                                      : 'no reminder',
-                              time: timeOption == 'yes time'
-                                  ? selectedTime
-                                  : 'no time',
-                            );
-                            Navigator.pop(context);
+                          onPressed: () async {
+                            if (taskNameController.text == '') {
+                              print('Please enter a task name');
+                            } else {
+                              Provider.of<TaskData>(context).addTask(
+                                newTaskTitle: taskNameController.text,
+                                taskDate: selectedDateSQL,
+                                priority: selectedPriority,
+                                notes: 'no notes',
+                                category: selectedCategory,
+                                alert:
+                                    (remind == true && selectedReminder != null)
+                                        ? selectedReminder
+                                        : 'no reminder',
+                                time: timeOption == 'yes time'
+                                    ? selectedTime
+                                    : 'no time',
+                              );
+                              print(selectedTimeOfDay);
+                              await TodoNotifications()
+                                  .schedule(selectedTimeOfDay);
+                              Navigator.pop(context);
+                            }
                           },
                         ),
                       ),
-//                  Padding(
-//                    padding: EdgeInsets.symmetric(
-//                        horizontal: SizeConfig.blockSizeHorizontal * 4.3),
-//                    child: Divider(
-//                      color: Colors.grey,
-//                      thickness: 1,
-//                    ),
-//                  ),
                     ],
                   ),
                 ),
               ),
-//              Padding(
-//                padding: EdgeInsets.only(
-//                  left: SizeConfig.blockSizeHorizontal * 4.3,
-//                  top: SizeConfig.screenHeight * 0.025,
-//                  bottom: SizeConfig.screenHeight * 0.01,
-//                ),
-//                child: Row(
-//                  mainAxisAlignment: MainAxisAlignment.start,
-//                  children: <Widget>[
-//                    Expanded(
-//                      child: Row(
-////                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                        children: <Widget>[
-//                          PriorityButtons(
-//                            selectedPriority: selectedPriority,
-//                            priority: 'none',
-//                            onTap: () {
-//                              setState(() {
-//                                selectedPriority = 'none';
-//                              });
-//                            },
-//                            screen: 'add_task',
-//                          ),
-//                          PriorityButtons(
-//                            selectedPriority: selectedPriority,
-//                            priority: 'low',
-//                            onTap: () {
-//                              setState(() {
-//                                selectedPriority = 'low';
-//                              });
-//                            },
-//                            screen: 'add_task',
-//                          ),
-//                          PriorityButtons(
-//                            selectedPriority: selectedPriority,
-//                            priority: 'medium',
-//                            onTap: () {
-//                              setState(() {
-//                                selectedPriority = 'medium';
-//                              });
-//                            },
-//                            screen: 'add_task',
-//                          ),
-//                          PriorityButtons(
-//                            selectedPriority: selectedPriority,
-//                            priority: 'high',
-//                            onTap: () {
-//                              setState(() {
-//                                selectedPriority = 'high';
-//                              });
-//                            },
-//                            screen: 'add_task',
-//                          ),
-//                        ],
-//                      ),
-//                    )
-////                    DropdownButton(
-////                      items: prioritiesList,
-////                      value: _selectedPriority,
-////                      onChanged: (priority) {
-////                        setState(() {
-////                          _selectedPriority = priority;
-////                        });
-////                      },
-////                    )
-//                  ],
-//                ),
-//              ),
-//              Padding(
-//                padding: EdgeInsets.only(
-//                  left: SizeConfig.blockSizeHorizontal * 4.3,
-//                  top: SizeConfig.screenHeight * 0.01,
-//                  right: SizeConfig.blockSizeHorizontal * 4.3,
-//                ),
-//                child: SingleChildScrollView(
-//                  scrollDirection: Axis.horizontal,
-//                  child: Row(
-//                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                    children: <Widget>[
-//                      FlatButton(
-//                        shape: RoundedRectangleBorder(
-//                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-//                        ),
-////                        color: addTaskDate == Date(DateTime.now()).toString()
-////                            ? kBlue
-////                            : Colors.grey.shade300,
-//                        color: getSelectedTagColor('Today'),
-//                        child: Text(
-//                          'Today',
-//                          style: TextStyle(
-//                            color:
-////                                addTaskDate == Date(DateTime.now()).toString()
-////                                    ? kWhite
-////                                    : kGrey,
-//                                getSelectedTagTextColor('Today'),
-//                            fontSize: 20,
-//                          ),
-//                        ),
-//                        onPressed: () {
-//                          print('today pressed');
-//                          setState(() {
-//                            selectedTag = 'Today';
-//                            addTaskDate = Date(DateTime.now()).toString();
-//                            addTaskDateSQL = Date(DateTime.now()).toStringSQL();
-//                          });
-//                        },
-//                      ),
-//                      SizedBox(
-//                        width: SizeConfig.screenWidth * 0.025,
-//                      ),
-//                      FlatButton(
-//                        shape: RoundedRectangleBorder(
-//                            borderRadius: BorderRadius.all(
-//                          Radius.circular(10.0),
-//                        )),
-//                        color: getSelectedTagColor('Tonight'),
-//                        child: Text(
-//                          'Tonight',
-//                          style: TextStyle(
-//                            color: getSelectedTagTextColor('Tonight'),
-//                            fontSize: 20,
-//                          ),
-//                        ),
-//                        onPressed: () {
-//                          print('tonight pressed');
-//                          setState(() {
-//                            selectedTag = 'Tonight';
-//                          });
-//                        },
-//                      ),
-//                      SizedBox(
-//                        width: SizeConfig.screenWidth * 0.025,
-//                      ),
-//                      FlatButton(
-//                        shape: RoundedRectangleBorder(
-//                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-//                        ),
-////                        color: addTaskDate ==
-////                                Date(DateTime.now().add(Duration(days: 1)))
-////                                    .toString()
-////                            ? kBlue
-////                            : Colors.grey.shade300,
-//                        color: getSelectedTagColor('Tomorrow'),
-//                        child: Text(
-//                          'Tomorrow',
-//                          style: TextStyle(
-//                            fontSize: 20,
-//                            color: getSelectedTagTextColor('Tomorrow'),
-////                            color: addTaskDate ==
-////                                    Date(DateTime.now().add(Duration(days: 1)))
-////                                        .toString()
-////                                ? kWhite
-////                                : kGrey,
-//                          ),
-//                        ),
-//                        onPressed: () {
-//                          print('tomorrow pressed');
-//                          setState(() {
-//                            selectedTag = 'Tomorrow';
-//                            addTaskDate =
-//                                Date(DateTime.now().add(Duration(days: 1)))
-//                                    .toString();
-//                            addTaskDateSQL =
-//                                Date(DateTime.now().add(Duration(days: 1)))
-//                                    .toStringSQL();
-//                          });
-//                        },
-//                      ),
-//                      SizedBox(
-//                        width: SizeConfig.screenWidth * 0.025,
-//                      ),
-//                    ],
-//                  ),
-//                ),
-//              ),
-//              Padding(
-//                padding: EdgeInsets.only(
-//                  left: SizeConfig.blockSizeHorizontal * 4.3,
-//                  top: SizeConfig.screenHeight * 0.01,
-//                  right: SizeConfig.blockSizeHorizontal * 4.3,
-//                ),
-//                child: SingleChildScrollView(
-//                  scrollDirection: Axis.horizontal,
-//                  child: Row(
-//                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                    children: <Widget>[
-//                      FlatButton(
-//                        shape: RoundedRectangleBorder(
-//                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-//                        ),
-//                        color: getSelectedTagColor('Next Week'),
-//                        child: Text(
-//                          'Next Week',
-//                          style: TextStyle(
-//                            color: getSelectedTagTextColor('Next Week'),
-//                            fontSize: 20,
-//                          ),
-//                        ),
-//                        onPressed: () {
-//                          print('next week pressed pressed');
-//                          setState(() {
-//                            selectedTag = 'Next Week';
-//                          });
-//                        },
-//                      ),
-//                      SizedBox(
-//                        width: SizeConfig.screenWidth * 0.025,
-//                      ),
-//                      FlatButton(
-//                        shape: RoundedRectangleBorder(
-//                            borderRadius: BorderRadius.all(
-//                          Radius.circular(10.0),
-//                        )),
-//                        color: getSelectedTagColor('Custom'),
-//                        child: Text(
-//                          selectedDate,
-//                          style: TextStyle(
-//                            color: getSelectedTagTextColor('Custom'),
-//                            fontSize: 20,
-//                          ),
-//                        ),
-//                        onPressed: () async {
-//                          print('Custom pressed');
-//                          await _selectDate(context);
-//                          setState(() {
-//                            if (selectedDate != 'Custom') {
-//                              selectedTag = 'Custom';
-//                              print('it has reached here');
-//                            }
-//                          });
-//                        },
-//                      ),
-//                      SizedBox(
-//                        width: SizeConfig.screenWidth * 0.025,
-//                      ),
-//                      SizedBox(
-//                        width: SizeConfig.screenWidth * 0.025,
-//                      ),
-//                    ],
-//                  ),
-//                ),
-//              ),
-//              Padding(
-//                padding: EdgeInsets.only(
-//                  left: SizeConfig.blockSizeHorizontal * 4.3,
-//                  top: SizeConfig.screenHeight * 0.02,
-//                ),
-//                child: Row(
-//                  mainAxisAlignment: MainAxisAlignment.start,
-//                  children: <Widget>[
-//                    Icon(
-//                      TaskCategory.tag,
-//                      color: kBlue,
-//                    ),
-//                    SizedBox(
-//                      width: SizeConfig.screenWidth * 0.05,
-//                    ),
-//                    DropdownButton(
-//                      value: selectedCategory,
-//                      items: categoriesList,
-//                      onChanged: (newCategory) {
-//                        setState(() {
-//                          selectedCategory = newCategory;
-//                        });
-//                      },
-//                    ),
-//                    SizedBox(
-//                      width: SizeConfig.screenWidth * 0.05,
-//                    ),
-//                    Icon(
-//                      SetTimeIcon.clock,
-//                      color: kBlue,
-//                    ),
-//                    SizedBox(
-//                      width: SizeConfig.screenWidth * 0.05,
-//                    ),
-//                    FlatButton(
-//                      shape: RoundedRectangleBorder(
-//                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
-//                      ),
-//                      color: selectedTime == 'Set time'
-//                          ? Colors.grey.shade300
-//                          : kBlue,
-//                      child: Text(
-//                        selectedTime,
-//                        style: TextStyle(
-//                          fontSize: 20,
-//                          color: selectedTime == 'Set time' ? kGrey : kWhite,
-//                        ),
-//                      ),
-//                      onPressed: () async {
-//                        print('Time picker selected');
-//                        await _selectTime(context);
-//                        print('selectedTime is $selectedTime');
-//                      },
-//                    ),
-//                  ],
-//                ),
-//              ),
-//              Padding(
-//                padding: EdgeInsets.only(
-//                  left: SizeConfig.blockSizeHorizontal * 4.3,
-//                  top: SizeConfig.blockSizeVertical * 2,
-//                ),
-//                child: Row(
-//                  mainAxisAlignment: MainAxisAlignment.start,
-//                  children: <Widget>[
-//                    Icon(
-//                      NotificationBell.bell,
-//                      color: kBlue,
-//                    ),
-//                    SizedBox(
-//                      width: SizeConfig.screenWidth * 0.05,
-//                    ),
-//                    FlatButton(
-//                      shape: RoundedRectangleBorder(
-//                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
-//                      ),
-//                      color: Colors.grey.shade300,
-//                      child: Text(
-//                        selectedReminder,
-//                        style: TextStyle(
-//                          color: kGrey,
-//                          fontSize: 20,
-//                        ),
-//                      ),
-//                      onPressed: () {
-//                        showDialog(
-//                          context: context,
-//                          builder: (context) => DurationPicker(
-//                            setReminderCallback: (dialogReminder) {
-//                              setState(() {
-//                                selectedReminder = dialogReminder;
-//                              });
-//                            },
-//                          ),
-//                        );
-//                      },
-//                    ),
-//                    Expanded(
-//                      child: Align(
-//                        alignment: Alignment.centerRight,
-//                        child: Padding(
-//                          padding: EdgeInsets.only(
-//                              right: SizeConfig.blockSizeHorizontal * 4.3),
-//                          child: Switch(
-//                            value: isSwitched,
-//                            onChanged: (newValue) {
-//                              setState(() {
-//                                isSwitched = newValue;
-//                              });
-//                            },
-//                            activeColor: kBlue,
-//                          ),
-//                        ),
-//                      ),
-//                    )
-//                  ],
-//                ),
-//              ),
-//              Padding(
-//                padding: EdgeInsets.symmetric(
-//                    horizontal: SizeConfig.blockSizeHorizontal * 4.3,
-//                    vertical: SizeConfig.blockSizeVertical * 2.5),
-//                child: TextField(
-//                  controller: taskNotesController,
-//                  keyboardType: TextInputType.multiline,
-//                  maxLines: null,
-//                  decoration: InputDecoration(
-//                    hintText: 'Tap here to add notes',
-//                    border: OutlineInputBorder(
-//                      borderSide: BorderSide(
-//                        color: kBlue,
-//                        width: 2.0,
-//                      ),
-//                    ),
-//                  ),
-//                ),
-//              ),
 //
-//              Align(
-//                alignment: Alignment.center,
-//                child: FlatButton(
-//                  padding: EdgeInsets.symmetric(
-//                    horizontal: SizeConfig.screenWidth * 0.3,
-//                    vertical: 5,
-//                  ),
-//                  color: kBlue,
-//                  onPressed: () {
-//                    print('add button pressed');
-////                    Provider.of<TaskData>(context).dropTable();
-//                    print(
-//                        'the taskNameController.text was ${taskNameController.text}');
-//                    print(
-//                        '************************* the addTaskDate was $addTaskDate');
-//                    print(
-//                        'aaaaaaaaaaaaaaaaaaand, the selectedPriority was $selectedPriority');
-//                    Provider.of<TaskData>(context).addTask(
-//                      taskNameController.text,
-//                      getAppropriateDate(),
-//                      selectedPriority,
-//                      taskNotesController.text.length == 0
-//                          ? 'no notes'
-//                          : taskNotesController.text,
-//                      selectedCategory,
-//                      selectedReminder == 'Set alert time'
-//                          ? 'no reminders'
-//                          : selectedReminder,
-//                      selectedTime == 'Set time' ? 'no time' : selectedTime,
-//                    );
-//                    Navigator.pop(context);
-//                  },
-//                  child: Text(
-//                    'Add Task',
-//                    style: TextStyle(
-//                      fontSize: SizeConfig.blockSizeVertical * 3.5,
-//                      color: kWhite,
-//                    ),
-//                  ),
-//                  shape: RoundedRectangleBorder(
-//                    borderRadius: BorderRadius.all(Radius.circular(20.0)),
-//                  ),
-//                ),
-//              )
             ],
           ),
         )

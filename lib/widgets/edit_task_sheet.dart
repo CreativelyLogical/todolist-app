@@ -82,6 +82,7 @@ class _EditTaskSheetState extends State<EditTaskSheet> {
         CupertinoDatePicker(
 //        minimumDate: DateTime.now().add(Duration(days: -1)),
 //        maximumDate: DateTime(2101),
+          backgroundColor: Colors.white,
           minimumDate: DateTime.now().add(Duration(days: -1)),
           maximumDate: DateTime(2101),
           mode: CupertinoDatePickerMode.date,
@@ -120,6 +121,7 @@ class _EditTaskSheetState extends State<EditTaskSheet> {
         context: context,
         builder: (BuildContext context) => _buildBottomSheet(
           CupertinoDatePicker(
+            backgroundColor: Colors.white,
             mode: CupertinoDatePickerMode.time,
             onDateTimeChanged: (DateTime picked) {
               setState(() {

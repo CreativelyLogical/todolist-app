@@ -34,6 +34,9 @@ dependencies:
   percent_indicator: ^2.1.1+1
   table_calendar: ^2.2.2
   device_calendar: ^1.0.0+2
+  characters: ^1.0.0
+  flutter_local_notifications: ^1.4.4+2
+  rxdart: ^0.24.1
 
 
 dev_dependencies:
