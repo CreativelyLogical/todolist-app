@@ -136,7 +136,7 @@ class TaskList extends StatelessWidget {
                   ? Container(
                       child: Center(
                         child: Text(
-                          'snapshot was null',
+                          'Looks like there are no tasks for today',
                         ),
                       ),
                     )

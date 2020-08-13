@@ -207,7 +207,7 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen>
     );
     controller.forward();
 
-    WidgetsBinding.instance.addPostFrameCallback((_) => getSizeAndPosition());
+//    WidgetsBinding.instance.addPostFrameCallback((_) => getSizeAndPosition());
 
     controller.addListener(() {
       setState(() {});
@@ -884,8 +884,10 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen>
                                     : 'no time',
                               );
                               print(selectedTimeOfDay);
-                              await TodoNotifications()
-                                  .schedule(selectedTimeOfDay);
+                              await TodoNotifications().schedule(
+                                  selectedTimeOfDay,
+                                  notificationTitle: taskNameController.text,
+                                  notificationBody: 'Reminder');
                               Navigator.pop(context);
                             }
                           },
