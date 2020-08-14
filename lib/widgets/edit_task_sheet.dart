@@ -32,8 +32,6 @@ class EditTaskSheet extends StatefulWidget {
 class _EditTaskSheetState extends State<EditTaskSheet> {
   Task _task;
 
-  Task _newTask;
-
   String selectedPriority;
 
   String selectedDateSQL;
@@ -57,14 +55,19 @@ class _EditTaskSheetState extends State<EditTaskSheet> {
     selectedDateSQL = _task.date;
     selectedTime = _task.time;
     selectedReminder = _task.alert;
-    RegExp exp = new RegExp(r"(\d+)");
-    Iterable<Match> matches = exp.allMatches(selectedTime);
-    List<int> times = [];
-    for (Match m in matches) {
-      String match = m.group(0);
-      times.add(int.parse(match));
+
+    if (selectedTime == 'no time' || selectedTime == 'Set time') {
+      print('task.name for this is ${_task.taskTitle}');
+    } else {
+      RegExp exp = new RegExp(r"(\d+)");
+      Iterable<Match> matches = exp.allMatches(selectedTime);
+      List<int> times = [];
+      for (Match m in matches) {
+        String match = m.group(0);
+        times.add(int.parse(match));
+      }
+      selectedTimeOfDay = TimeOfDay(hour: times[0], minute: times[1]);
     }
-    selectedTimeOfDay = TimeOfDay(hour: times[0], minute: times[1]);
   }
 
   String selectedDate = Date(DateTime.now()).toString();
