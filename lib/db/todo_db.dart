@@ -103,6 +103,28 @@ class TodoDatabase {
     });
   }
 
+  Future<Task> getTaskById(int id) async {
+    final Database db = await _initDatabase();
+
+    final List<Map<String, dynamic>> maps =
+        await db.rawQuery('SELECT * FROM todo_table WHERE id=?', [id]);
+
+    var tasks = List.generate(maps.length, (int i) {
+      return Task(
+        date: maps[i]['task_date'],
+        taskTitle: maps[i]['task_name'],
+        isChecked: maps[i]['is_checked'] == 0 ? false : true,
+        priority: maps[i]['priority'],
+        notes: maps[i]['notes'],
+        category: maps[i]['category'],
+        alert: maps[i]['alert'],
+        time: maps[i]['task_time'],
+        id: maps[i]['id'],
+      );
+    });
+    return tasks[0];
+  }
+
   Future<List<Task>> getAllTaskList() async {
     final Database db = await _initDatabase();
 
@@ -134,36 +156,36 @@ class TodoDatabase {
 
     final List<Map<String, dynamic>> allMaps =
         await db.rawQuery('SELECT * FROM todo_table');
-
-    final List<Map<String, dynamic>> noDate =
-        await db.rawQuery('SELECT * FROM todo_table WHERE task_date is NULL');
-
-    final List<Map<String, dynamic>> uncompleted =
-        await db.rawQuery('SELECT * from todo_table WHERE is_checked=0');
-
-    print('the id in todo is ${maps[0]['id']}');
-
-    print('inputDay.toStringSQL is ${inputDay.toStringSQL()}');
-
-    print('-----------------------------------maps.length is ${maps.length}');
-
-    print(
-        '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ allMaps.length is ${allMaps.length}');
-
+//
+//    final List<Map<String, dynamic>> noDate =
+//        await db.rawQuery('SELECT * FROM todo_table WHERE task_date is NULL');
+//
+//    final List<Map<String, dynamic>> uncompleted =
+//        await db.rawQuery('SELECT * from todo_table WHERE is_checked=0');
+//
+//    print('the id in todo is ${maps[0]['id']}');
+//
+//    print('inputDay.toStringSQL is ${inputDay.toStringSQL()}');
+//
+//    print('-----------------------------------maps.length is ${maps.length}');
+//
+//    print(
+//        '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ allMaps.length is ${allMaps.length}');
+//
     print('allMaps is \n');
     for (var map in allMaps) {
       print('$map\n');
     }
-
-    print('noDate is \n');
-    for (var map in noDate) {
-      print('$map\n');
-    }
-
-    print('uncompleted tasks are \n');
-    for (var map in uncompleted) {
-      print('$map\n');
-    }
+//
+//    print('noDate is \n');
+//    for (var map in noDate) {
+//      print('$map\n');
+//    }
+//
+//    print('uncompleted tasks are \n');
+//    for (var map in uncompleted) {
+//      print('$map\n');
+//    }
 
     return List.generate(maps.length, (int i) {
       return Task(

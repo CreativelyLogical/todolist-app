@@ -138,6 +138,7 @@ class _EditTaskSheetState extends State<EditTaskSheet> {
               setState(() {
                 selectedTimeOfDay = TimeOfDay.fromDateTime(picked);
                 selectedTime = selectedTimeOfDay.format(context);
+                _task.time = selectedTime;
 //                Provider.of<TaskData>(context).updateTask(_task);
               });
             },
@@ -512,7 +513,7 @@ class _EditTaskSheetState extends State<EditTaskSheet> {
                   onPressed: () {
                     print('Save button pressed');
                     Provider.of<TaskData>(context).updateTask(_task);
-                    Navigator.pop(context);
+                    Navigator.pop(context, 'complete');
                     Fluttertoast.showToast(
                         msg: "saved changes",
                         toastLength: Toast.LENGTH_SHORT,

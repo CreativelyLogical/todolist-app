@@ -24,6 +24,10 @@ class TaskData extends ChangeNotifier {
     return await todoDB.getAllTaskList();
   }
 
+  Future<Task> getTaskById(int id) async {
+    return await todoDB.getTaskById(id);
+  }
+
 //  List<Task> taskList = [
 //    Task(taskTitle: 'Go to the gym', isChecked: false),
 //    Task(taskTitle: 'Finish Flutter course', isChecked: false),

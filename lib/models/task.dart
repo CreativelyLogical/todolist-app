@@ -40,4 +40,20 @@ class Task {
       'task_time': time,
     };
   }
+
+  String toString() {
+    return "id: ${this.id}\ntitle: ${this.taskTitle}\ncategory: ${this.category}\npriority: ${this.priority}";
+  }
+
+  void assimilateTask(final Task task) {
+    task.id = this.id;
+    task.date = this.date;
+    task.taskTitle = this.taskTitle;
+    task.isChecked = this.isChecked;
+    task.priority = this.priority;
+    task.notes = this.notes;
+    task.category = this.category;
+    task.alert = this.alert;
+    task.time = this.time;
+  }
 }
