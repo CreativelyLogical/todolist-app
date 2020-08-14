@@ -57,6 +57,14 @@ class _EditTaskSheetState extends State<EditTaskSheet> {
     selectedDateSQL = _task.date;
     selectedTime = _task.time;
     selectedReminder = _task.alert;
+    RegExp exp = new RegExp(r"(\d+)");
+    Iterable<Match> matches = exp.allMatches(selectedTime);
+    List<int> times = [];
+    for (Match m in matches) {
+      String match = m.group(0);
+      times.add(int.parse(match));
+    }
+    selectedTimeOfDay = TimeOfDay(hour: times[0], minute: times[1]);
   }
 
   String selectedDate = Date(DateTime.now()).toString();
@@ -130,7 +138,6 @@ class _EditTaskSheetState extends State<EditTaskSheet> {
               setState(() {
                 selectedTimeOfDay = TimeOfDay.fromDateTime(picked);
                 selectedTime = selectedTimeOfDay.format(context);
-                _newTask.time = selectedTime;
 //                Provider.of<TaskData>(context).updateTask(_task);
               });
             },
@@ -186,6 +193,10 @@ class _EditTaskSheetState extends State<EditTaskSheet> {
         Date(DateTime.now().add(Duration(days: 1))).toStringSQL()) {
       return 'Tomorrow';
     }
+//    else if (inputDate ==
+//        Date(DateTime.now().add(Duration(days: -1))).toStringSQL()) {
+//      return 'Yesterday';
+//    }
 
     return '$intDate $letterMonth $year';
   }
@@ -323,10 +334,10 @@ class _EditTaskSheetState extends State<EditTaskSheet> {
                 child: GestureDetector(
                   onTap: () {
                     getDateEditorOS(context);
-                    setState(() {
-                      _task.date = selectedDateSQL;
-//                        Provider.of<TaskData>(context).updateTask(_task);
-                    });
+//                    setState(() {
+//                      _task.date = selectedDateSQL;
+////                        Provider.of<TaskData>(context).updateTask(_task);
+//                    });
                   },
                   child: Row(
                     children: <Widget>[
