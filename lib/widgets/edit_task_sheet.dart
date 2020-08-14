@@ -31,6 +31,8 @@ class EditTaskSheet extends StatefulWidget {
 class _EditTaskSheetState extends State<EditTaskSheet> {
   Task _task;
 
+  Task _newTask;
+
   String selectedPriority;
 
   String selectedDateSQL;
@@ -91,7 +93,7 @@ class _EditTaskSheetState extends State<EditTaskSheet> {
 //              selectedDate = Date(newDate).toString();
               selectedDateSQL = Date(newDate).toStringSQL();
               _task.date = selectedDateSQL;
-              Provider.of<TaskData>(context).updateTask(_task);
+//              Provider.of<TaskData>(context).updateTask(_task);
             });
           },
         ),
@@ -127,8 +129,8 @@ class _EditTaskSheetState extends State<EditTaskSheet> {
               setState(() {
                 selectedTimeOfDay = TimeOfDay.fromDateTime(picked);
                 selectedTime = selectedTimeOfDay.format(context);
-                _task.time = selectedTime;
-                Provider.of<TaskData>(context).updateTask(_task);
+                _newTask.time = selectedTime;
+//                Provider.of<TaskData>(context).updateTask(_task);
               });
             },
           ),
@@ -252,8 +254,8 @@ class _EditTaskSheetState extends State<EditTaskSheet> {
                               setState(() {
                                 selectedPriority = 'none';
                                 _task.priority = selectedPriority;
-                                Provider.of<TaskData>(context)
-                                    .updateTask(_task);
+//                                Provider.of<TaskData>(context)
+//                                    .updateTask(_task);
                               });
                             },
                             screen: 'edit_task',
@@ -268,8 +270,8 @@ class _EditTaskSheetState extends State<EditTaskSheet> {
                               setState(() {
                                 selectedPriority = 'low';
                                 _task.priority = selectedPriority;
-                                Provider.of<TaskData>(context)
-                                    .updateTask(_task);
+//                                Provider.of<TaskData>(context)
+//                                    .updateTask(_task);
                               });
                             },
                             screen: 'edit_task',
@@ -284,8 +286,8 @@ class _EditTaskSheetState extends State<EditTaskSheet> {
                               setState(() {
                                 selectedPriority = 'medium';
                                 _task.priority = selectedPriority;
-                                Provider.of<TaskData>(context)
-                                    .updateTask(_task);
+//                                Provider.of<TaskData>(context)
+//                                    .updateTask(_task);
                               });
                             },
                             screen: 'edit_task',
@@ -300,8 +302,8 @@ class _EditTaskSheetState extends State<EditTaskSheet> {
                               setState(() {
                                 selectedPriority = 'high';
                                 _task.priority = selectedPriority;
-                                Provider.of<TaskData>(context)
-                                    .updateTask(_task);
+//                                Provider.of<TaskData>(context)
+//                                    .updateTask(_task);
                               });
                             },
                             screen: 'edit_task',
@@ -321,7 +323,7 @@ class _EditTaskSheetState extends State<EditTaskSheet> {
                   onTap: () {
                     getDateEditorOS(context);
                     setState(() {
-//                        _task.date = selectedDateSQL;
+                      _task.date = selectedDateSQL;
 //                        Provider.of<TaskData>(context).updateTask(_task);
                     });
                   },
@@ -382,8 +384,8 @@ class _EditTaskSheetState extends State<EditTaskSheet> {
                             newCategoryCallback: (String newCategory) {
                               setState(() {
                                 _task.category = newCategory;
-                                Provider.of<TaskData>(context)
-                                    .updateTask(_task);
+//                                Provider.of<TaskData>(context)
+//                                    .updateTask(_task);
                               });
                             },
                           ),
@@ -438,7 +440,7 @@ class _EditTaskSheetState extends State<EditTaskSheet> {
                           selectedReminder = reminder;
                           setState(() {});
                           _task.alert = selectedReminder;
-                          Provider.of<TaskData>(context).updateTask(_task);
+//                          Provider.of<TaskData>(context).updateTask(_task);
                         },
                       ),
                     );
@@ -465,15 +467,6 @@ class _EditTaskSheetState extends State<EditTaskSheet> {
                   ),
                 ),
               ),
-              Container(
-                margin: EdgeInsets.only(top: SizeConfig.screenHeight * 0.05),
-                child: IconButton(
-                  icon: Icon(Icons.save),
-                  onPressed: () {
-                    print('Save button pressed');
-                  },
-                ),
-              ),
             ],
           ),
         ),
@@ -483,50 +476,55 @@ class _EditTaskSheetState extends State<EditTaskSheet> {
           child: Align(
             alignment: Alignment(0, 0.95),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(
-                    left: SizeConfig.screenWidth * 0.05,
+                FlatButton(
+                  child: Text(
+                    'Delete task',
+                    style: TextStyle(
+                      color: kWhite,
+                      fontSize: SizeConfig.blockSizeHorizontal * 5,
+                    ),
                   ),
-                  child: FlatButton(
-                    child: Text(
-                      'Delete task',
-                      style: TextStyle(
-                        color: kWhite,
-                        fontSize: SizeConfig.blockSizeHorizontal * 5,
-                      ),
-                    ),
-                    color: Colors.red,
-                    onPressed: () {
-                      print('delete button pressed');
-                      Provider.of<TaskData>(context).deleteTask(_task);
-                      Navigator.pop(context);
-                    },
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                    ),
+                  color: Colors.red,
+                  onPressed: () {
+                    print('delete button pressed');
+                    Provider.of<TaskData>(context).deleteTask(_task);
+                    Navigator.pop(context);
+                  },
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(20.0)),
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.only(
-                    right: SizeConfig.screenWidth * 0.05,
+                RawMaterialButton(
+                  onPressed: () {
+                    print('Save button pressed');
+                    Provider.of<TaskData>(context).updateTask(_task);
+                    Navigator.pop(context);
+                  },
+                  fillColor: Colors.green,
+                  shape: CircleBorder(),
+                  padding: EdgeInsets.all(10.0),
+                  child: Icon(
+                    Icons.check,
+                    color: Colors.white,
+                    size: SizeConfig.blockSizeVertical * 4,
                   ),
-                  child: FlatButton(
-                    child: Text(
-                      'Mark as done',
-                      style: TextStyle(
-                        color: kWhite,
-                        fontSize: SizeConfig.blockSizeHorizontal * 5,
-                      ),
+                ),
+                FlatButton(
+                  child: Text(
+                    'Mark as done',
+                    style: TextStyle(
+                      color: kWhite,
+                      fontSize: SizeConfig.blockSizeHorizontal * 5,
                     ),
-                    color: kBlue,
-                    onPressed: () {
-                      print('done button pressed');
-                    },
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                    ),
+                  ),
+                  color: kBlue,
+                  onPressed: () {
+                    print('done button pressed');
+                  },
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(20.0)),
                   ),
                 ),
               ],
@@ -537,3 +535,20 @@ class _EditTaskSheetState extends State<EditTaskSheet> {
     );
   }
 }
+
+//class SaveChangesButton extends StatelessWidget {
+//  @override
+//  Widget build(BuildContext context) {
+//    // TODO: implement build
+//    return RawMaterialButton(
+//      fillColor: Colors.green,
+//      shape: CircleBorder(),
+//      padding: EdgeInsets.all(10.0),
+//      child: Icon(
+//        Icons.check,
+//        color: Colors.white,
+//        size: SizeConfig.blockSizeVertical * 4,
+//      ),
+//    );
+//  }
+//}

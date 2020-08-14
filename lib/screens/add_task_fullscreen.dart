@@ -96,11 +96,13 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen>
 
   String selectedReminder;
 
-  String selectedDate = Date(DateTime.now()).toString();
+//  String selectedDate = Date(DateTime.now()).toString();
+  String selectedDate = TaskScreen.selectedDay.toString();
 
   String selectedTag = 'Today';
 
-  String selectedDateSQL = Date(DateTime.now()).toStringSQL();
+//  String selectedDateSQL = Date(DateTime.now()).toStringSQL();
+  String selectedDateSQL = TaskScreen.selectedDay.toStringSQL();
 
   String timeOption = 'yes time';
 
@@ -138,7 +140,7 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen>
     );
   }
 
-  Future<Null> _selectDate(BuildContext context) async {
+  Future<void> _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
@@ -153,7 +155,7 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen>
     }
   }
 
-  Future<Null> _selectDateCupertino(BuildContext context) async {
+  Future<void> _selectDateCupertino(BuildContext context) async {
     final DateTime picked = await showCupertinoModalPopup(
       context: context,
       builder: (BuildContext context) => _buildBottomSheet(
