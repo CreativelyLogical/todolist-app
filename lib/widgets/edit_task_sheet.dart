@@ -16,6 +16,7 @@ import 'package:flutter/cupertino.dart';
 import 'duration_picker_dialog.dart';
 import 'package:my_todo/widgets/horizontal_sized_box.dart';
 import 'package:my_todo/widgets/category_dialog.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class EditTaskSheet extends StatefulWidget {
   EditTaskSheet({this.task, this.dateChangedCallback});
@@ -501,6 +502,13 @@ class _EditTaskSheetState extends State<EditTaskSheet> {
                     print('Save button pressed');
                     Provider.of<TaskData>(context).updateTask(_task);
                     Navigator.pop(context);
+                    Fluttertoast.showToast(
+                        msg: "saved changes",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,
+                        backgroundColor: Colors.grey,
+                        textColor: Colors.white,
+                        fontSize: 16.0);
                   },
                   fillColor: Colors.green,
                   shape: CircleBorder(),

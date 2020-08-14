@@ -37,14 +37,21 @@ class PriorityButtons extends StatelessWidget {
           radius: screen == 'add_task'
               ? SizeConfig.blockSizeVertical * 3.0
               : SizeConfig.blockSizeVertical * 3.0,
-          child: Icon(
-            CustomFlagIcon.flag,
-            color:
-                selectedPriority == priority ? kWhite : kWhite.withOpacity(0),
-            size: screen == 'add_task'
-                ? SizeConfig.blockSizeVertical * 3.5
-                : SizeConfig.blockSizeVertical * 3.5,
-          ),
+          child: selectedPriority == priority
+              ? Icon(
+                  CustomFlagIcon.flag,
+                  color: kWhite,
+                  size: SizeConfig.blockSizeVertical * 3.5,
+                )
+              : Container(),
+//          child: Icon(
+//            CustomFlagIcon.flag,
+//            color:
+//                selectedPriority == priority ? kWhite : kWhite.withOpacity(0),
+//            size: screen == 'add_task'
+//                ? SizeConfig.blockSizeVertical * 3.5
+//                : SizeConfig.blockSizeVertical * 3.5,
+//          ),
         ),
       ),
     );
