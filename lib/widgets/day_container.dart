@@ -64,7 +64,7 @@ class _DayContainerState extends State<DayContainer> {
       // For the DayContainers that aren't selected
       if (inputDay.dateCompare(Date(DateTime.now()))) {
         // If the DayContainer is today
-        return Colors.lightGreenAccent;
+        return Colors.white;
       } else {
         return Colors.white.withOpacity(0.5);
       }

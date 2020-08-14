@@ -29,7 +29,7 @@ class TodoNotifications {
         await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
 
     var initializationSettingsAndroid =
-        AndroidInitializationSettings('app_icon');
+        new AndroidInitializationSettings('@mipmap/ic_launcher');
     // Note: permissions aren't requested here just to demonstrate that can be done later using the `requestPermissions()` method
     // of the `IOSFlutterLocalNotificationsPlugin` class
     var initializationSettingsIOS = IOSInitializationSettings(
@@ -70,9 +70,9 @@ class TodoNotifications {
         'your other channel id',
         'your other channel name',
         'your other channel description',
-        icon: 'secondary_icon',
-        sound: RawResourceAndroidNotificationSound('slow_spring_board'),
-        largeIcon: DrawableResourceAndroidBitmap('sample_large_icon'),
+        icon: '@mipmap/ic_launcher',
+//        sound: RawResourceAndroidNotificationSound('slow_spring_board'),
+        largeIcon: DrawableResourceAndroidBitmap('@mipmap/ic_launcher'),
 //        vibrationPattern: vibrationPattern,
         enableLights: true,
         color: const Color.fromARGB(255, 255, 0, 0),
