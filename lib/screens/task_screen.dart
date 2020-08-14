@@ -210,124 +210,6 @@ class _TaskScreenState extends State<TaskScreen> {
                 });
               },
             ),
-//            Container(
-//              padding: EdgeInsets.only(left: SizeConfig.screenWidth * 0.05),
-//              alignment: Alignment.centerLeft,
-//              child: Text(
-//                '${TaskScreen.selectedDay.toString()}',
-//                style: TextStyle(
-//                  color: kWhite,
-//                  fontSize: SizeConfig.screenHeight * 0.04,
-//                ),
-//              ),
-//            ),
-
-//            Container(
-//              decoration: BoxDecoration(
-//                color: Colors.blue,
-//                borderRadius: BorderRadius.only(
-//                    bottomLeft: Radius.circular(15.0),
-//                    bottomRight: Radius.circular(15.0)),
-//              ),
-//              child: Column(
-//                textBaseline: TextBaseline.alphabetic,
-//                crossAxisAlignment: CrossAxisAlignment.start,
-//                children: <Widget>[
-//                  Row(
-//                    children: <Widget>[
-//                      Expanded(
-//                        child: Padding(
-//                          padding: EdgeInsets.only(
-//                            top: SizeConfig.screenHeight * 0.035,
-//                            bottom: 5,
-//                          ),
-//                          child: Text(
-//                            TaskScreen.selectedDay.month,
-//                            style: TextStyle(
-//                              color: kWhite,
-//                              fontSize: 30.0,
-//                            ),
-//                            textAlign: TextAlign.center,
-//                          ),
-//                        ),
-//                      )
-//                    ],
-//                  ),
-//                  Padding(
-//                    padding: EdgeInsets.only(
-////                      left: SizeConfig.screenWidth * 0.05,
-////                      bottom: SizeConfig.screenHeight * 0.015,
-//                        ),
-//                    child: SizedBox(
-//                      height: SizeConfig.screenHeight * 0.125,
-//                      child: Container(
-////                          color: kLightBlueAccent,
-////                    margin: EdgeInsets.only(bottom: 10.0),
-////                    padding: EdgeInsets.only(bottom: 15.0),
-//                          child: Row(
-//                        crossAxisAlignment: CrossAxisAlignment.center,
-//                        mainAxisAlignment: MainAxisAlignment.center,
-////                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-////                  padding: EdgeInsets.only(bottom: 20),
-////                        scrollDirection: Axis.horizontal,
-//                        children: <Widget>[
-//                          DayContainer(
-//                            today: DateTime.now(),
-//                            inputWeekday: 0,
-//                            setStateCallback: () {
-//                              setState(() {});
-//                            },
-//                          ),
-//                          DayContainer(
-//                            today: DateTime.now(),
-//                            inputWeekday: 1,
-//                            setStateCallback: () {
-//                              setState(() {});
-//                            },
-//                          ),
-//                          DayContainer(
-//                            today: DateTime.now(),
-//                            inputWeekday: 2,
-//                            setStateCallback: () {
-//                              setState(() {});
-//                            },
-//                          ),
-//                          DayContainer(
-//                            today: DateTime.now(),
-//                            inputWeekday: 3,
-//                            setStateCallback: () {
-//                              setState(() {});
-//                            },
-//                          ),
-//                          DayContainer(
-//                            today: DateTime.now(),
-//                            inputWeekday: 4,
-//                            setStateCallback: () {
-//                              setState(() {});
-//                            },
-//                          ),
-//                          DayContainer(
-//                            today: DateTime.now(),
-//                            inputWeekday: 5,
-//                            setStateCallback: () {
-//                              setState(() {});
-//                            },
-//                          ),
-//                          DayContainer(
-//                            today: DateTime.now(),
-//                            inputWeekday: 6,
-//                            setStateCallback: () {
-//                              setState(() {});
-//                            },
-//                          ),
-//                        ],
-//                      )),
-//                    ),
-//                  ),
-//                ],
-//              ),
-//            ),
-//
             Expanded(
               child: Container(
                 decoration: BoxDecoration(
@@ -336,33 +218,9 @@ class _TaskScreenState extends State<TaskScreen> {
                     topLeft: Radius.circular(20.0),
                   ),
                 ),
-//                padding: EdgeInsets.only(
-////                      bottom: SizeConfig.blockSizeVertical * 12,
-//                    left: SizeConfig.screenWidth * 0.03,
-//                    right: SizeConfig.screenWidth * 0.03),
                 child: TaskList(),
               ),
             ),
-//            Expanded(
-//              child: Container(
-////                margin: EdgeInsets.only(
-//////                    bottom: SizeConfig.screenHeight * 0.06,
-////                    left: SizeConfig.screenWidth * 0.03,
-////                    right: SizeConfig.screenWidth * 0.03),
-////                color: kWhite,
-//                decoration: BoxDecoration(
-//                  color: kWhite,
-//                  borderRadius: BorderRadius.only(
-//                    topLeft: Radius.circular(20.0),
-//                  ),
-//                ),
-//                padding: EdgeInsets.only(
-////                      bottom: SizeConfig.blockSizeVertical * 12,
-//                    left: SizeConfig.screenWidth * 0.03,
-//                    right: SizeConfig.screenWidth * 0.03),
-//                child: TaskList(),
-//              ),
-//            ),
           ],
         ));
   }

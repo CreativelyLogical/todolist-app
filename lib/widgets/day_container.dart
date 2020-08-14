@@ -56,6 +56,31 @@ class _DayContainerState extends State<DayContainer> {
         fontSize: 16.0);
   }
 
+  Color dayColor(Date selectedDay, Date inputDay) {
+    // For the DayContainer that IS selected
+    if (selectedDay.dateCompare(inputDay)) {
+      return kBlue;
+    } else {
+      // For the DayContainers that aren't selected
+      if (inputDay.dateCompare(Date(DateTime.now()))) {
+        // If the DayContainer is today
+        return Colors.lightGreenAccent;
+      } else {
+        return Colors.white.withOpacity(0.5);
+      }
+    }
+  }
+
+  TextStyle dayTextStyle(Date selectedDay, Date inputDay) {
+    return TextStyle(
+      color: dayColor(selectedDay, inputDay),
+      fontSize: SizeConfig.blockSizeVertical * 4,
+      fontWeight: inputDay.dateCompare(Date(DateTime.now()))
+          ? FontWeight.w600
+          : FontWeight.w500,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     int todayWeekday = widget.today.weekday % 7;
@@ -120,25 +145,21 @@ class _DayContainerState extends State<DayContainer> {
 //                      .day
 //                      .toString(),
                     inputDay.day.toString(),
-                    style: TextStyle(
-                      color: TaskScreen.selectedDay.dateCompare(inputDay)
-                          ? kBlue
-                          : Colors.white.withOpacity(0.5),
-//              color: Colors.white,
-                      fontWeight: FontWeight.w500,
-                      fontSize: SizeConfig.blockSizeVertical * 4,
-                    ),
+                    style: dayTextStyle(TaskScreen.selectedDay, inputDay),
+//                    style: TextStyle(
+//                      color: dayColor(TaskScreen.selectedDay, inputDay),
+////                      color: TaskScreen.selectedDay.dateCompare(inputDay)
+////                          ? kBlue
+////                          : Colors.white.withOpacity(0.5),
+////              color: Colors.white,
+//                      fontWeight: FontWeight.w500,
+//                      fontSize: SizeConfig.blockSizeVertical * 4,
+//                    ),
                   ),
                 ],
               ),
             ),
           ),
-//        TaskScreen.selectedDay.dateCompare(inputDay)
-//            ? Icon(
-//                Icons.arrow_drop_up,
-//                color: kRallyGreen,
-//              )
-//            : Icon(null),
         ],
       ),
     );
