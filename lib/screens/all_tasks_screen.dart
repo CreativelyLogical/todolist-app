@@ -443,28 +443,37 @@ class VersatileListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return GestureDetector(
-      onTap: () {
-        showModalBottomSheet(
-          context: context,
-          builder: (context) => Container(
-            height: SizeConfig.screenHeight * 0.75,
-            child: EditTaskSheet(
-              task: task,
+      onTap: () async {
+        if (!task.isChecked) {
+          String result = await showModalBottomSheet(
+            context: context,
+            builder: (context) => Container(
+              height: SizeConfig.screenHeight * 0.75,
+              child: EditTaskSheet(
+                task: task,
 //              dateChangedCallback: (String newSelectedDate) {
 //                setState(() {
 //                  widget.task.date = newSelectedDate;
 //                  Provider.of<TaskData>(context).updateTask(widget.task);
 //                });
 //              },
+              ),
             ),
-          ),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(30.0),
-                topRight: Radius.circular(30.0)),
-          ),
-          isScrollControlled: true,
-        );
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(30.0),
+                  topRight: Radius.circular(30.0)),
+            ),
+            isScrollControlled: true,
+          );
+
+          if (result != 'complete') {
+            // resetting state of widget.task because the modalBottomSheet was closed by pressing the save button
+            Task originalTask =
+                await Provider.of<TaskData>(context).getTaskById(task.id);
+            originalTask.assimilateTask(task);
+          }
+        }
       },
       child: Container(
           padding: EdgeInsets.only(
