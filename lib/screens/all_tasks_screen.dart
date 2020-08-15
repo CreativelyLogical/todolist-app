@@ -10,6 +10,7 @@ import 'package:my_todo/widgets/notes_indicator_icons.dart';
 import 'task_category_icons.dart';
 //import 'calendar_screen.dart';
 import 'package:my_todo/widgets/edit_task_sheet.dart';
+import 'package:my_todo/screens/add_task_fullscreen.dart';
 
 class AllTasksScreen extends StatefulWidget {
   @override
@@ -65,7 +66,7 @@ class _AllTasksScreenState extends State<AllTasksScreen> {
                     },
                   ),
                   Text(
-                    'Week View',
+                    'Tasks',
                     style: TextStyle(
                         color: kWhite.withOpacity(0.6),
                         fontSize: SizeConfig.screenHeight * 0.02),
@@ -132,31 +133,55 @@ class _AllTasksScreenState extends State<AllTasksScreen> {
         child: Container(
           margin: EdgeInsets.only(top: SizeConfig.screenHeight * 0.02),
 //        color: kWhite,
-          width: SizeConfig.screenWidth,
-          height: SizeConfig.screenHeight,
+//          width: SizeConfig.screenWidth,
+//          height: SizeConfig.screenHeight,
 
           child: allTasksList == null
               ? Container(
                   child: Center(
                     child: Text(
-                      'nothing yet lol',
+                      'Loading Tasks...',
                     ),
                   ),
                 )
               : Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.only(
-                          left: SizeConfig.screenWidth * 0.03,
-                          bottom: SizeConfig.screenHeight * 0.01),
-                      child: Text(
-                        "All Tasks",
-                        style: TextStyle(
-                          fontSize: SizeConfig.blockSizeVertical * 4,
-                          color: kWhite,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(
+                              left: SizeConfig.screenWidth * 0.03,
+                              bottom: SizeConfig.screenHeight * 0.01),
+                          child: Text(
+                            "All Tasks",
+                            style: TextStyle(
+                              fontSize: SizeConfig.blockSizeVertical * 4,
+                              color: kWhite,
+                            ),
+                          ),
                         ),
-                      ),
+                        IconButton(
+                          icon: Icon(
+                            Icons.add_circle,
+                            size: SizeConfig.blockSizeVertical * 4,
+                            color: kWhite,
+                          ),
+                          padding: EdgeInsets.only(
+                            right: SizeConfig.screenWidth * 0.04,
+                            bottom: SizeConfig.screenHeight * 0.01,
+                          ),
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => AddTaskFullScreen(
+                                          screen: 'AllTasksScreen',
+                                        )));
+                          },
+                        )
+                      ],
                     ),
                     Expanded(
                       child: Container(

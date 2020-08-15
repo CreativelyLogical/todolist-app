@@ -21,6 +21,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:my_todo/notifications/todo_notifications.dart';
 
 class AddTaskFullScreen extends StatefulWidget {
+  final String screen;
+
+  AddTaskFullScreen({@required this.screen});
   @override
   _AddTaskFullScreenState createState() => _AddTaskFullScreenState();
 }
@@ -104,7 +107,7 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen>
 //  String selectedDateSQL = Date(DateTime.now()).toStringSQL();
   String selectedDateSQL = TaskScreen.selectedDay.toStringSQL();
 
-  String timeOption = 'yes time';
+  bool taskHasTime = true;
 
   bool remind = false;
 
@@ -300,8 +303,11 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen>
 //      context: context,
 //    );
 
-//    print('now selectedPriority is $selectedPriority');
+    if (widget.screen == 'AllTasksScreen') {
+      selectedDate = Date(DateTime.now()).toString();
+    }
 
+//    print('now selectedPriority is $selectedPriority');
     SizeConfig().init(context);
     return Scaffold(
         resizeToAvoidBottomPadding: false,
@@ -600,12 +606,16 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen>
                             GestureDetector(
                               onTap: () async {
 //                              await _selectTime(context);
-                                getTimePickerOS(context);
-                                setState(() {
-                                  if (selectedTime != 'Set time') {
-                                    timeOption = 'yes time';
-                                  }
-                                });
+                                if (taskHasTime) {
+                                  getTimePickerOS(context);
+//                                  setState(() {});
+                                }
+//                                getTimePickerOS(context);
+//                                setState(() {
+//                                  if (selectedTime != 'Set time') {
+//                                    timeOption = true;
+//                                  }
+//                                });
                               },
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -615,10 +625,10 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen>
                                     style: TextStyle(
                                       fontSize:
                                           SizeConfig.blockSizeVertical * 3.5,
-                                      color: timeOption == 'yes time'
+                                      color: taskHasTime
                                           ? Colors.grey.shade800
                                           : Colors.grey.shade400,
-                                      decoration: timeOption == 'yes time'
+                                      decoration: taskHasTime
                                           ? null
                                           : TextDecoration.lineThrough,
                                     ),
@@ -631,7 +641,7 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen>
                                     child: Icon(
                                       SetTimeIcon.clock,
                                       size: SizeConfig.blockSizeVertical * 4,
-                                      color: timeOption == 'yes time'
+                                      color: taskHasTime
                                           ? Colors.grey.shade800
                                           : Colors.grey.shade400,
                                     ),
@@ -648,24 +658,21 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen>
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(10.0)),
                                 ),
-                                color: timeOption == 'no time'
-                                    ? kBlue
-                                    : Colors.grey.shade300,
+                                color:
+                                    !taskHasTime ? kBlue : Colors.grey.shade300,
                                 child: Text(
                                   'No Time',
                                   style: TextStyle(
                                     fontSize: SizeConfig.blockSizeVertical * 3,
-                                    color: timeOption == 'no time'
-                                        ? kWhite
-                                        : kGrey,
+                                    color: !taskHasTime ? kWhite : kGrey,
                                   ),
                                 ),
                                 onPressed: () {
                                   setState(() {
-                                    if (timeOption == 'yes time')
-                                      timeOption = 'no time';
+                                    if (taskHasTime == true)
+                                      taskHasTime = false;
                                     else
-                                      timeOption = 'yes time';
+                                      taskHasTime = true;
                                   });
                                 },
                               ),
@@ -881,15 +888,20 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen>
                                     (remind == true && selectedReminder != null)
                                         ? selectedReminder
                                         : 'no reminder',
-                                time: timeOption == 'yes time'
-                                    ? selectedTime
+                                time: taskHasTime == true
+                                    ? (selectedTime == 'Set time'
+                                        ? 'no time'
+                                        : selectedTime)
                                     : 'no time',
                               );
                               print(selectedTimeOfDay);
-                              await TodoNotifications().schedule(
-                                  selectedTimeOfDay,
-                                  notificationTitle: taskNameController.text,
-                                  notificationBody: 'Reminder');
+                              if (!taskHasTime || selectedTime == 'Set time') {
+                              } else {
+                                await TodoNotifications().schedule(
+                                    selectedTimeOfDay,
+                                    notificationTitle: taskNameController.text,
+                                    notificationBody: 'Reminder');
+                              }
                               Navigator.pop(context);
                             }
                           },

@@ -134,7 +134,7 @@ class _TaskScreenState extends State<TaskScreen> {
                       },
                     ),
                     Text(
-                      'Week View',
+                      'Tasks',
                       style: TextStyle(
                           color: kWhite,
                           fontSize: SizeConfig.screenHeight * 0.02),

@@ -97,7 +97,9 @@ class TaskList extends StatelessWidget {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => AddTaskFullScreen()));
+                                  builder: (context) => AddTaskFullScreen(
+                                        screen: 'TaskListScreen',
+                                      )));
                         },
                       )
                     ],

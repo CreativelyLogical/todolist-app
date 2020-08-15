@@ -42,6 +42,10 @@ class _EditTaskSheetState extends State<EditTaskSheet> {
 
   String selectedReminder;
 
+  TextEditingController taskTitleController;
+
+  bool taskHasTime;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -67,6 +71,13 @@ class _EditTaskSheetState extends State<EditTaskSheet> {
         times.add(int.parse(match));
       }
       selectedTimeOfDay = TimeOfDay(hour: times[0], minute: times[1]);
+    }
+
+    taskTitleController = TextEditingController(text: _task.taskTitle);
+    if (_task.time == 'no time') {
+      taskHasTime = false;
+    } else {
+      taskHasTime = true;
     }
   }
 
@@ -236,7 +247,7 @@ class _EditTaskSheetState extends State<EditTaskSheet> {
                   bottom: SizeConfig.screenHeight * 0.03,
                 ),
                 child: TextFormField(
-                  initialValue: widget.task.taskTitle,
+                  controller: taskTitleController,
                   style: TextStyle(
                     fontSize: 40.0,
                   ),
@@ -260,71 +271,76 @@ class _EditTaskSheetState extends State<EditTaskSheet> {
                       width: SizeConfig.screenWidth * 0.1,
                     ),
                     Expanded(
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        children: <Widget>[
-                          PriorityButtons(
-                            selectedPriority: selectedPriority,
-                            priority: 'none',
-                            onTap: () {
-                              setState(() {
-                                selectedPriority = 'none';
-                                _task.priority = selectedPriority;
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                            right: SizeConfig.blockSizeHorizontal * 5),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            PriorityButtons(
+                              selectedPriority: selectedPriority,
+                              priority: 'none',
+                              onTap: () {
+                                setState(() {
+                                  selectedPriority = 'none';
+                                  _task.priority = selectedPriority;
 //                                Provider.of<TaskData>(context)
 //                                    .updateTask(_task);
-                              });
-                            },
-                            screen: 'edit_task',
-                          ),
-                          HorizontalSizedBox(
-                            boxWidth: SizeConfig.screenWidth * 0.08,
-                          ),
-                          PriorityButtons(
-                            selectedPriority: selectedPriority,
-                            priority: 'low',
-                            onTap: () {
-                              setState(() {
-                                selectedPriority = 'low';
-                                _task.priority = selectedPriority;
+                                });
+                              },
+                              screen: 'edit_task',
+                            ),
+//                          HorizontalSizedBox(
+//                            boxWidth: SizeConfig.screenWidth * 0.08,
+//                          ),
+                            PriorityButtons(
+                              selectedPriority: selectedPriority,
+                              priority: 'low',
+                              onTap: () {
+                                setState(() {
+                                  selectedPriority = 'low';
+                                  _task.priority = selectedPriority;
 //                                Provider.of<TaskData>(context)
 //                                    .updateTask(_task);
-                              });
-                            },
-                            screen: 'edit_task',
-                          ),
-                          HorizontalSizedBox(
-                            boxWidth: SizeConfig.screenWidth * 0.08,
-                          ),
-                          PriorityButtons(
-                            selectedPriority: selectedPriority,
-                            priority: 'medium',
-                            onTap: () {
-                              setState(() {
-                                selectedPriority = 'medium';
-                                _task.priority = selectedPriority;
+                                });
+                              },
+                              screen: 'edit_task',
+                            ),
+//                          HorizontalSizedBox(
+//                            boxWidth: SizeConfig.screenWidth * 0.08,
+//                          ),
+                            PriorityButtons(
+                              selectedPriority: selectedPriority,
+                              priority: 'medium',
+                              onTap: () {
+                                setState(() {
+                                  selectedPriority = 'medium';
+                                  _task.priority = selectedPriority;
 //                                Provider.of<TaskData>(context)
 //                                    .updateTask(_task);
-                              });
-                            },
-                            screen: 'edit_task',
-                          ),
-                          HorizontalSizedBox(
-                            boxWidth: SizeConfig.screenWidth * 0.08,
-                          ),
-                          PriorityButtons(
-                            selectedPriority: selectedPriority,
-                            priority: 'high',
-                            onTap: () {
-                              setState(() {
-                                selectedPriority = 'high';
-                                _task.priority = selectedPriority;
+                                });
+                              },
+                              screen: 'edit_task',
+                            ),
+//                          HorizontalSizedBox(
+//                            boxWidth: SizeConfig.screenWidth * 0.08,
+//                          ),
+                            PriorityButtons(
+                              selectedPriority: selectedPriority,
+                              priority: 'high',
+                              onTap: () {
+                                setState(() {
+                                  selectedPriority = 'high';
+                                  _task.priority = selectedPriority;
 //                                Provider.of<TaskData>(context)
 //                                    .updateTask(_task);
-                              });
-                            },
-                            screen: 'edit_task',
-                          ),
-                        ],
+                                });
+                              },
+                              screen: 'edit_task',
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],
@@ -415,6 +431,7 @@ class _EditTaskSheetState extends State<EditTaskSheet> {
                 padding: EdgeInsets.only(
                   left: SizeConfig.screenWidth * 0.05,
                   bottom: SizeConfig.screenHeight * 0.03,
+                  right: SizeConfig.screenWidth * 0.05,
                 ),
                 child: GestureDetector(
                   onTap: () {
@@ -422,23 +439,55 @@ class _EditTaskSheetState extends State<EditTaskSheet> {
                     print('time selector pressed');
                   },
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      Icon(
-                        SetTimeIcon.clock,
-                        color: kBlue,
-                      ),
-                      SizedBox(
-                        width: SizeConfig.screenWidth * 0.1,
-                      ),
-                      Text(
+                      Row(
+                        children: [
+                          Icon(
+                            SetTimeIcon.clock,
+                            color: kBlue,
+                          ),
+                          SizedBox(
+                            width: SizeConfig.screenWidth * 0.1,
+                          ),
+                          Text(
 //                          selectedTime == null ? _task.time : selectedTime,
-                        selectedTime,
-                        style: TextStyle(
-                          color: kBlue,
-                          fontSize: 25,
-                          fontWeight: FontWeight.w500,
+                            selectedTime == 'no time'
+                                ? 'Set Time'
+                                : selectedTime,
+                            style: TextStyle(
+                              color: taskHasTime ? kBlue : Colors.grey.shade400,
+                              decoration: taskHasTime
+                                  ? null
+                                  : TextDecoration.lineThrough,
+                              fontSize: 25,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                      FlatButton(
+                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
                         ),
-                      )
+                        color: !taskHasTime ? kBlue : Colors.grey.shade300,
+                        child: Text(
+                          'No Time',
+                          style: TextStyle(
+                            fontSize: 25,
+                            color: !taskHasTime ? kWhite : kGrey,
+                          ),
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            if (taskHasTime == true)
+                              taskHasTime = false;
+                            else
+                              taskHasTime = true;
+                          });
+                        },
+                      ),
                     ],
                   ),
                 ),
@@ -472,7 +521,9 @@ class _EditTaskSheetState extends State<EditTaskSheet> {
                         width: SizeConfig.screenWidth * 0.1,
                       ),
                       Text(
-                        selectedReminder,
+                        selectedReminder == 'no reminder'
+                            ? 'No Reminder'
+                            : selectedReminder,
                         style: TextStyle(
                           color: kBlue,
                           fontSize: 25,
@@ -515,6 +566,7 @@ class _EditTaskSheetState extends State<EditTaskSheet> {
                 RawMaterialButton(
                   onPressed: () {
                     print('Save button pressed');
+                    _task.taskTitle = taskTitleController.text;
                     Provider.of<TaskData>(context).updateTask(_task);
                     Navigator.pop(context, 'complete');
                     Fluttertoast.showToast(
@@ -544,7 +596,13 @@ class _EditTaskSheetState extends State<EditTaskSheet> {
                   ),
                   color: kBlue,
                   onPressed: () {
-                    print('done button pressed');
+                    if (!_task.isChecked) {
+                      _task.toggleChecked();
+                      Provider.of<TaskData>(context).updateTask(_task);
+                      Navigator.pop(context, 'complete');
+                    } else {
+                      print('Task is already done');
+                    }
                   },
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(20.0)),
