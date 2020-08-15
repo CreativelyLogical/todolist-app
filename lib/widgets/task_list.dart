@@ -217,32 +217,35 @@ class _TaskListTileState extends State<TaskListTile> {
     SizeConfig().init(context);
     return GestureDetector(
       onTap: () async {
-        String result = await showModalBottomSheet<String>(
-          context: context,
-          builder: (context) => Container(
-            height: SizeConfig.screenHeight * 0.75,
-            child: EditTaskSheet(
-              task: widget.task,
+        if (!widget.task.isChecked) {
+          String result = await showModalBottomSheet<String>(
+            context: context,
+            builder: (context) => Container(
+              height: SizeConfig.screenHeight * 0.75,
+              child: EditTaskSheet(
+                task: widget.task,
 //              dateChangedCallback: (String newSelectedDate) {
 //                setState(() {
 //                  widget.task.date = newSelectedDate;
 //                  Provider.of<TaskData>(context).updateTask(widget.task);
 //                });
 //              },
+              ),
             ),
-          ),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(30.0),
-                topRight: Radius.circular(30.0)),
-          ),
-          isScrollControlled: true,
-        );
-        if (result != 'complete') {
-          // resetting state of widget.task because the modalBottomSheet was closed by pressing the save button
-          Task originalTask =
-              await Provider.of<TaskData>(context).getTaskById(widget.task.id);
-          originalTask.assimilateTask(widget.task);
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(30.0),
+                  topRight: Radius.circular(30.0)),
+            ),
+            isScrollControlled: true,
+          );
+
+          if (result != 'complete') {
+            // resetting state of widget.task because the modalBottomSheet was closed by pressing the save button
+            Task originalTask = await Provider.of<TaskData>(context)
+                .getTaskById(widget.task.id);
+            originalTask.assimilateTask(widget.task);
+          }
         }
       },
       child: Container(
