@@ -119,6 +119,7 @@ class CategorySelection extends StatelessWidget {
         onTap: () {
           print('$selection pressed');
           callback(selection);
+          print('context is: ${context.toString()}');
           Navigator.pop(context);
         },
         child: Container(

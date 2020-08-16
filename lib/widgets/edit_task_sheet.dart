@@ -462,7 +462,8 @@ class _EditTaskSheetState extends State<EditTaskSheet> {
                             });
                           },
                         ),
-                      );
+                      ).whenComplete(() =>
+                          Provider.of<TaskData>(context).updateTask(_task));
                     },
                   )
                 ],
