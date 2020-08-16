@@ -35,13 +35,13 @@ class _DayContainerState extends State<DayContainer> {
   };
 
   final Map<int, String> intToWeekday = {
-    1: 'M',
-    2: 'T',
-    3: 'W',
-    4: 'T',
-    5: 'F',
-    6: 'S',
-    0: 'S',
+    1: 'MON',
+    2: 'TUE',
+    3: 'WED',
+    4: 'THU',
+    5: 'FRI',
+    6: 'SAT',
+    0: 'SUN',
   };
 
   void showFlutterToast(String toastMsg) {
@@ -97,16 +97,6 @@ class _DayContainerState extends State<DayContainer> {
 //      padding: EdgeInsets.symmetric(vertical: 0, horizontal: 4),
       child: Column(
         children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(bottom: 4),
-            child: Text(
-              intToWeekday[widget.inputWeekday],
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w900,
-              ),
-            ),
-          ),
           GestureDetector(
             onTap: () {
 //              showFlutterToast(widget.today
@@ -138,6 +128,20 @@ class _DayContainerState extends State<DayContainer> {
               ),
               child: Column(
                 children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 4),
+                    child: Text(
+                      intToWeekday[widget.inputWeekday],
+                      style: TextStyle(
+                        color: TaskScreen.selectedDay.dateCompare(inputDay)
+                            ? kBlue
+                            : (inputDay.dateCompare(Date(DateTime.now()))
+                                ? kWhite
+                                : kWhite.withOpacity(0.5)),
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
                   Text(
 //                  widget.today
 //                      .add(Duration(

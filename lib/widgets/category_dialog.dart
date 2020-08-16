@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_todo/size_config.dart';
 import 'package:my_todo/constants.dart';
-
 import 'package:flutter/cupertino.dart';
 
 class CategoryDialog extends StatelessWidget {

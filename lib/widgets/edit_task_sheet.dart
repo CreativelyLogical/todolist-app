@@ -328,8 +328,8 @@ class _EditTaskSheetState extends State<EditTaskSheet> {
                               setState(() {
                                 selectedPriority = 'none';
                                 _task.priority = selectedPriority;
-//                                Provider.of<TaskData>(context)
-//                                    .updateTask(_task);
+                                Provider.of<TaskData>(context)
+                                    .updateTask(_task);
                               });
                             },
                             screen: 'edit_task',
@@ -344,8 +344,8 @@ class _EditTaskSheetState extends State<EditTaskSheet> {
                               setState(() {
                                 selectedPriority = 'low';
                                 _task.priority = selectedPriority;
-//                                Provider.of<TaskData>(context)
-//                                    .updateTask(_task);
+                                Provider.of<TaskData>(context)
+                                    .updateTask(_task);
                               });
                             },
                             screen: 'edit_task',
@@ -360,8 +360,8 @@ class _EditTaskSheetState extends State<EditTaskSheet> {
                               setState(() {
                                 selectedPriority = 'medium';
                                 _task.priority = selectedPriority;
-//                                Provider.of<TaskData>(context)
-//                                    .updateTask(_task);
+                                Provider.of<TaskData>(context)
+                                    .updateTask(_task);
                               });
                             },
                             screen: 'edit_task',
@@ -376,8 +376,8 @@ class _EditTaskSheetState extends State<EditTaskSheet> {
                               setState(() {
                                 selectedPriority = 'high';
                                 _task.priority = selectedPriority;
-//                                Provider.of<TaskData>(context)
-//                                    .updateTask(_task);
+                                Provider.of<TaskData>(context)
+                                    .updateTask(_task);
                               });
                             },
                             screen: 'edit_task',
@@ -459,8 +459,6 @@ class _EditTaskSheetState extends State<EditTaskSheet> {
                           newCategoryCallback: (String newCategory) {
                             setState(() {
                               _task.category = newCategory;
-//                                Provider.of<TaskData>(context)
-//                                    .updateTask(_task);
                             });
                           },
                         ),
