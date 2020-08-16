@@ -16,8 +16,7 @@ import 'package:flutter/cupertino.dart';
 import 'duration_picker_dialog.dart';
 import 'package:my_todo/widgets/horizontal_sized_box.dart';
 import 'package:my_todo/widgets/category_dialog.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'dart:math' as math;
+import 'package:auto_size_text/auto_size_text.dart';
 
 class EditTaskSheet extends StatefulWidget {
   EditTaskSheet({this.task, this.dateChangedCallback});
@@ -222,17 +221,44 @@ class _EditTaskSheetState extends State<EditTaskSheet> {
     return Scaffold(
       backgroundColor: Colors.transparent,
       bottomNavigationBar: BottomAppBar(
-        color: Colors.grey,
+        color: kWhite,
         child: Container(
+          padding: EdgeInsets.only(
+            top: SizeConfig.blockSizeVertical,
+            bottom: SizeConfig.blockSizeVertical,
+          ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Text(
-                'Delete task',
+              EditTaskButton(
+                icon: Icon(
+                  Icons.highlight_off,
+                  color: Colors.red,
+                  size: SizeConfig.blockSizeVertical * 3.0,
+                ),
+                buttonText: 'Delete task',
+                onPressed: () {
+                  Provider.of<TaskData>(context).deleteTask(_task);
+                  Navigator.pop(context);
+                },
               ),
-              Text(
-                'Mark as done',
-              ),
+              EditTaskButton(
+                icon: Icon(
+                  Icons.check_circle_outline,
+                  color: kBlue,
+                  size: SizeConfig.blockSizeVertical * 3.0,
+                ),
+                buttonText: 'Mark as done',
+                onPressed: () {
+                  print('mark as done button pressed');
+                  if (_task.isChecked) {
+                  } else {
+                    _task.toggleChecked();
+                    Provider.of<TaskData>(context).updateTask(_task);
+                    Navigator.pop(context);
+                  }
+                },
+              )
             ],
           ),
         ),
@@ -389,7 +415,7 @@ class _EditTaskSheetState extends State<EditTaskSheet> {
                       dateParser(selectedDateSQL),
                       style: TextStyle(
                         color: kBlue,
-                        fontSize: 25,
+                        fontSize: SizeConfig.blockSizeVertical * 3.0,
                         fontWeight: FontWeight.w500,
                       ),
                     )
@@ -420,7 +446,7 @@ class _EditTaskSheetState extends State<EditTaskSheet> {
                       _task.category,
                       style: TextStyle(
                         color: kWhite,
-                        fontSize: 25,
+                        fontSize: SizeConfig.blockSizeVertical * 3.0,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -469,14 +495,14 @@ class _EditTaskSheetState extends State<EditTaskSheet> {
                         SizedBox(
                           width: SizeConfig.screenWidth * 0.1,
                         ),
-                        Text(
+                        AutoSizeText(
 //                          selectedTime == null ? _task.time : selectedTime,
                           selectedTime == 'no time' ? 'Set Time' : selectedTime,
                           style: TextStyle(
                             color: taskHasTime ? kBlue : Colors.grey.shade400,
                             decoration:
                                 taskHasTime ? null : TextDecoration.lineThrough,
-                            fontSize: 25,
+                            fontSize: SizeConfig.blockSizeVertical * 3.0,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -491,7 +517,7 @@ class _EditTaskSheetState extends State<EditTaskSheet> {
                       child: Text(
                         'No Time',
                         style: TextStyle(
-                          fontSize: 25,
+                          fontSize: SizeConfig.blockSizeVertical * 3.0,
                           color: !taskHasTime ? kWhite : kGrey,
                         ),
                       ),
@@ -542,7 +568,7 @@ class _EditTaskSheetState extends State<EditTaskSheet> {
                           : selectedReminder,
                       style: TextStyle(
                         color: kBlue,
-                        fontSize: 25,
+                        fontSize: SizeConfig.blockSizeVertical * 3.0,
                         fontWeight: FontWeight.w500,
                       ),
                     )
@@ -552,6 +578,41 @@ class _EditTaskSheetState extends State<EditTaskSheet> {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class EditTaskButton extends StatelessWidget {
+  EditTaskButton({this.icon, this.buttonText, this.onPressed});
+
+  final Icon icon;
+
+  final String buttonText;
+
+  final Function onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return GestureDetector(
+      onTap: onPressed,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          icon,
+          FittedBox(
+            fit: BoxFit.fill,
+            child: AutoSizeText(
+              buttonText,
+              style: TextStyle(
+                color: buttonText == 'Delete task' ? Colors.red : kBlue,
+                fontSize: SizeConfig.blockSizeVertical * 2.5,
+              ),
+              maxLines: 2,
+            ),
+          ),
+        ],
       ),
     );
   }

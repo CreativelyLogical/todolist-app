@@ -445,7 +445,7 @@ class VersatileListTile extends StatelessWidget {
     return GestureDetector(
       onTap: () async {
         if (!task.isChecked) {
-          String result = await showModalBottomSheet(
+          showModalBottomSheet(
             context: context,
             builder: (context) => Container(
               height: SizeConfig.screenHeight * 0.75,
@@ -466,13 +466,6 @@ class VersatileListTile extends StatelessWidget {
             ),
             isScrollControlled: true,
           );
-
-          if (result != 'complete') {
-            // resetting state of widget.task because the modalBottomSheet was closed by pressing the save button
-            Task originalTask =
-                await Provider.of<TaskData>(context).getTaskById(task.id);
-            originalTask.assimilateTask(task);
-          }
         }
       },
       child: Container(

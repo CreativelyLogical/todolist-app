@@ -37,6 +37,7 @@ dependencies:
   characters: ^1.0.0
   flutter_local_notifications: ^1.4.4+2
   rxdart: ^0.24.1
+  auto_size_text: ^2.1.0
 
 
 dev_dependencies:
