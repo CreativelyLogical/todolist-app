@@ -134,6 +134,9 @@ class _EditTaskSheetState extends State<EditTaskSheet> {
       setState(() {
         selectedTimeOfDay = picked;
         selectedTime = selectedTimeOfDay.format(context);
+        print('selectedTime is $selectedTime');
+//        _task.time = selectedTime;
+//        Provider.of<TaskData>(context).updateTask(_task);
       });
     }
   }
@@ -521,10 +524,12 @@ class _EditTaskSheetState extends State<EditTaskSheet> {
                       ),
                       onPressed: () {
                         setState(() {
-                          if (taskHasTime == true)
+                          if (taskHasTime == true) {
                             taskHasTime = false;
-                          else
+                            Provider.of<TaskData>(context).updateTask(_task);
+                          } else {
                             taskHasTime = true;
+                          }
                         });
                       },
                     ),
@@ -545,7 +550,6 @@ class _EditTaskSheetState extends State<EditTaskSheet> {
                         selectedReminder = reminder;
                         setState(() {});
                         _task.alert = selectedReminder;
-//                          Provider.of<TaskData>(context).updateTask(_task);
                       },
                     ),
                   );

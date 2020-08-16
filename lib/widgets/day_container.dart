@@ -97,6 +97,18 @@ class _DayContainerState extends State<DayContainer> {
 //      padding: EdgeInsets.symmetric(vertical: 0, horizontal: 4),
       child: Column(
         children: <Widget>[
+          Padding(
+            padding: EdgeInsets.only(bottom: 4),
+            child: Text(
+              intToWeekday[widget.inputWeekday],
+              style: TextStyle(
+                color: inputDay.dateCompare(Date(DateTime.now()))
+                    ? kWhite
+                    : kWhite.withOpacity(0.6),
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
           GestureDetector(
             onTap: () {
 //              showFlutterToast(widget.today
@@ -106,50 +118,40 @@ class _DayContainerState extends State<DayContainer> {
               widget.setStateCallback();
 //            print(today.add(Duration(days: inputWeekday - todayWeekday + 1)));
             },
-            child: Container(
-              padding: EdgeInsets.only(
-                top: 10.0,
-                bottom: 5.0,
-                left: SizeConfig.blockSizeHorizontal * 1.2,
-                right: SizeConfig.blockSizeHorizontal * 1.2,
-              ),
-//              margin: EdgeInsets.symmetric(horizontal: 5.0),
-              decoration: BoxDecoration(
-//              color: weekdayColor[widget.today
-//                  .add(Duration(days: widget.inputWeekday - todayWeekday))
-//                  .weekday],
-                color: TaskScreen.selectedDay.dateCompare(inputDay)
-                    ? Colors.white
-                    : kLightBlueAccent.withOpacity(0.0),
+            child: CircleAvatar(
+              backgroundColor: TaskScreen.selectedDay.dateCompare(inputDay)
+                  ? Colors.white
+                  : kLightBlueAccent.withOpacity(0.0),
+              radius: SizeConfig.blockSizeVertical * 3,
+//              padding: EdgeInsets.all(10),
+//              padding: EdgeInsets.only(
+//                top: 10.0,
+//                bottom: 5.0,
+////                left: SizeConfig.blockSizeHorizontal * 1.2,
+////                right: SizeConfig.blockSizeHorizontal * 1.2,
 
-//            color: kLightBlueAccent,
-//        color: diff == 0 ? Color(0xffe3681b) : Color(0xff585866),
-                borderRadius: BorderRadius.all(Radius.circular(10.0)),
-              ),
-              child: Column(
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.only(bottom: 4),
-                    child: Text(
-                      intToWeekday[widget.inputWeekday],
-                      style: TextStyle(
-                        color: TaskScreen.selectedDay.dateCompare(inputDay)
-                            ? kBlue
-                            : (inputDay.dateCompare(Date(DateTime.now()))
-                                ? kWhite
-                                : kWhite.withOpacity(0.5)),
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                  Text(
+//              margin: EdgeInsets.symmetric(horizontal: 5.0),
+//              decoration: BoxDecoration(
+//                shape: BoxShape.circle,
+////              color: weekdayColor[widget.today
+////                  .add(Duration(days: widget.inputWeekday - todayWeekday))
+////                  .weekday],
+//                color: TaskScreen.selectedDay.dateCompare(inputDay)
+//                    ? Colors.white
+//                    : kLightBlueAccent.withOpacity(0.0),
+//
+////            color: kLightBlueAccent,
+////        color: diff == 0 ? Color(0xffe3681b) : Color(0xff585866),
+////                borderRadius: BorderRadius.all(Radius.circular(10.0)),
+//              ),
+              child: Text(
 //                  widget.today
 //                      .add(Duration(
 //                          days: widget.inputWeekday - widget.today.weekday))
 //                      .day
 //                      .toString(),
-                    inputDay.day.toString(),
-                    style: dayTextStyle(TaskScreen.selectedDay, inputDay),
+                inputDay.day.toString(),
+                style: dayTextStyle(TaskScreen.selectedDay, inputDay),
 //                    style: TextStyle(
 //                      color: dayColor(TaskScreen.selectedDay, inputDay),
 ////                      color: TaskScreen.selectedDay.dateCompare(inputDay)
@@ -159,8 +161,6 @@ class _DayContainerState extends State<DayContainer> {
 //                      fontWeight: FontWeight.w500,
 //                      fontSize: SizeConfig.blockSizeVertical * 4,
 //                    ),
-                  ),
-                ],
               ),
             ),
           ),
