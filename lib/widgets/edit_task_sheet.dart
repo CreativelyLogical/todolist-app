@@ -153,12 +153,11 @@ class _EditTaskSheetState extends State<EditTaskSheet> {
                 selectedTimeOfDay = TimeOfDay.fromDateTime(picked);
                 selectedTime = selectedTimeOfDay.format(context);
                 _task.time = selectedTime;
-//                Provider.of<TaskData>(context).updateTask(_task);
               });
             },
           ),
         ),
-      );
+      ).whenComplete(() => Provider.of<TaskData>(context).updateTask(_task));
     }
   }
 
@@ -476,7 +475,7 @@ class _EditTaskSheetState extends State<EditTaskSheet> {
                 right: SizeConfig.screenWidth * 0.05,
               ),
               child: GestureDetector(
-                onTap: () {
+                onTap: () async {
                   if (taskHasTime) {
                     getTimePickerOS(context);
                   }

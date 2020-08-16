@@ -42,7 +42,7 @@ class Task {
   }
 
   String toString() {
-    return "id: ${this.id}\ntitle: ${this.taskTitle}\ncategory: ${this.category}\npriority: ${this.priority}";
+    return "id: ${this.id}\ntitle: ${this.taskTitle}\ncategory: ${this.category}\npriority: ${this.priority}\ntime: ${this.time}\n";
   }
 
   void assimilateTask(final Task task) {

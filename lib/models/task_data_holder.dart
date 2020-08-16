@@ -35,7 +35,9 @@ class TaskData extends ChangeNotifier {
 //    Task(taskTitle: 'Take out the trash', isChecked: false),
 //  ];
 
-  void updateTask(Task task) async {
+  Future<void> updateTask(Task task) async {
+    print(
+        'so updateTask has been called, and the task is: \n${task.toString()}');
     await todoDB.update(task);
     notifyListeners();
   }
