@@ -59,6 +59,7 @@ class _EditTaskSheetState extends State<EditTaskSheet> {
     selectedDateSQL = _task.date;
     selectedTime = _task.time;
     selectedReminder = _task.alert;
+    taskHasTime = _task.hasTime;
 
     if (selectedTime == 'no time' || selectedTime == 'Set time') {
       print('task.name for this is ${_task.taskTitle}');
@@ -534,6 +535,7 @@ class _EditTaskSheetState extends State<EditTaskSheet> {
                       onPressed: () {
                         setState(() {
                           _task.toggleHasTime();
+                          taskHasTime = _task.hasTime;
                           Provider.of<TaskData>(context).updateTask(_task);
 //                          if (taskHasTime == true) {
 //                            taskHasTime = false;
