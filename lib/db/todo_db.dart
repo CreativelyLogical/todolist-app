@@ -27,7 +27,7 @@ class TodoDatabase {
       join(documentsDirectory.path, 'todo_database.db'),
       onCreate: _onCreate,
       onUpgrade: _onUpgrade,
-      version: 2,
+      version: 3,
     );
     return database;
   }
@@ -44,7 +44,7 @@ class TodoDatabase {
 
   void _onUpgrade(Database db, int oldVersion, int newVersion) {
     if (oldVersion < newVersion) {
-      db.execute('ALTER TABLE todo_table ADD has_time BIT;');
+      db.execute('ALTER TABLE todo_table ADD notification_id TEXT;');
     }
   }
 

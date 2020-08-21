@@ -1,24 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:my_todo/widgets/day_container.dart';
-import 'package:my_todo/widgets/week_view.dart';
 import 'task_screen.dart';
 import 'package:my_todo/constants.dart';
 import 'package:my_todo/size_config.dart';
 import 'package:my_todo/models/date.dart';
 import 'package:provider/provider.dart';
 import 'package:my_todo/models/task_data_holder.dart';
-import 'custom_flag_icon_icons.dart';
-import 'task_date_icons.dart';
-import 'task_category_icons.dart';
-import 'notification_bell_icons.dart';
 import 'package:my_todo/widgets/duration_picker_dialog.dart';
 import 'set_time_icon_icons.dart';
-import 'package:my_todo/models/time.dart';
 import 'package:my_todo/widgets/priority_buttons.dart';
 import 'notification_bells_icons.dart';
 import 'dart:io' show Platform;
 import 'package:flutter/cupertino.dart';
 import 'package:my_todo/notifications/todo_notifications.dart';
+import 'package:uuid/uuid.dart';
 
 class AddTaskFullScreen extends StatefulWidget {
   final String screen;
