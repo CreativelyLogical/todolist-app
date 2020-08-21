@@ -622,7 +622,7 @@ class VersatileListTile extends StatelessWidget {
                             ),
                           ),
 //                      Spacer(),
-                          (time == 'no time' || time == null)
+                          (time == 'no time' || time == null || !task.hasTime)
                               ? Container()
                               : Container(
                                   padding: EdgeInsets.symmetric(

@@ -399,7 +399,9 @@ class _TaskListTileState extends State<TaskListTile> {
                             ),
                           ),
 //                      Spacer(),
-                          (widget.time == 'no time' || widget.time == null)
+                          (widget.time == 'no time' ||
+                                  widget.time == null ||
+                                  !widget.task.hasTime)
                               ? Container()
                               : Container(
                                   padding: EdgeInsets.symmetric(
