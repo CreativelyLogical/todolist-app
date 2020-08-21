@@ -9,12 +9,14 @@ class TodoDatabase {
 //
 //  static final TodoDatabase instance = TodoDatabase._privateConstructor();
 
-  TodoDatabase() {
-//    _initDatabase();
-    print('this is ruuuuuuuuuuuuun');
-  }
+//  TodoDatabase() {
+////    _initDatabase();
+//    print('database initialized');
+//  }
 
-  static final TodoDatabase todoDatabase = TodoDatabase();
+//  final int version;
+//
+//  static final TodoDatabase todoDatabase = TodoDatabase();
 
   Future<Database> _initDatabase() async {
     print('sup');
@@ -23,18 +25,27 @@ class TodoDatabase {
     print('the documentDirectory is ${documentsDirectory.path}');
     Database database = await openDatabase(
       join(documentsDirectory.path, 'todo_database.db'),
-      onCreate: (Database db, int version) async {
-        print(getDatabasesPath());
-        await db.execute(
-          '''
+      onCreate: _onCreate,
+      onUpgrade: _onUpgrade,
+      version: 2,
+    );
+    return database;
+  }
+
+  void _onCreate(Database db, int version) async {
+    print(getDatabasesPath());
+    await db.execute(
+      '''
           CREATE TABLE IF NOT EXISTS todo_table(
           id INTEGER PRIMARY KEY, task_date TEXT, task_name TEXT, is_checked BIT, priority TEXT, notes TEXT, category TEXT, alert TEXT, task_time TEXT)
           ''',
-        );
-      },
-      version: 1,
     );
-    return database;
+  }
+
+  void _onUpgrade(Database db, int oldVersion, int newVersion) {
+    if (oldVersion < newVersion) {
+      db.execute('ALTER TABLE todo_table ADD has_time BIT;');
+    }
   }
 
   Future<void> insert(Task task) async {
@@ -53,7 +64,7 @@ class TodoDatabase {
 //      conflictAlgorithm: ConflictAlgorithm.replace,
 //    );
     await db.rawQuery(
-        'INSERT INTO todo_table VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?)', [
+        'INSERT INTO todo_table VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [
       task.date,
       task.taskTitle,
       !task.isChecked ? 0 : 1,
@@ -62,6 +73,7 @@ class TodoDatabase {
       task.category,
       task.alert,
       task.time,
+      !task.hasTime ? 0 : 1,
     ]);
   }
 
@@ -99,6 +111,7 @@ class TodoDatabase {
         alert: maps[i]['alert'],
         time: maps[i]['task_time'],
         id: maps[i]['id'],
+        hasTime: maps[i]['has_time'] == 0 ? false : true,
       );
     });
   }
@@ -120,6 +133,7 @@ class TodoDatabase {
         alert: maps[i]['alert'],
         time: maps[i]['task_time'],
         id: maps[i]['id'],
+        hasTime: maps[i]['has_time'] == 0 ? false : true,
       );
     });
     return tasks[0];
@@ -143,6 +157,7 @@ class TodoDatabase {
         alert: maps[i]['alert'],
         time: maps[i]['task_time'],
         id: maps[i]['id'],
+        hasTime: maps[i]['has_time'] == 0 ? false : true,
       );
     });
   }
@@ -198,6 +213,7 @@ class TodoDatabase {
         alert: maps[i]['alert'],
         time: maps[i]['task_time'],
         id: maps[i]['id'],
+        hasTime: maps[i]['has_time'] == 0 ? false : true,
       );
     });
   }

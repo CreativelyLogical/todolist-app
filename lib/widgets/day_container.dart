@@ -35,13 +35,13 @@ class _DayContainerState extends State<DayContainer> {
   };
 
   final Map<int, String> intToWeekday = {
-    1: 'MON',
-    2: 'TUE',
-    3: 'WED',
-    4: 'THU',
-    5: 'FRI',
-    6: 'SAT',
-    0: 'SUN',
+    1: 'M',
+    2: 'T',
+    3: 'W',
+    4: 'T',
+    5: 'F',
+    6: 'S',
+    0: 'S',
   };
 
   void showFlutterToast(String toastMsg) {
@@ -74,7 +74,7 @@ class _DayContainerState extends State<DayContainer> {
   TextStyle dayTextStyle(Date selectedDay, Date inputDay) {
     return TextStyle(
       color: dayColor(selectedDay, inputDay),
-      fontSize: SizeConfig.blockSizeVertical * 4,
+      fontSize: SizeConfig.blockSizeVertical * 3,
       fontWeight: inputDay.dateCompare(Date(DateTime.now()))
           ? FontWeight.w600
           : FontWeight.w500,
@@ -122,7 +122,7 @@ class _DayContainerState extends State<DayContainer> {
               backgroundColor: TaskScreen.selectedDay.dateCompare(inputDay)
                   ? Colors.white
                   : kLightBlueAccent.withOpacity(0.0),
-              radius: SizeConfig.blockSizeVertical * 3,
+              radius: SizeConfig.blockSizeVertical * 2.5,
 //              padding: EdgeInsets.all(10),
 //              padding: EdgeInsets.only(
 //                top: 10.0,

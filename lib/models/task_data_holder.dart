@@ -63,6 +63,7 @@ class TaskData extends ChangeNotifier {
       alert: alert,
       time: time,
       id: 0,
+      hasTime: time == 'no time' ? false : true,
     ));
     notifyListeners();
   }

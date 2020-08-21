@@ -74,11 +74,11 @@ class _EditTaskSheetState extends State<EditTaskSheet> {
     }
 
     taskTitleController = TextEditingController(text: _task.taskTitle);
-    if (_task.time == 'no time') {
-      taskHasTime = false;
-    } else {
-      taskHasTime = true;
-    }
+//    if (_task.time == 'no time') {
+//      taskHasTime = false;
+//    } else {
+//      taskHasTime = true;
+//    }
   }
 
   String selectedDate = Date(DateTime.now()).toString();
@@ -220,6 +220,15 @@ class _EditTaskSheetState extends State<EditTaskSheet> {
 
   @override
   Widget build(BuildContext context) {
+    print('for the task ${_task.taskTitle}, task.HasTime is ${_task.hasTime}');
+//    if (_task.time == 'no time') {
+//      _task.hasTime = false;
+//      Provider.of<TaskData>(context).updateTask(_task);
+//    } else {
+//      _task.hasTime = true;
+//      Provider.of<TaskData>(context).updateTask(_task);
+//    }
+
     return Scaffold(
       backgroundColor: Colors.transparent,
       bottomNavigationBar: BottomAppBar(
@@ -524,12 +533,14 @@ class _EditTaskSheetState extends State<EditTaskSheet> {
                       ),
                       onPressed: () {
                         setState(() {
-                          if (taskHasTime == true) {
-                            taskHasTime = false;
-                            Provider.of<TaskData>(context).updateTask(_task);
-                          } else {
-                            taskHasTime = true;
-                          }
+                          _task.toggleHasTime();
+                          Provider.of<TaskData>(context).updateTask(_task);
+//                          if (taskHasTime == true) {
+//                            taskHasTime = false;
+//                            Provider.of<TaskData>(context).updateTask(_task);
+//                          } else {
+//                            taskHasTime = true;
+//                          }
                         });
                       },
                     ),

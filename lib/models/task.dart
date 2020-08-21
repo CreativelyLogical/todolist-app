@@ -11,6 +11,7 @@ class Task {
     this.alert,
     this.time,
     this.id,
+    this.hasTime,
   });
 
   String taskTitle;
@@ -22,9 +23,14 @@ class Task {
   String alert;
   String time;
   int id;
+  bool hasTime;
 
   void toggleChecked() {
     isChecked = !isChecked;
+  }
+
+  void toggleHasTime() {
+    hasTime = !hasTime;
   }
 
   Map<String, dynamic> toMap() {
@@ -38,6 +44,7 @@ class Task {
       'category': category,
       'alert': alert,
       'task_time': time,
+      'has_time': !hasTime ? false : true,
     };
   }
 
@@ -55,5 +62,6 @@ class Task {
     task.category = this.category;
     task.alert = this.alert;
     task.time = this.time;
+    task.hasTime = this.hasTime;
   }
 }
