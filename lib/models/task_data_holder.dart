@@ -50,6 +50,7 @@ class TaskData extends ChangeNotifier {
     String category,
     String alert,
     String time,
+    String notificationId,
   }) async {
 //    taskList.add(Task(taskTitle: newTaskTitle, isChecked: false));
 //    notifyListeners();
@@ -64,6 +65,7 @@ class TaskData extends ChangeNotifier {
       time: time,
       id: 0,
       hasTime: time == 'no time' ? false : true,
+      notificationId: notificationId,
     ));
     notifyListeners();
   }

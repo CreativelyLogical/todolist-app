@@ -64,7 +64,7 @@ class TodoDatabase {
 //      conflictAlgorithm: ConflictAlgorithm.replace,
 //    );
     await db.rawQuery(
-        'INSERT INTO todo_table VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [
+        'INSERT INTO todo_table VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [
       task.date,
       task.taskTitle,
       !task.isChecked ? 0 : 1,
@@ -74,6 +74,7 @@ class TodoDatabase {
       task.alert,
       task.time,
       !task.hasTime ? 0 : 1,
+      task.notificationId,
     ]);
   }
 
@@ -112,6 +113,7 @@ class TodoDatabase {
         time: maps[i]['task_time'],
         id: maps[i]['id'],
         hasTime: maps[i]['has_time'] == 0 ? false : true,
+        notificationId: maps[i]['notification_id'],
       );
     });
   }
@@ -134,6 +136,7 @@ class TodoDatabase {
         time: maps[i]['task_time'],
         id: maps[i]['id'],
         hasTime: maps[i]['has_time'] == 0 ? false : true,
+        notificationId: maps[i]['notification_id'],
       );
     });
     return tasks[0];
@@ -158,6 +161,7 @@ class TodoDatabase {
         time: maps[i]['task_time'],
         id: maps[i]['id'],
         hasTime: maps[i]['has_time'] == 0 ? false : true,
+        notificationId: maps[i]['notification_id'],
       );
     });
   }
@@ -214,6 +218,7 @@ class TodoDatabase {
         time: maps[i]['task_time'],
         id: maps[i]['id'],
         hasTime: maps[i]['has_time'] == 0 ? false : true,
+        notificationId: maps[i]['notification_id'],
       );
     });
   }

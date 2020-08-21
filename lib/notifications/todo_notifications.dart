@@ -52,8 +52,12 @@ class TodoNotifications {
     });
   }
 
-  Future<void> _scheduleNotification(TimeOfDay timeOfDay,
-      {String title, String body}) async {
+  Future<void> _scheduleNotification(
+    TimeOfDay timeOfDay, {
+    String title,
+    String body,
+    int id,
+  }) async {
     DateTime now = DateTime.now();
     var hoursDiff = timeOfDay.hour - now.hour;
     var minutesDiff = timeOfDay.minute - now.minute - 1;
@@ -83,14 +87,25 @@ class TodoNotifications {
         IOSNotificationDetails(sound: 'slow_spring_board.aiff');
     var platformChannelSpecifics = NotificationDetails(
         androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
-    await flutterLocalNotificationsPlugin.schedule(0, title, body,
-        scheduledNotificationDateTime, platformChannelSpecifics);
+    await flutterLocalNotificationsPlugin.schedule(
+      id,
+      title,
+      body,
+      scheduledNotificationDateTime,
+      platformChannelSpecifics,
+    );
   }
 
   Future<void> schedule(TimeOfDay timeOfDay,
-      {String notificationTitle, String notificationBody}) async {
+      {String notificationTitle,
+      String notificationBody,
+      int notificationId}) async {
     await _scheduleNotification(timeOfDay,
-        title: notificationTitle, body: notificationBody);
+        title: notificationTitle, body: notificationBody, id: notificationId);
+  }
+
+  Future<void> cancelNotificationById(int id) async {
+    await flutterLocalNotificationsPlugin.cancel(id);
   }
 }
 

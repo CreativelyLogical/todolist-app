@@ -12,7 +12,6 @@ import 'notification_bells_icons.dart';
 import 'dart:io' show Platform;
 import 'package:flutter/cupertino.dart';
 import 'package:my_todo/notifications/todo_notifications.dart';
-import 'package:uuid/uuid.dart';
 
 class AddTaskFullScreen extends StatefulWidget {
   final String screen;
@@ -869,6 +868,9 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen>
                           ),
                           color: kBlue,
                           onPressed: () async {
+                            int notificationId =
+                                (DateTime.now().millisecondsSinceEpoch / 1000)
+                                    .floor();
                             if (taskNameController.text == '') {
                               print('Please enter a task name');
                             } else {
@@ -882,11 +884,19 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen>
                                     (remind == true && selectedReminder != null)
                                         ? selectedReminder
                                         : 'no reminder',
-                                time: taskHasTime == true
-                                    ? (selectedTime == 'Set time'
+                                time:
+                                    (!taskHasTime || selectedTime == 'Set time')
                                         ? 'no time'
-                                        : selectedTime)
-                                    : 'no time',
+                                        : selectedTime,
+//                                time: taskHasTime == true
+//                                    ? (selectedTime == 'Set time'
+//                                        ? 'no time'
+//                                        : selectedTime)
+//                                    : 'no time',
+                                notificationId:
+                                    (!taskHasTime || selectedTime == 'Set time')
+                                        ? null
+                                        : notificationId.toString(),
                               );
                               print(selectedTimeOfDay);
                               if (!taskHasTime || selectedTime == 'Set time') {
@@ -894,7 +904,8 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen>
                                 await TodoNotifications().schedule(
                                     selectedTimeOfDay,
                                     notificationTitle: taskNameController.text,
-                                    notificationBody: 'Reminder');
+                                    notificationBody: 'Reminder',
+                                    notificationId: notificationId);
                               }
                               Navigator.pop(context);
                             }

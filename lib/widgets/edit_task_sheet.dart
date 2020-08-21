@@ -17,6 +17,7 @@ import 'duration_picker_dialog.dart';
 import 'package:my_todo/widgets/horizontal_sized_box.dart';
 import 'package:my_todo/widgets/category_dialog.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:my_todo/notifications/todo_notifications.dart';
 
 class EditTaskSheet extends StatefulWidget {
   EditTaskSheet({this.task, this.dateChangedCallback});
@@ -46,6 +47,8 @@ class _EditTaskSheetState extends State<EditTaskSheet> {
 
   bool taskHasTime;
 
+  int notificationId;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -60,6 +63,8 @@ class _EditTaskSheetState extends State<EditTaskSheet> {
     selectedTime = _task.time;
     selectedReminder = _task.alert;
     taskHasTime = _task.hasTime;
+    notificationId =
+        _task.notificationId != null ? int.parse(_task.notificationId) : null;
 
     if (selectedTime == 'no time' || selectedTime == 'Set time') {
       print('task.name for this is ${_task.taskTitle}');
@@ -251,6 +256,9 @@ class _EditTaskSheetState extends State<EditTaskSheet> {
                 buttonText: 'Delete task',
                 onPressed: () {
                   Provider.of<TaskData>(context).deleteTask(_task);
+                  if (notificationId != null) {
+                    TodoNotifications().cancelNotificationById(notificationId);
+                  }
                   Navigator.pop(context);
                 },
               ),
@@ -533,9 +541,13 @@ class _EditTaskSheetState extends State<EditTaskSheet> {
                         ),
                       ),
                       onPressed: () {
-                        setState(() {
+                        setState(() async {
                           _task.toggleHasTime();
                           taskHasTime = _task.hasTime;
+                          if (!taskHasTime && notificationId != null) {
+                            await TodoNotifications()
+                                .cancelNotificationById(notificationId);
+                          }
                           Provider.of<TaskData>(context).updateTask(_task);
 //                          if (taskHasTime == true) {
 //                            taskHasTime = false;

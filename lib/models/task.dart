@@ -12,6 +12,7 @@ class Task {
     this.time,
     this.id,
     this.hasTime,
+    this.notificationId,
   });
 
   String taskTitle;
@@ -24,6 +25,7 @@ class Task {
   String time;
   int id;
   bool hasTime;
+  String notificationId;
 
   void toggleChecked() {
     isChecked = !isChecked;
@@ -45,6 +47,7 @@ class Task {
       'alert': alert,
       'task_time': time,
       'has_time': !hasTime ? false : true,
+      'notification_id': notificationId,
     };
   }
 
@@ -63,5 +66,6 @@ class Task {
     task.alert = this.alert;
     task.time = this.time;
     task.hasTime = this.hasTime;
+    task.notificationId = this.notificationId;
   }
 }
