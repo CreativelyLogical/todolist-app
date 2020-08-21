@@ -924,10 +924,9 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen>
                                 priority: selectedPriority,
                                 notes: 'no notes',
                                 category: selectedCategory,
-                                alert:
-                                    (remind == true && selectedReminder != null)
-                                        ? selectedReminder
-                                        : 'no reminder',
+                                alert: remind == true
+                                    ? selectedReminder
+                                    : 'no reminder',
                                 time:
                                     (!taskHasTime || selectedTime == 'Set time')
                                         ? 'no time'
@@ -945,11 +944,15 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen>
                               print(selectedTimeOfDay);
                               if (!taskHasTime || selectedTime == 'Set time') {
                               } else {
-                                await TodoNotifications().schedule(
-                                    selectedTimeOfDay,
-                                    notificationTitle: taskNameController.text,
-                                    notificationBody: 'Reminder',
-                                    notificationId: notificationId);
+                                print('remind is $remind');
+                                if (remind) {
+                                  await TodoNotifications().schedule(
+                                      selectedTimeOfDay,
+                                      notificationTitle:
+                                          taskNameController.text,
+                                      notificationBody: 'Reminder',
+                                      notificationId: notificationId);
+                                }
                               }
                               Navigator.pop(context);
                             }
