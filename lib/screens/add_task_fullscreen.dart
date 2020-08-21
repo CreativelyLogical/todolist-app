@@ -104,6 +104,10 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen>
 
   bool remind = false;
 
+  bool cannotSetReminder = false;
+
+  bool attemptToSetReminderWhenCannot = false;
+
   final _containerKey = GlobalKey<_AddTaskFullScreenState>();
 
   final _categoryKey = GlobalKey();
@@ -199,6 +203,8 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen>
   void initState() {
     super.initState();
 
+    cannotSetReminder = !taskHasTime || (selectedTime == 'Set time');
+
     controller = AnimationController(
       duration: Duration(milliseconds: 300),
       vsync: this,
@@ -264,12 +270,20 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen>
   }
 
   Widget getSwitcherOS(BuildContext context) {
+    cannotSetReminder = !taskHasTime || (selectedTime == 'Set time');
+    print('taskHasTime is $taskHasTime');
+    print('cannotSetReminder is $cannotSetReminder');
+    print('selectedTime is $selectedTime');
     if (Platform.isAndroid) {
       return Switch(
         value: remind,
         onChanged: (newValue) {
-          if (selectedTime == 'Set time' || !taskHasTime) {
+          if (cannotSetReminder) {
+            setState(() {
+              attemptToSetReminderWhenCannot = true;
+            });
           } else {
+            attemptToSetReminderWhenCannot = false;
             setState(() {
               remind = newValue;
               controller.value = 0;
@@ -282,8 +296,12 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen>
       return CupertinoSwitch(
         value: remind,
         onChanged: (newValue) {
-          if (selectedTime == 'Set time' || !taskHasTime) {
+          if (cannotSetReminder) {
+            setState(() {
+              attemptToSetReminderWhenCannot = true;
+            });
           } else {
+            attemptToSetReminderWhenCannot = false;
             setState(() {
               remind = newValue;
               controller.value = 0;
@@ -293,6 +311,40 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen>
         },
       );
     }
+  }
+
+  Widget notificationMsg() {
+    if (cannotSetReminder && attemptToSetReminderWhenCannot) {
+      return Text(
+        'Please set a time first',
+        style: TextStyle(
+          fontSize: SizeConfig.blockSizeVertical * 2.5,
+          color: Colors.red,
+        ),
+      );
+    } else if (remind) {
+      return Padding(
+        padding: EdgeInsets.only(left: SizeConfig.blockSizeVertical * 1.5),
+        child: Text(
+          'Notify me',
+          style: TextStyle(
+            fontSize: SizeConfig.blockSizeVertical * 2.5,
+            color: Colors.blue.shade800,
+          ),
+        ),
+      );
+    }
+//    return Text(
+//      (cannotSetReminder && attemptToSetReminderWhenCannot)
+//          ? 'Please set a time first'
+//          : 'Notify me',
+//      style: TextStyle(
+//        fontSize: SizeConfig.blockSizeVertical * 2.5,
+//        color: (cannotSetReminder && attemptToSetReminderWhenCannot)
+//            ? Colors.red
+//            : Colors.blue.shade800,
+//      ),
+//    );
   }
 
   @override
@@ -668,9 +720,10 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen>
                                 ),
                                 onPressed: () {
                                   setState(() {
-                                    if (taskHasTime == true)
+                                    if (taskHasTime == true) {
                                       taskHasTime = false;
-                                    else
+                                      remind = false;
+                                    } else
                                       taskHasTime = true;
                                   });
                                 },
@@ -742,28 +795,13 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen>
                                                       controller.value),
                                         ),
                                       ),
-                                      Padding(
-                                        padding: selectedReminder != null
-                                            ? EdgeInsets.only(
-                                                left: SizeConfig.screenWidth *
-                                                    0.02)
-                                            : EdgeInsets.all(0),
-                                        child: Text(
-                                          selectedReminder == null
-                                              ? ''
-                                              : selectedReminder,
-                                          style: TextStyle(
-                                            fontSize:
-                                                SizeConfig.blockSizeVertical *
-                                                    3,
-                                            color: remind == true
-                                                ? Colors.blue.shade800
-                                                : Colors.grey.shade600,
-                                          ),
-                                        ),
-                                      )
                                     ],
                                   ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                      left: SizeConfig.screenWidth * 0.02),
+                                  child: notificationMsg(),
                                 ),
                                 SizedBox(
                                   width: SizeConfig.screenWidth * 0.02,
