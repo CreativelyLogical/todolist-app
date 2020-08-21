@@ -268,22 +268,28 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen>
       return Switch(
         value: remind,
         onChanged: (newValue) {
-          setState(() {
-            remind = newValue;
-            controller.value = 0;
-            controller.forward();
-          });
+          if (selectedTime == 'Set time' || !taskHasTime) {
+          } else {
+            setState(() {
+              remind = newValue;
+              controller.value = 0;
+              controller.forward();
+            });
+          }
         },
       );
     } else if (Platform.isIOS) {
       return CupertinoSwitch(
         value: remind,
         onChanged: (newValue) {
-          setState(() {
-            remind = newValue;
-            controller.value = 0;
-            controller.forward();
-          });
+          if (selectedTime == 'Set time' || !taskHasTime) {
+          } else {
+            setState(() {
+              remind = newValue;
+              controller.value = 0;
+              controller.forward();
+            });
+          }
         },
       );
     }
