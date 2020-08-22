@@ -310,6 +310,8 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen>
           }
         },
       );
+    } else {
+      return Container();
     }
   }
 
@@ -925,7 +927,7 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen>
                                 notes: 'no notes',
                                 category: selectedCategory,
                                 alert: remind == true
-                                    ? selectedReminder
+                                    ? "yes reminder"
                                     : 'no reminder',
                                 time:
                                     (!taskHasTime || selectedTime == 'Set time')

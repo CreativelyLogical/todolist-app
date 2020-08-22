@@ -30,7 +30,8 @@ class EditTaskSheet extends StatefulWidget {
   _EditTaskSheetState createState() => _EditTaskSheetState();
 }
 
-class _EditTaskSheetState extends State<EditTaskSheet> {
+class _EditTaskSheetState extends State<EditTaskSheet>
+    with SingleTickerProviderStateMixin {
   Task _task;
 
   String selectedPriority;
@@ -45,14 +46,32 @@ class _EditTaskSheetState extends State<EditTaskSheet> {
 
   TextEditingController taskTitleController;
 
+  AnimationController controller;
+
   bool taskHasTime;
 
   int notificationId;
+
+  bool remind;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+
+    controller = AnimationController(
+      duration: Duration(milliseconds: 300),
+      vsync: this,
+    );
+    controller.forward();
+
+//    WidgetsBinding.instance.addPostFrameCallback((_) => getSizeAndPosition());
+
+    controller.addListener(() {
+      setState(() {});
+      print(controller.value);
+    });
+
     setTask();
   }
 
@@ -65,6 +84,8 @@ class _EditTaskSheetState extends State<EditTaskSheet> {
     taskHasTime = _task.hasTime;
     notificationId =
         _task.notificationId != null ? int.parse(_task.notificationId) : null;
+
+    remind = selectedReminder == 'yes reminder' ? true : false;
 
     if (selectedTime == 'no time' || selectedTime == 'Set time') {
       print('task.name for this is ${_task.taskTitle}');
@@ -144,6 +165,44 @@ class _EditTaskSheetState extends State<EditTaskSheet> {
 //        _task.time = selectedTime;
 //        Provider.of<TaskData>(context).updateTask(_task);
       });
+    }
+  }
+
+  Widget getSwitcherOS(BuildContext context) {
+    print('taskHasTime is $taskHasTime');
+    print('selectedTime is $selectedTime');
+    if (Platform.isAndroid) {
+      return Switch(
+        value: remind,
+        onChanged: (!taskHasTime || selectedTime == 'no time')
+            ? null
+            : (newValue) {
+                setState(
+                  () {
+                    remind = newValue;
+                    controller.value = 0;
+                    controller.forward();
+                  },
+                );
+              },
+      );
+    } else if (Platform.isIOS) {
+      return CupertinoSwitch(
+        value: remind,
+        onChanged: (!taskHasTime || selectedTime == 'no time')
+            ? null
+            : (newValue) {
+                setState(
+                  () {
+                    remind = newValue;
+                    controller.value = 0;
+                    controller.forward();
+                  },
+                );
+              },
+      );
+    } else {
+      return Container();
     }
   }
 
@@ -565,20 +624,21 @@ class _EditTaskSheetState extends State<EditTaskSheet> {
             Padding(
               padding: EdgeInsets.only(
                 left: SizeConfig.screenWidth * 0.05,
+                right: SizeConfig.screenWidth * 0.05,
               ),
               child: GestureDetector(
                 onTap: () {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) => DurationPicker(
-                      setReminderCallback: (reminder) {
-                        selectedReminder = reminder;
-                        setState(() {});
-                        _task.alert = selectedReminder;
-                      },
-                    ),
-                  );
-                  print('reminder setter tapped');
+//                  showDialog(
+//                    context: context,
+//                    builder: (BuildContext context) => DurationPicker(
+//                      setReminderCallback: (reminder) {
+//                        selectedReminder = reminder;
+//                        setState(() {});
+//                        _task.alert = selectedReminder;
+//                      },
+//                    ),
+//                  );
+//                  print('reminder setter tapped');
                 },
                 child: Row(
                   children: <Widget>[
@@ -590,15 +650,16 @@ class _EditTaskSheetState extends State<EditTaskSheet> {
                       width: SizeConfig.screenWidth * 0.1,
                     ),
                     Text(
-                      selectedReminder == 'no reminder'
-                          ? 'No Reminder'
-                          : selectedReminder,
+                      'Notify me',
                       style: TextStyle(
-                        color: kBlue,
+                        color: remind ? kBlue : Colors.grey.shade400,
                         fontSize: SizeConfig.blockSizeVertical * 3.0,
                         fontWeight: FontWeight.w500,
+                        decoration: remind ? null : TextDecoration.lineThrough,
                       ),
-                    )
+                    ),
+                    Spacer(),
+                    getSwitcherOS(context),
                   ],
                 ),
               ),
