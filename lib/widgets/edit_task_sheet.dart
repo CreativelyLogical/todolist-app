@@ -97,7 +97,7 @@ class _EditTaskSheetState extends State<EditTaskSheet>
         String match = m.group(0);
         times.add(int.parse(match));
       }
-      selectedTimeOfDay = TimeOfDay(hour: times[0], minute: times[1]);
+      selectedTimeOfDay = TimeOfDay(hour: times[0] + 12, minute: times[1]);
     }
 
     taskTitleController = TextEditingController(text: _task.taskTitle);
@@ -191,7 +191,7 @@ class _EditTaskSheetState extends State<EditTaskSheet>
         value: remind,
         onChanged: (!taskHasTime || selectedTime == 'no time')
             ? null
-            : (newValue) {
+            : (newValue) async {
                 setState(
                   () {
                     remind = newValue;
@@ -199,6 +199,18 @@ class _EditTaskSheetState extends State<EditTaskSheet>
                     controller.forward();
                   },
                 );
+                if (!remind) {
+                  print('cancelling notifications');
+                  await TodoNotifications()
+                      .cancelNotificationById(notificationId);
+                } else if (remind) {
+                  print('selectedTimeOfDay is $selectedTimeOfDay');
+                  print('notificationId is $notificationId');
+                  await TodoNotifications().schedule(selectedTimeOfDay,
+                      notificationTitle: _task.taskTitle,
+                      notificationBody: "Reminder",
+                      notificationId: notificationId);
+                }
               },
       );
     } else {

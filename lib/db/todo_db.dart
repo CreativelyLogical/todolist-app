@@ -27,7 +27,7 @@ class TodoDatabase {
       join(documentsDirectory.path, 'todo_database.db'),
       onCreate: _onCreate,
       onUpgrade: _onUpgrade,
-      version: 3,
+      version: 1,
     );
     return database;
   }
@@ -37,14 +37,14 @@ class TodoDatabase {
     await db.execute(
       '''
           CREATE TABLE IF NOT EXISTS todo_table(
-          id INTEGER PRIMARY KEY, task_date TEXT, task_name TEXT, is_checked BIT, priority TEXT, notes TEXT, category TEXT, alert TEXT, task_time TEXT)
+          id INTEGER PRIMARY KEY, task_date TEXT, task_name TEXT, is_checked BIT, priority TEXT, notes TEXT, category TEXT, alert TEXT, task_time TEXT, has_time BIT, notification_id TEXT)
           ''',
     );
   }
 
   void _onUpgrade(Database db, int oldVersion, int newVersion) {
     if (oldVersion < newVersion) {
-      db.execute('ALTER TABLE todo_table ADD notification_id TEXT;');
+//      db.execute('ALTER TABLE todo_table ADD notification_id TEXT;');
     }
   }
 

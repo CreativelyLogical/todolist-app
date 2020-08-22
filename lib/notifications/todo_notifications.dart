@@ -64,6 +64,10 @@ class TodoNotifications {
     var secondsDiff = 60 - now.second;
     var scheduledNotificationDateTime = DateTime.now().add(
         Duration(hours: hoursDiff, minutes: minutesDiff, seconds: secondsDiff));
+    print(
+        'timeOfDay.hour is ${timeOfDay.hour} and DateTime.now().hour is ${now.hour}');
+    print(
+        'The notification $title will appear in $hoursDiff hours $minutesDiff minutes and $secondsDiff seconds');
     var vibrationPattern = Int64List(4);
     vibrationPattern[0] = 0;
     vibrationPattern[1] = 1000;
@@ -100,11 +104,13 @@ class TodoNotifications {
       {String notificationTitle,
       String notificationBody,
       int notificationId}) async {
+    print('the notification id of $notificationTitle was $notificationId');
     await _scheduleNotification(timeOfDay,
         title: notificationTitle, body: notificationBody, id: notificationId);
   }
 
   Future<void> cancelNotificationById(int id) async {
+    print('for deletion, the notification id is $id');
     await flutterLocalNotificationsPlugin.cancel(id);
   }
 }
