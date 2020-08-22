@@ -97,7 +97,10 @@ class _EditTaskSheetState extends State<EditTaskSheet>
         String match = m.group(0);
         times.add(int.parse(match));
       }
-      selectedTimeOfDay = TimeOfDay(hour: times[0] + 12, minute: times[1]);
+      RegExp morningOrAfternoon = new RegExp(r"([A-Z]+)");
+      String time = morningOrAfternoon.firstMatch(selectedTime).toString();
+      int hour = time == 'PM' ? times[0] + 12 : times[0];
+      selectedTimeOfDay = TimeOfDay(hour: hour, minute: times[1]);
     }
 
     taskTitleController = TextEditingController(text: _task.taskTitle);
