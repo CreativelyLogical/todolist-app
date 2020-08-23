@@ -126,23 +126,43 @@ class TaskList extends StatelessWidget {
                         print('so the title is ${task.taskTitle}');
                         print('the task id in taskList is ${task.id}');
                         print('the task is checked? ${task.isChecked}');
-                        return TaskListTile(
-                          taskName: task.taskTitle,
-                          isChecked: task.isChecked,
-                          checkBoxCallback: () {
-                            if (!task.isChecked) {
-                              task.isChecked = true;
-                            } else {
-                              task.isChecked = false;
-                            }
-                            Provider.of<TaskData>(context).updateTask(task);
-                          },
-                          priority: task.priority,
-                          notes: task.notes,
-                          category: task.category,
-                          alert: task.alert,
-                          time: task.time,
-                          task: task,
+                        return Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            task.isChecked
+                                ? IconButton(
+                                    icon: Icon(
+                                      Icons.delete,
+                                      color: Colors.red,
+                                    ),
+                                    onPressed: () {
+                                      Provider.of<TaskData>(context)
+                                          .deleteTask(task);
+                                    },
+                                  )
+                                : Container(),
+                            Expanded(
+                              child: TaskListTile(
+                                taskName: task.taskTitle,
+                                isChecked: task.isChecked,
+                                checkBoxCallback: () {
+                                  if (!task.isChecked) {
+                                    task.isChecked = true;
+                                  } else {
+                                    task.isChecked = false;
+                                  }
+                                  Provider.of<TaskData>(context)
+                                      .updateTask(task);
+                                },
+                                priority: task.priority,
+                                notes: task.notes,
+                                category: task.category,
+                                alert: task.alert,
+                                time: task.time,
+                                task: task,
+                              ),
+                            ),
+                          ],
                         );
                       },
                       separatorBuilder: (BuildContext context, int index) =>
@@ -243,7 +263,7 @@ class _TaskListTileState extends State<TaskListTile> {
       },
       child: Container(
           margin: EdgeInsets.symmetric(
-            horizontal: SizeConfig.screenWidth * 0.03,
+            horizontal: widget.isChecked ? 0 : SizeConfig.screenWidth * 0.03,
           ),
           padding: EdgeInsets.only(
             left: SizeConfig.screenWidth * 0.05,
