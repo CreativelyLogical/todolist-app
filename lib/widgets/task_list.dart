@@ -216,9 +216,9 @@ class _TaskListTileState extends State<TaskListTile> {
 
     SizeConfig().init(context);
     return GestureDetector(
-      onTap: () async {
+      onTap: () {
         if (!widget.task.isChecked) {
-          String result = await showModalBottomSheet<String>(
+          showModalBottomSheet<String>(
             context: context,
             builder: (context) => Container(
               height: SizeConfig.screenHeight * 0.75,
@@ -239,13 +239,6 @@ class _TaskListTileState extends State<TaskListTile> {
             ),
             isScrollControlled: true,
           );
-
-          if (result != 'complete') {
-            // resetting state of widget.task because the modalBottomSheet was closed by pressing the save button
-            Task originalTask = await Provider.of<TaskData>(context)
-                .getTaskById(widget.task.id);
-            originalTask.assimilateTask(widget.task);
-          }
         }
       },
       child: Container(

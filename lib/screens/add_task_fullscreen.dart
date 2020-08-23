@@ -229,7 +229,7 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen>
           CupertinoDatePicker(
             mode: CupertinoDatePickerMode.time,
             backgroundColor: Colors.white,
-            initialDateTime: DateTime.now().add(Duration(minutes: 5)),
+            initialDateTime: DateTime.now().add(Duration(minutes: 1)),
             onDateTimeChanged: (DateTime picked) {
               setState(() {
                 selectedTimeOfDay = TimeOfDay.fromDateTime(picked);

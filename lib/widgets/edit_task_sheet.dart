@@ -18,6 +18,7 @@ import 'package:my_todo/widgets/horizontal_sized_box.dart';
 import 'package:my_todo/widgets/category_dialog.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:my_todo/notifications/todo_notifications.dart';
+import 'delete_task_dialog.dart';
 
 class EditTaskSheet extends StatefulWidget {
   EditTaskSheet({this.task, this.dateChangedCallback});
@@ -260,7 +261,7 @@ class _EditTaskSheetState extends State<EditTaskSheet>
 
   DateTime getMinimumTime() {
     if (selectedDateSQL == Date(DateTime.now()).toStringSQL()) {
-      return DateTime.now().add(Duration(minutes: 5));
+      return DateTime.now();
     } else {
       return null;
     }
@@ -390,12 +391,23 @@ class _EditTaskSheetState extends State<EditTaskSheet>
                   size: SizeConfig.blockSizeVertical * 3.0,
                 ),
                 buttonText: 'Delete task',
-                onPressed: () {
-                  Provider.of<TaskData>(context).deleteTask(_task);
-                  if (notificationId != null) {
-                    TodoNotifications().cancelNotificationById(notificationId);
+                onPressed: () async {
+                  String status = await showDialog(
+                    context: context,
+                    builder: (BuildContext context) => DeleteTaskDialog(
+                      onDeleteTaskCallback: () {
+                        print('delete button pressed');
+                        if (notificationId != null) {
+                          TodoNotifications()
+                              .cancelNotificationById(notificationId);
+                        }
+                      },
+                    ),
+                  );
+                  if (status == 'deleted') {
+                    Provider.of<TaskData>(context).deleteTask(_task);
+                    Navigator.pop(context);
                   }
-                  Navigator.pop(context);
                 },
               ),
               EditTaskButton(
