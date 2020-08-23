@@ -358,7 +358,7 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen>
     int month = Date.monthToInt[selectedDate.month];
     int day = selectedDate.day;
 
-    print('selectedTimeOfDay is $selectedTimeOfDay');
+    print('selectedTimeOfDay in AddTaskFullScreen is $selectedTimeOfDay');
 
     return DateTime(
         year, month, day, selectedTimeOfDay.hour, selectedTimeOfDay.minute, 0);

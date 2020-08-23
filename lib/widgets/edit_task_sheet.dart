@@ -87,9 +87,8 @@ class _EditTaskSheetState extends State<EditTaskSheet>
 
     remind = selectedReminder == 'yes reminder' ? true : false;
 
-    if (selectedTime == 'no time' || selectedTime == 'Set time') {
-      print('task.name for this is ${_task.taskTitle}');
-    } else {
+    if (taskHasTime) {
+      print('hello darkness my old friend');
       RegExp exp = new RegExp(r"(\d+)");
       Iterable<Match> matches = exp.allMatches(selectedTime);
       List<int> times = [];
@@ -98,10 +97,28 @@ class _EditTaskSheetState extends State<EditTaskSheet>
         times.add(int.parse(match));
       }
       RegExp morningOrAfternoon = new RegExp(r"([A-Z]+)");
-      String time = morningOrAfternoon.firstMatch(selectedTime).toString();
+      String time = morningOrAfternoon.firstMatch(selectedTime).group(0);
+      print('selectedTime in EditTaskSheet is $selectedTime');
+      print('time is $time');
       int hour = time == 'PM' ? times[0] + 12 : times[0];
       selectedTimeOfDay = TimeOfDay(hour: hour, minute: times[1]);
+      print('now selectedTimeOfDay is $selectedTimeOfDay');
     }
+//    if (selectedTime == 'no time' || selectedTime == 'Set time') {
+//      print('task.name for this is ${_task.taskTitle}');
+//    } else {
+//      RegExp exp = new RegExp(r"(\d+)");
+//      Iterable<Match> matches = exp.allMatches(selectedTime);
+//      List<int> times = [];
+//      for (Match m in matches) {
+//        String match = m.group(0);
+//        times.add(int.parse(match));
+//      }
+//      RegExp morningOrAfternoon = new RegExp(r"([A-Z]+)");
+//      String time = morningOrAfternoon.firstMatch(selectedTime).toString();
+//      int hour = time == 'PM' ? times[0] + 12 : times[0];
+//      selectedTimeOfDay = TimeOfDay(hour: hour, minute: times[1]);
+//    }
 
     taskTitleController = TextEditingController(text: _task.taskTitle);
 //    if (_task.time == 'no time') {
@@ -170,6 +187,20 @@ class _EditTaskSheetState extends State<EditTaskSheet>
     }
   }
 
+  DateTime getNotificationDateTime() {
+    Date selectedDate =
+        Date(DateTime.now()).fromSQLToDate(date: selectedDateSQL);
+
+    int year = selectedDate.year;
+    int month = Date.monthToInt[selectedDate.month];
+    int day = selectedDate.day;
+
+    print('selectedTimeOfDay in EditTaskSheet is $selectedTimeOfDay');
+
+    return DateTime(
+        year, month, day, selectedTimeOfDay.hour, selectedTimeOfDay.minute, 0);
+  }
+
   Widget getSwitcherOS(BuildContext context) {
     print('taskHasTime is $taskHasTime');
     print('selectedTime is $selectedTime');
@@ -210,10 +241,14 @@ class _EditTaskSheetState extends State<EditTaskSheet>
                   print('selectedTimeOfDay is $selectedTimeOfDay');
                   print('notificationId is $notificationId');
                   _task.alert = 'yes reminder';
+                  DateTime notificationTimeOfDay = getNotificationDateTime();
+                  print(
+                      'notificationTimeOfDay is ${notificationTimeOfDay.toString()}');
                   await TodoNotifications().schedule(selectedTimeOfDay,
                       notificationTitle: _task.taskTitle,
                       notificationBody: "Reminder",
-                      notificationId: notificationId);
+                      notificationId: notificationId,
+                      dateTime: notificationTimeOfDay);
                 }
                 Provider.of<TaskData>(context).updateTask(_task);
               },
