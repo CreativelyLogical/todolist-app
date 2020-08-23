@@ -350,6 +350,20 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen>
 //    );
   }
 
+  DateTime getNotificationDateTime() {
+    Date selectedDate =
+        Date(DateTime.now()).fromSQLToDate(date: selectedDateSQL);
+
+    int year = selectedDate.year;
+    int month = Date.monthToInt[selectedDate.month];
+    int day = selectedDate.day;
+
+    print('selectedTimeOfDay is $selectedTimeOfDay');
+
+    return DateTime(
+        year, month, day, selectedTimeOfDay.hour, selectedTimeOfDay.minute, 0);
+  }
+
   @override
   Widget build(BuildContext context) {
 //    Future<TimeOfDay> selectedTime = showTimePicker(
@@ -949,12 +963,15 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen>
                               } else {
                                 print('remind is $remind');
                                 if (remind) {
+                                  DateTime notificationTime =
+                                      getNotificationDateTime();
                                   await TodoNotifications().schedule(
                                       selectedTimeOfDay,
                                       notificationTitle:
                                           taskNameController.text,
                                       notificationBody: 'Reminder',
-                                      notificationId: notificationId);
+                                      notificationId: notificationId,
+                                      dateTime: notificationTime);
                                 }
                               }
                               Navigator.pop(context);

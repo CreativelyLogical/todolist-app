@@ -54,20 +54,13 @@ class TodoNotifications {
 
   Future<void> _scheduleNotification(
     TimeOfDay timeOfDay, {
+    DateTime notificationTime,
     String title,
     String body,
     int id,
   }) async {
-    DateTime now = DateTime.now();
-    var hoursDiff = timeOfDay.hour - now.hour;
-    var minutesDiff = timeOfDay.minute - now.minute - 1;
-    var secondsDiff = 60 - now.second;
-    var scheduledNotificationDateTime = DateTime.now().add(
-        Duration(hours: hoursDiff, minutes: minutesDiff, seconds: secondsDiff));
-    print(
-        'timeOfDay.hour is ${timeOfDay.hour} and DateTime.now().hour is ${now.hour}');
-    print(
-        'The notification $title will appear in $hoursDiff hours $minutesDiff minutes and $secondsDiff seconds');
+    Duration untilNotification = notificationTime.difference(DateTime.now());
+    var scheduledNotificationDateTime = DateTime.now().add(untilNotification);
     var vibrationPattern = Int64List(4);
     vibrationPattern[0] = 0;
     vibrationPattern[1] = 1000;
@@ -100,13 +93,19 @@ class TodoNotifications {
     );
   }
 
-  Future<void> schedule(TimeOfDay timeOfDay,
-      {String notificationTitle,
-      String notificationBody,
-      int notificationId}) async {
+  Future<void> schedule(
+    TimeOfDay timeOfDay, {
+    String notificationTitle,
+    String notificationBody,
+    int notificationId,
+    DateTime dateTime,
+  }) async {
     print('the notification id of $notificationTitle was $notificationId');
     await _scheduleNotification(timeOfDay,
-        title: notificationTitle, body: notificationBody, id: notificationId);
+        title: notificationTitle,
+        body: notificationBody,
+        id: notificationId,
+        notificationTime: dateTime);
   }
 
   Future<void> cancelNotificationById(int id) async {
