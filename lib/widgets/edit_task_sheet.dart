@@ -195,7 +195,7 @@ class _EditTaskSheetState extends State<EditTaskSheet>
     int month = Date.monthToInt[selectedDate.month];
     int day = selectedDate.day;
 
-    print('selectedTimeOfDay in EditTaskSheet is $selectedTimeOfDay');
+//    print('selectedTimeOfDay in EditTaskSheet is $selectedTimeOfDay');
 
     return DateTime(
         year, month, day, selectedTimeOfDay.hour, selectedTimeOfDay.minute, 0);
@@ -242,8 +242,8 @@ class _EditTaskSheetState extends State<EditTaskSheet>
                   print('notificationId is $notificationId');
                   _task.alert = 'yes reminder';
                   DateTime notificationTimeOfDay = getNotificationDateTime();
-                  print(
-                      'notificationTimeOfDay is ${notificationTimeOfDay.toString()}');
+//                  print(
+//                      'notificationTimeOfDay is ${notificationTimeOfDay.toString()}');
                   await TodoNotifications().schedule(selectedTimeOfDay,
                       notificationTitle: _task.taskTitle,
                       notificationBody: "Reminder",
@@ -277,7 +277,7 @@ class _EditTaskSheetState extends State<EditTaskSheet>
             backgroundColor: Colors.white,
             mode: CupertinoDatePickerMode.time,
             minimumDate: getMinimumTime(),
-            initialDateTime: DateTime.now().add(Duration(minutes: 5)),
+            initialDateTime: DateTime.now().add(Duration(minutes: 1)),
             onDateTimeChanged: (DateTime picked) {
               setState(() {
                 selectedTimeOfDay = TimeOfDay.fromDateTime(picked);
@@ -287,7 +287,22 @@ class _EditTaskSheetState extends State<EditTaskSheet>
             },
           ),
         ),
-      ).whenComplete(() => Provider.of<TaskData>(context).updateTask(_task));
+      ).whenComplete(() async {
+        if (remind) {
+          TodoNotifications().cancelNotificationById(notificationId);
+
+          DateTime notificationTimeOfDay = getNotificationDateTime();
+
+          await TodoNotifications().schedule(
+            selectedTimeOfDay,
+            notificationTitle: _task.taskTitle,
+            notificationBody: "Reminder",
+            notificationId: notificationId,
+            dateTime: notificationTimeOfDay,
+          );
+        }
+        Provider.of<TaskData>(context).updateTask(_task);
+      });
     }
   }
 
