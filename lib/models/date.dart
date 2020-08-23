@@ -30,6 +30,21 @@ class Date {
     7: 'Sunday',
   };
 
+  static final Map<String, int> monthToInt = {
+    'Jan': 1,
+    'Feb': 2,
+    'Mar': 3,
+    'Apr': 4,
+    'May': 5,
+    'Jun': 6,
+    'Jul': 7,
+    'Aug': 8,
+    'Sep': 9,
+    'Oct': 10,
+    'Nov': 11,
+    'Dec': 12,
+  };
+
   @override
   Date(DateTime dateTime) {
     this.dateTime = dateTime;
@@ -53,6 +68,30 @@ class Date {
     }
   }
 
+  bool dateGreaterThan(Date inputDate) {
+    if (this.year == inputDate.year) {
+      if (this.month == inputDate.month) {
+        if (this.day > inputDate.day) {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        if (monthToInt[this.month] > monthToInt[inputDate.month]) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    } else {
+      if (this.year > inputDate.year) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  }
+
   DateTime getDateTime() {
     return dateTime;
   }
@@ -64,5 +103,13 @@ class Date {
   String toStringSQL() {
     print(dateTime.toString().substring(0, 10));
     return dateTime.toString().substring(0, 10);
+  }
+
+  Date fromSQLToDate({String date}) {
+    int year = int.parse(date.substring(0, 4));
+    int month = int.parse(date.substring(5, 7));
+    int day = int.parse(date.substring(8, 10));
+
+    return Date(DateTime(year, month, day));
   }
 }

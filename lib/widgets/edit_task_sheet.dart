@@ -138,7 +138,7 @@ class _EditTaskSheetState extends State<EditTaskSheet>
 //        minimumDate: DateTime.now().add(Duration(days: -1)),
 //        maximumDate: DateTime(2101),
           backgroundColor: Colors.white,
-          minimumDate: DateTime.now().add(Duration(days: -1)),
+          minimumDate: DateTime.now(),
           maximumDate: DateTime(2101),
           mode: CupertinoDatePickerMode.date,
           onDateTimeChanged: (DateTime newDate) {
@@ -146,12 +146,11 @@ class _EditTaskSheetState extends State<EditTaskSheet>
 //              selectedDate = Date(newDate).toString();
               selectedDateSQL = Date(newDate).toStringSQL();
               _task.date = selectedDateSQL;
-//              Provider.of<TaskData>(context).updateTask(_task);
             });
           },
         ),
       ),
-    );
+    ).whenComplete(() => Provider.of<TaskData>(context).updateTask(_task));
   }
 
   Future<Null> _selectTime(BuildContext context) async {
@@ -204,20 +203,31 @@ class _EditTaskSheetState extends State<EditTaskSheet>
                 );
                 if (!remind) {
                   print('cancelling notifications');
+                  _task.alert = 'no reminder';
                   await TodoNotifications()
                       .cancelNotificationById(notificationId);
                 } else if (remind) {
                   print('selectedTimeOfDay is $selectedTimeOfDay');
                   print('notificationId is $notificationId');
+                  _task.alert = 'yes reminder';
                   await TodoNotifications().schedule(selectedTimeOfDay,
                       notificationTitle: _task.taskTitle,
                       notificationBody: "Reminder",
                       notificationId: notificationId);
                 }
+                Provider.of<TaskData>(context).updateTask(_task);
               },
       );
     } else {
       return Container();
+    }
+  }
+
+  DateTime getMinimumTime() {
+    if (selectedDateSQL == Date(DateTime.now()).toStringSQL()) {
+      return DateTime.now().add(Duration(minutes: 5));
+    } else {
+      return null;
     }
   }
 
@@ -231,6 +241,8 @@ class _EditTaskSheetState extends State<EditTaskSheet>
           CupertinoDatePicker(
             backgroundColor: Colors.white,
             mode: CupertinoDatePickerMode.time,
+            minimumDate: getMinimumTime(),
+            initialDateTime: DateTime.now().add(Duration(minutes: 5)),
             onDateTimeChanged: (DateTime picked) {
               setState(() {
                 selectedTimeOfDay = TimeOfDay.fromDateTime(picked);
@@ -619,6 +631,8 @@ class _EditTaskSheetState extends State<EditTaskSheet>
                           _task.toggleHasTime();
                           taskHasTime = _task.hasTime;
                           if (!taskHasTime && notificationId != null) {
+                            remind = false;
+                            _task.alert = 'no reminder';
                             await TodoNotifications()
                                 .cancelNotificationById(notificationId);
                           }
