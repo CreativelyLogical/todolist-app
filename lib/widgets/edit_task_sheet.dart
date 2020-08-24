@@ -171,23 +171,6 @@ class _EditTaskSheetState extends State<EditTaskSheet>
     ).whenComplete(() => Provider.of<TaskData>(context).updateTask(_task));
   }
 
-  Future<Null> _selectTime(BuildContext context) async {
-    final TimeOfDay picked = await showTimePicker(
-      context: context,
-      initialTime:
-          selectedTime == 'Set time' ? TimeOfDay.now() : selectedTimeOfDay,
-    );
-    if (picked.toString() != selectedTime && picked != null) {
-      setState(() {
-        selectedTimeOfDay = picked;
-        selectedTime = selectedTimeOfDay.format(context);
-        print('selectedTime is $selectedTime');
-//        _task.time = selectedTime;
-//        Provider.of<TaskData>(context).updateTask(_task);
-      });
-    }
-  }
-
   DateTime getNotificationDateTime() {
     Date selectedDate =
         Date(DateTime.now()).fromSQLToDate(date: selectedDateSQL);
@@ -210,7 +193,7 @@ class _EditTaskSheetState extends State<EditTaskSheet>
         value: remind,
         onChanged: (!taskHasTime || selectedTime == 'no time')
             ? null
-            : (newValue) {
+            : (newValue) async {
                 setState(
                   () {
                     remind = newValue;
@@ -218,6 +201,22 @@ class _EditTaskSheetState extends State<EditTaskSheet>
                     controller.forward();
                   },
                 );
+                if (!remind) {
+                  _task.alert = 'no reminder';
+                  await TodoNotifications()
+                      .cancelNotificationById(notificationId);
+                } else if (remind) {
+                  _task.alert = 'yes reminder';
+                  DateTime notificationTimeOfDay = getNotificationDateTime();
+
+                  await TodoNotifications().schedule(
+                    notificationTitle: _task.taskTitle,
+                    notificationBody: "Reminder",
+                    notificationId: notificationId,
+                    dateTime: notificationTimeOfDay,
+                  );
+                }
+                Provider.of<TaskData>(context).updateTask(_task);
               },
       );
     } else if (Platform.isIOS) {
@@ -245,7 +244,7 @@ class _EditTaskSheetState extends State<EditTaskSheet>
                   DateTime notificationTimeOfDay = getNotificationDateTime();
 //                  print(
 //                      'notificationTimeOfDay is ${notificationTimeOfDay.toString()}');
-                  await TodoNotifications().schedule(selectedTimeOfDay,
+                  await TodoNotifications().schedule(
                       notificationTitle: _task.taskTitle,
                       notificationBody: "Reminder",
                       notificationId: notificationId,
@@ -264,6 +263,39 @@ class _EditTaskSheetState extends State<EditTaskSheet>
       return DateTime.now();
     } else {
       return null;
+    }
+  }
+
+  Future<Null> _selectTime(BuildContext context) async {
+    final TimeOfDay picked = await showTimePicker(
+      context: context,
+      initialTime:
+          selectedTime == 'Set time' ? TimeOfDay.now() : selectedTimeOfDay,
+    ).whenComplete(() async {
+      Provider.of<TaskData>(context).updateTask(_task);
+    });
+
+    if (picked.toString() != selectedTime && picked != null) {
+      setState(() async {
+        selectedTimeOfDay = picked;
+        selectedTime = selectedTimeOfDay.format(context);
+        _task.time = selectedTime;
+        print('selectedTime is $selectedTime');
+//        _task.time = selectedTime;
+//        Provider.of<TaskData>(context).updateTask(_task);
+        await TodoNotifications().cancelNotificationById(notificationId);
+
+        if (remind) {
+          DateTime notificationTimeOfDay = getNotificationDateTime();
+
+          await TodoNotifications().schedule(
+            notificationTitle: _task.taskTitle,
+            notificationBody: "Reminder",
+            notificationId: notificationId,
+            dateTime: notificationTimeOfDay,
+          );
+        }
+      });
     }
   }
 
@@ -295,7 +327,6 @@ class _EditTaskSheetState extends State<EditTaskSheet>
           DateTime notificationTimeOfDay = getNotificationDateTime();
 
           await TodoNotifications().schedule(
-            selectedTimeOfDay,
             notificationTitle: _task.taskTitle,
             notificationBody: "Reminder",
             notificationId: notificationId,

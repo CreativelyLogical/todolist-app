@@ -52,8 +52,7 @@ class TodoNotifications {
     });
   }
 
-  Future<void> _scheduleNotification(
-    TimeOfDay timeOfDay, {
+  Future<void> _scheduleNotification({
     DateTime notificationTime,
     String title,
     String body,
@@ -93,15 +92,14 @@ class TodoNotifications {
     );
   }
 
-  Future<void> schedule(
-    TimeOfDay timeOfDay, {
+  Future<void> schedule({
     String notificationTitle,
     String notificationBody,
     int notificationId,
     DateTime dateTime,
   }) async {
     print('the notification id of $notificationTitle was $notificationId');
-    await _scheduleNotification(timeOfDay,
+    await _scheduleNotification(
         title: notificationTitle,
         body: notificationBody,
         id: notificationId,
