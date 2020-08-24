@@ -200,24 +200,45 @@ class _AllTasksScreenState extends State<AllTasksScreen> {
                             itemBuilder: (BuildContext context, int index) {
                               final task = allTasksList[index];
 //                  print('the type here is ${widget.type}');
-                              return VersatileListTile(
-                                taskName: task.taskTitle,
-                                priority: task.priority,
-                                notes: task.notes,
-                                category: task.category,
-                                time: task.time,
-                                checkBoxCallback: () {
-                                  if (!task.isChecked) {
-                                    task.isChecked = true;
-                                  } else {
-                                    task.isChecked = false;
-                                  }
-                                  Provider.of<TaskData>(context)
-                                      .updateTask(task);
-                                },
-                                isChecked: task.isChecked,
-                                taskDate: task.date,
-                                task: task,
+                              return Row(
+                                children: [
+                                  task.isChecked
+                                      ? IconButton(
+                                          icon: Icon(
+                                            Icons.delete,
+                                            color: Colors.red,
+                                            size: SizeConfig.blockSizeVertical *
+                                                4,
+                                          ),
+                                          onPressed: () {
+                                            print('IconButton pressed');
+                                            Provider.of<TaskData>(context)
+                                                .deleteTask(task);
+                                          },
+                                        )
+                                      : Container(),
+                                  Expanded(
+                                    child: VersatileListTile(
+                                      taskName: task.taskTitle,
+                                      priority: task.priority,
+                                      notes: task.notes,
+                                      category: task.category,
+                                      time: task.time,
+                                      checkBoxCallback: () {
+                                        if (!task.isChecked) {
+                                          task.isChecked = true;
+                                        } else {
+                                          task.isChecked = false;
+                                        }
+                                        Provider.of<TaskData>(context)
+                                            .updateTask(task);
+                                      },
+                                      isChecked: task.isChecked,
+                                      taskDate: task.date,
+                                      task: task,
+                                    ),
+                                  ),
+                                ],
                               );
                             },
                             separatorBuilder:
@@ -618,6 +639,17 @@ class VersatileListTile extends StatelessWidget {
                                     ],
                                   ),
                                 ),
+                                SizedBox(
+                                  width: SizeConfig.screenWidth * 0.02,
+                                ),
+                                task.alert == 'no reminder'
+                                    ? Container()
+                                    : Icon(
+                                        Icons.notifications,
+                                        color: kBlue,
+                                        size:
+                                            SizeConfig.blockSizeVertical * 2.5,
+                                      ),
                               ],
                             ),
                           ),
@@ -684,7 +716,7 @@ class CircleCheckBox extends StatelessWidget {
             : null,
       ),
       child: CircleAvatar(
-        radius: SizeConfig.blockSizeVertical * 2.3,
+        radius: SizeConfig.blockSizeVertical * 2.6,
         backgroundColor: icon == null
             ? Colors.grey.shade200
             : kLightBlueAccent.withOpacity(0.0),

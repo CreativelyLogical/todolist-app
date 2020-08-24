@@ -33,7 +33,6 @@ class TaskList extends StatelessWidget {
           .getTaskList(TaskScreen.selectedDay);
     }
 
-    print('did it even reach here?');
     return FutureBuilder<List<Task>>(
 //      initialData: Container(
 //        child: Center(
@@ -134,6 +133,7 @@ class TaskList extends StatelessWidget {
                                     icon: Icon(
                                       Icons.delete,
                                       color: Colors.red,
+                                      size: SizeConfig.blockSizeVertical * 4,
                                     ),
                                     onPressed: () {
                                       Provider.of<TaskData>(context)
@@ -262,8 +262,9 @@ class _TaskListTileState extends State<TaskListTile> {
         }
       },
       child: Container(
-          margin: EdgeInsets.symmetric(
-            horizontal: widget.isChecked ? 0 : SizeConfig.screenWidth * 0.03,
+          margin: EdgeInsets.only(
+            left: widget.isChecked ? 0 : SizeConfig.screenWidth * 0.03,
+            right: SizeConfig.screenWidth * 0.03,
           ),
           padding: EdgeInsets.only(
             left: SizeConfig.screenWidth * 0.05,
@@ -403,7 +404,8 @@ class _TaskListTileState extends State<TaskListTile> {
                                 widget.alert == 'no reminder'
                                     ? Container()
                                     : Icon(
-                                        NotificationBells.bell,
+//                                        NotificationBells.bell,
+                                        Icons.notifications_active,
                                         color: kBlue,
                                         size:
                                             SizeConfig.blockSizeVertical * 2.5,
@@ -476,7 +478,7 @@ class CircleCheckBox extends StatelessWidget {
             : null,
       ),
       child: CircleAvatar(
-        radius: SizeConfig.blockSizeVertical * 2.3,
+        radius: SizeConfig.blockSizeVertical * 2.6,
         backgroundColor: icon == null
             ? Colors.grey.shade200
             : kLightBlueAccent.withOpacity(0.0),
