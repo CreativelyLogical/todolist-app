@@ -11,6 +11,7 @@ import 'task_category_icons.dart';
 //import 'calendar_screen.dart';
 import 'package:my_todo/widgets/edit_task_sheet.dart';
 import 'package:my_todo/screens/add_task_fullscreen.dart';
+import 'about_page.dart';
 
 class AllTasksScreen extends StatefulWidget {
   @override
@@ -109,7 +110,10 @@ class _AllTasksScreenState extends State<AllTasksScreen> {
                       color: kWhite.withOpacity(0.5),
                     ),
                     iconSize: SizeConfig.screenHeight * 0.045,
-
+                    onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => AboutPage()));
+                    },
 //                color: kWhite,
                   ),
                   Text(

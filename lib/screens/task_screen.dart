@@ -5,6 +5,7 @@ import 'package:my_todo/constants.dart';
 import 'package:my_todo/models/date.dart';
 import 'package:my_todo/widgets/week_view.dart';
 import 'all_tasks_screen.dart';
+import 'about_page.dart';
 
 class TaskScreen extends StatefulWidget {
   @override
@@ -180,7 +181,12 @@ class _TaskScreenState extends State<TaskScreen> {
                         color: kWhite.withOpacity(0.5),
                       ),
                       iconSize: SizeConfig.screenHeight * 0.045,
-
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => AboutPage()));
+                      },
 //                color: kWhite,
                     ),
                     Text(
