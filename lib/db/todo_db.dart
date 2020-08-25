@@ -3,6 +3,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:my_todo/models/task.dart';
 import 'package:path/path.dart';
 import 'package:my_todo/models/date.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter/material.dart';
 
 class TodoDatabase {
 //  TodoDatabase._privateConstructor();
@@ -63,6 +65,16 @@ class TodoDatabase {
 //      task.toMap(),
 //      conflictAlgorithm: ConflictAlgorithm.replace,
 //    );
+
+    Fluttertoast.showToast(
+        msg: "the time is ${task.time}",
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0);
+
     await db.rawQuery(
         'INSERT INTO todo_table VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [
       task.date,

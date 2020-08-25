@@ -12,6 +12,7 @@ import 'task_category_icons.dart';
 import 'package:my_todo/widgets/edit_task_sheet.dart';
 import 'package:my_todo/screens/add_task_fullscreen.dart';
 import 'about_page.dart';
+import 'task_screen.dart';
 
 class AllTasksScreen extends StatefulWidget {
   @override
@@ -63,7 +64,10 @@ class _AllTasksScreenState extends State<AllTasksScreen> {
                     ),
                     iconSize: SizeConfig.screenHeight * 0.045,
                     onPressed: () {
-                      Navigator.pop(context);
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => TaskScreen()));
                     },
                   ),
                   Text(
@@ -263,113 +267,6 @@ class _AllTasksScreenState extends State<AllTasksScreen> {
   }
 }
 
-//class ListObjects extends StatefulWidget {
-//  @override
-//  _ListObjectsState createState() => _ListObjectsState();
-//
-//  ListObjects({this.type});
-//
-//  final String type;
-//}
-//
-//class _ListObjectsState extends State<ListObjects> {
-//  List<Task> taskList;
-//
-////  Future getTaskList() async {
-////    taskList =  await Provider.of<TaskData>(context)
-////        .getTaskList(Date(DateTime.now()));
-////  }
-//
-//  Future _getTodayTaskList() async {
-//    Date listDay;
-//    if (widget.type == 'today')
-//      listDay = Date(DateTime.now());
-//    else if (widget.type == 'tomorrow')
-//      listDay = Date(DateTime.now().add(Duration(days: 1)));
-////    print('listday is ${listDay.toStringSQL()}');
-//    if (widget.type == 'today' || widget.type == 'tomorrow') {
-//      taskList = await Provider.of<TaskData>(context).getTaskList(listDay);
-//    } else if (widget.type == 'uncompleted') {
-//      taskList = await Provider.of<TaskData>(context).getUncompletedTaskList();
-//    }
-//
-//    setState(() {});
-////    if (taskList != null) {
-////      setState(() {
-////        print('taskList.length is ${taskList.length}');
-////      });
-////    }
-//  }
-//
-//  @override
-//  void didChangeDependencies() {
-//    // TODO: implement didChangeDependencies
-//    super.didChangeDependencies();
-//    _getTodayTaskList();
-//  }
-//
-//  String getListType() {
-//    String listType = widget.type;
-//    if (listType == 'today') {
-//      return 'Today';
-//    } else if (listType == 'tomorrow') {
-//      return 'Tomorrow';
-//    } else if (listType == 'uncompleted') {
-//      return 'Uncompleted';
-//    } else {
-//      return 'Undefined';
-//    }
-//  }
-//
-//  @override
-//  Widget build(BuildContext context) {
-//    return Container(
-//      padding: EdgeInsets.only(bottom: SizeConfig.screenHeight * 0.04),
-//      child: Column(
-//        crossAxisAlignment: CrossAxisAlignment.start,
-//        children: <Widget>[
-//          (taskList == null)
-//              ? Container(
-//                  child: Center(
-//                    child: Text('no data currently'),
-//                  ),
-//                )
-//              : ListView.separated(
-//                  padding: EdgeInsets.only(top: 10.0),
-//                  shrinkWrap: true,
-//                  itemBuilder: (BuildContext context, int index) {
-//                    final task = taskList[index];
-//                    print('the type here is ${widget.type}');
-//                    return VersatileListTile(
-//                      taskName: task.taskTitle,
-//                      priority: task.priority,
-//                      notes: task.notes,
-//                      category: task.category,
-//                      time: task.time,
-//                      checkBoxCallback: () {
-//                        if (!task.isChecked) {
-//                          task.isChecked = true;
-//                        } else {
-//                          task.isChecked = false;
-//                        }
-//                        Provider.of<TaskData>(context).updateTask(task);
-//                      },
-//                      isChecked: task.isChecked,
-//                    );
-//                  },
-//                  separatorBuilder: (BuildContext context, int index) {
-//                    return Divider(
-//                      height: SizeConfig.screenHeight * 0.01,
-//                      color: Color.fromRGBO(234, 234, 234, 1),
-//                    );
-//                  },
-//                  itemCount: taskList.length)
-//        ],
-//      ),
-//    );
-//  }
-//}
-
 class VersatileListTile extends StatelessWidget {
   VersatileListTile({
     this.taskName,
@@ -470,7 +367,7 @@ class VersatileListTile extends StatelessWidget {
     return GestureDetector(
       onTap: () async {
         if (!task.isChecked) {
-          showModalBottomSheet(
+          await showModalBottomSheet(
             context: context,
             builder: (context) => Container(
               height: SizeConfig.screenHeight * 0.75,
@@ -491,6 +388,11 @@ class VersatileListTile extends StatelessWidget {
             ),
             isScrollControlled: true,
           );
+
+          if (task.time == 'no time') {
+            task.hasTime = false;
+            Provider.of<TaskData>(context).updateTask(task);
+          }
         }
       },
       child: Container(

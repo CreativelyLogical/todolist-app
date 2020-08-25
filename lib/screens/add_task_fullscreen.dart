@@ -953,10 +953,7 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen>
 //                                        ? 'no time'
 //                                        : selectedTime)
 //                                    : 'no time',
-                                notificationId:
-                                    (!taskHasTime || selectedTime == 'Set time')
-                                        ? null
-                                        : notificationId.toString(),
+                                notificationId: notificationId.toString(),
                               );
                               print(selectedTimeOfDay);
                               if (!taskHasTime || selectedTime == 'Set time') {

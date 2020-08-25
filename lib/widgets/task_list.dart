@@ -236,9 +236,9 @@ class _TaskListTileState extends State<TaskListTile> {
 
     SizeConfig().init(context);
     return GestureDetector(
-      onTap: () {
+      onTap: () async {
         if (!widget.task.isChecked) {
-          showModalBottomSheet<String>(
+          await showModalBottomSheet<String>(
             context: context,
             builder: (context) => Container(
               height: SizeConfig.screenHeight * 0.75,
@@ -259,6 +259,11 @@ class _TaskListTileState extends State<TaskListTile> {
             ),
             isScrollControlled: true,
           );
+
+          if (widget.task.time == 'no time') {
+            widget.task.hasTime = false;
+            Provider.of<TaskData>(context).updateTask(widget.task);
+          }
         }
       },
       child: Container(

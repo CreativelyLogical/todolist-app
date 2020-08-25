@@ -123,6 +123,67 @@ class AboutPage extends StatelessWidget {
                   ),
                 ),
               ),
+              Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: SizeConfig.screenWidth * 0.04),
+                child: Container(
+                  child: Column(
+                    children: [
+                      Text(
+                        'Hi, This is Umutjan, creator of Check-a-do. Thank you for using my app. It is my hope that '
+                        'this app will prove useful to you and help you lead a more productive and fulfilling life. \n\nIn the meanwhile, '
+                        'if you are enjoying the app, '
+                        'please give it a rating. If not, please leave a review'
+                        ' containing suggestions on how it can be improved.',
+                        style: TextStyle(
+                          fontSize: SizeConfig.blockSizeVertical * 2.5,
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                          top: SizeConfig.screenHeight * 0.05,
+                          bottom: SizeConfig.screenHeight * 0.01,
+                        ),
+                        child: Text(
+                          "Here's to a more productive life!",
+                          style: TextStyle(
+                            fontSize: SizeConfig.blockSizeVertical * 2.5,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      Text(
+                        '🍻',
+                        style: TextStyle(
+                          fontSize: SizeConfig.blockSizeVertical * 4,
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(
+                          top: SizeConfig.screenHeight * 0.03,
+                        ),
+                        width: SizeConfig.screenWidth * 0.95,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                              color: kBlue, width: 1, style: BorderStyle.solid),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(20.0),
+                          ),
+                        ),
+                        child: FlatButton(
+                            onPressed: () {},
+                            child: Text(
+                              'Rate our app',
+                              style: TextStyle(
+                                fontSize: SizeConfig.blockSizeVertical * 2.5,
+                                color: kBlue,
+                              ),
+                            )),
+                      )
+                    ],
+                  ),
+                ),
+              ),
             ],
           ),
         ),

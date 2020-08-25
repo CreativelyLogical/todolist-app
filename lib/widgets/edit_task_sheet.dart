@@ -82,9 +82,8 @@ class _EditTaskSheetState extends State<EditTaskSheet>
     selectedDateSQL = _task.date;
     selectedTime = _task.time;
     selectedReminder = _task.alert;
-    taskHasTime = _task.hasTime;
-    notificationId =
-        _task.notificationId != null ? int.parse(_task.notificationId) : null;
+    taskHasTime = _task.hasTime && _task.time != 'no time';
+    notificationId = int.parse(_task.notificationId);
 
     remind = selectedReminder == 'yes reminder' ? true : false;
 
@@ -104,6 +103,8 @@ class _EditTaskSheetState extends State<EditTaskSheet>
       int hour = time == 'PM' ? times[0] + 12 : times[0];
       selectedTimeOfDay = TimeOfDay(hour: hour, minute: times[1]);
       print('now selectedTimeOfDay is $selectedTimeOfDay');
+    } else {
+      print('selectedTime in EditTaskSheet is $selectedTime');
     }
 //    if (selectedTime == 'no time' || selectedTime == 'Set time') {
 //      print('task.name for this is ${_task.taskTitle}');
@@ -270,7 +271,7 @@ class _EditTaskSheetState extends State<EditTaskSheet>
     final TimeOfDay picked = await showTimePicker(
       context: context,
       initialTime:
-          selectedTime == 'Set time' ? TimeOfDay.now() : selectedTimeOfDay,
+          selectedTime == 'no time' ? TimeOfDay.now() : selectedTimeOfDay,
     ).whenComplete(() async {
       Provider.of<TaskData>(context).updateTask(_task);
     });

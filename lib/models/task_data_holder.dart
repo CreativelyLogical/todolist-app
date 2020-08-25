@@ -2,7 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'task.dart';
 import 'package:my_todo/db/todo_db.dart';
 import 'date.dart';
-import 'package:my_todo/screens/task_screen.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter/material.dart';
 
 class TaskData extends ChangeNotifier {
   final todoDB = TodoDatabase();
@@ -54,6 +55,7 @@ class TaskData extends ChangeNotifier {
   }) async {
 //    taskList.add(Task(taskTitle: newTaskTitle, isChecked: false));
 //    notifyListeners();
+
     await todoDB.insert(new Task(
       date: taskDate,
       taskTitle: newTaskTitle,
@@ -67,6 +69,7 @@ class TaskData extends ChangeNotifier {
       hasTime: time == 'no time' ? false : true,
       notificationId: notificationId,
     ));
+
     notifyListeners();
   }
 
