@@ -8,15 +8,10 @@ import 'package:my_todo/screens/add_task_fullscreen.dart';
 import 'package:my_todo/screens/task_screen.dart';
 import 'custom_flag_icon_icons.dart';
 import 'package:my_todo/screens/task_category_icons.dart';
-import 'package:my_todo/screens/notification_bell_icons.dart';
-import 'priority_buttons.dart';
-import 'package:my_todo/screens/set_time_icon_icons.dart';
-import 'package:my_todo/screens/edit_screen_calendar_icons.dart';
-import 'package:my_todo/models/date.dart';
-import 'package:my_todo/screens/notification_bells_icons.dart';
 import 'dart:io' show Platform;
 import 'package:flutter/cupertino.dart';
 import 'package:my_todo/widgets/edit_task_sheet.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class TaskList extends StatelessWidget {
   @override
@@ -30,6 +25,13 @@ class TaskList extends StatelessWidget {
           .getTaskList(TaskScreen.selectedDay);
     }
 
+    final String allDoneAsset = 'assets/images/tasks-solid.svg';
+    final Widget allDoneSvg = SvgPicture.asset(
+      allDoneAsset,
+      height: SizeConfig.blockSizeVertical * 6,
+      width: SizeConfig.blockSizeVertical * 6,
+      color: Colors.grey.shade700,
+    );
     return FutureBuilder<List<Task>>(
 //      initialData: Container(
 //        child: Center(
@@ -107,11 +109,27 @@ class TaskList extends StatelessWidget {
 //              height: SizeConfig.screenHeight * 0.01,
 //            ),
             Expanded(
-              child: snapshot.data == null
+              child: (snapshot.data.length == 0)
                   ? Container(
                       child: Center(
-                        child: Text(
-                          'Looks like there are no tasks for today',
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            allDoneSvg,
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                vertical: SizeConfig.screenHeight * 0.01,
+                              ),
+                              child: Text(
+                                'Looks like there are no tasks for today',
+                                style: TextStyle(
+                                  fontSize: SizeConfig.blockSizeVertical * 3,
+                                  color: kGrey,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     )
