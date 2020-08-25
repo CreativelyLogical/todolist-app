@@ -5,7 +5,6 @@ import 'package:my_todo/size_config.dart';
 import 'package:my_todo/models/date.dart';
 import 'package:provider/provider.dart';
 import 'package:my_todo/models/task_data_holder.dart';
-import 'package:my_todo/widgets/duration_picker_dialog.dart';
 import 'set_time_icon_icons.dart';
 import 'package:my_todo/widgets/priority_buttons.dart';
 import 'notification_bells_icons.dart';
@@ -784,17 +783,6 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen>
                                           if (!remind) {
                                             print(
                                                 'cant set alert, option deactivated');
-                                          } else {
-                                            showDialog(
-                                              context: context,
-                                              builder: (BuildContext context) =>
-                                                  DurationPicker(
-                                                setReminderCallback:
-                                                    (reminder) {
-                                                  selectedReminder = reminder;
-                                                },
-                                              ),
-                                            );
                                           }
                                         },
                                         child: Icon(

@@ -13,7 +13,6 @@ import 'package:my_todo/models/date.dart';
 import 'package:my_todo/screens/notification_bells_icons.dart';
 import 'dart:io' show Platform;
 import 'package:flutter/cupertino.dart';
-import 'duration_picker_dialog.dart';
 import 'package:my_todo/widgets/horizontal_sized_box.dart';
 import 'package:my_todo/widgets/category_dialog.dart';
 import 'package:auto_size_text/auto_size_text.dart';

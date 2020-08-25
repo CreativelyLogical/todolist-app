@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:my_todo/models/task_data_holder.dart';
 import 'package:provider/provider.dart';
 import 'package:my_todo/size_config.dart';
-import 'package:circular_check_box/circular_check_box.dart';
 import 'package:my_todo/models/task.dart';
 import 'package:my_todo/constants.dart';
 import 'package:my_todo/screens/add_task_fullscreen.dart';
 import 'package:my_todo/screens/task_screen.dart';
 import 'custom_flag_icon_icons.dart';
-import 'notes_indicator_icons.dart';
 import 'package:my_todo/screens/task_category_icons.dart';
 import 'package:my_todo/screens/notification_bell_icons.dart';
 import 'priority_buttons.dart';
@@ -18,7 +16,6 @@ import 'package:my_todo/models/date.dart';
 import 'package:my_todo/screens/notification_bells_icons.dart';
 import 'dart:io' show Platform;
 import 'package:flutter/cupertino.dart';
-import 'duration_picker_dialog.dart';
 import 'package:my_todo/widgets/edit_task_sheet.dart';
 
 class TaskList extends StatelessWidget {
@@ -349,17 +346,6 @@ class _TaskListTileState extends State<TaskListTile> {
                                   color: returnPriorityColor(),
                                   size: SizeConfig.blockSizeVertical * 2.5,
                                 ),
-                                SizedBox(
-                                  width: SizeConfig.screenWidth * 0.01,
-                                ),
-                                widget.notes == 'no notes'
-                                    ? Container()
-                                    : Icon(
-                                        NotesIndicator.doc_text,
-                                        color: kBlue,
-                                        size:
-                                            SizeConfig.blockSizeVertical * 2.5,
-                                      ),
                                 SizedBox(
                                   width: SizeConfig.screenWidth * 0.01,
                                 ),

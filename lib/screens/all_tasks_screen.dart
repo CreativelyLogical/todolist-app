@@ -6,7 +6,6 @@ import 'package:my_todo/models/task_data_holder.dart';
 import 'package:provider/provider.dart';
 import 'package:my_todo/models/date.dart';
 import 'custom_flag_icon_icons.dart';
-import 'package:my_todo/widgets/notes_indicator_icons.dart';
 import 'task_category_icons.dart';
 //import 'calendar_screen.dart';
 import 'package:my_todo/widgets/edit_task_sheet.dart';
@@ -493,17 +492,6 @@ class VersatileListTile extends StatelessWidget {
                                   color: returnPriorityColor(),
                                   size: SizeConfig.blockSizeVertical * 2.5,
                                 ),
-                                SizedBox(
-                                  width: SizeConfig.screenWidth * 0.01,
-                                ),
-                                notes == 'no notes'
-                                    ? Container()
-                                    : Icon(
-                                        NotesIndicator.doc_text,
-                                        color: kBlue,
-                                        size:
-                                            SizeConfig.blockSizeVertical * 2.5,
-                                      ),
                                 SizedBox(
                                   width: SizeConfig.screenWidth * 0.01,
                                 ),
