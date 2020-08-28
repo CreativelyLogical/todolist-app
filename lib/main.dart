@@ -10,6 +10,8 @@ import 'dart:typed_data';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:rxdart/subjects.dart';
 import 'package:my_todo/notifications/todo_notifications.dart';
+import 'package:double_back_to_close_app/double_back_to_close_app.dart';
+import 'dart:io';
 
 Future<void> main() async {
   await TodoNotifications().init();
@@ -25,6 +27,8 @@ class MyApp extends StatefulWidget {
   // This widget is the root of your application.
   @override
   _MyAppState createState() => _MyAppState();
+
+  static var pagesOnStack = 0;
 }
 
 class _MyAppState extends State<MyApp> {
@@ -58,7 +62,9 @@ class _MyAppState extends State<MyApp> {
           bottomAppBarColor: kBlue,
         ),
         title: 'Flutter todo',
-        home: TaskScreen(),
+        home: Scaffold(
+          body: TaskScreen(),
+        ),
       ),
     );
   }

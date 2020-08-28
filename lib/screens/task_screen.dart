@@ -6,6 +6,8 @@ import 'package:my_todo/models/date.dart';
 import 'package:my_todo/widgets/week_view.dart';
 import 'all_tasks_screen.dart';
 import 'about_page.dart';
+import 'package:my_todo/main.dart';
+import 'package:flutter/services.dart';
 
 class TaskScreen extends StatefulWidget {
   @override
@@ -74,9 +76,18 @@ class _TaskScreenState extends State<TaskScreen> {
     Color selectedColor = Colors.white;
     Color deselectedColor = Colors.white.withOpacity(0.6);
 
-    return Scaffold(
-        floatingActionButton: Padding(
-          padding: EdgeInsets.only(bottom: SizeConfig.blockSizeVertical * 1.5),
+    return WillPopScope(
+      onWillPop: () async {
+        print('back button has been pressed');
+        for (var i = 0; i < MyApp.pagesOnStack; i++) {
+          SystemNavigator.pop();
+        }
+        return Future.value(true);
+      },
+      child: Scaffold(
+          floatingActionButton: Padding(
+            padding:
+                EdgeInsets.only(bottom: SizeConfig.blockSizeVertical * 1.5),
 //          child: FloatingActionButton(
 //            onPressed: () {
 //              Navigator.push(context,
@@ -100,135 +111,138 @@ class _TaskScreenState extends State<TaskScreen> {
 //            backgroundColor: kBlue,
 //            child: Icon(Icons.add, color: Colors.white),
 //          ),
-        ),
+          ),
 //        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
 //        backgroundColor: Color.fromRGBO(66, 99, 236, 1.0),
 //        appBar: AppBar(
 //          title: Text('Todo'),
-        backgroundColor: kBlue,
+          backgroundColor: kBlue,
 //        backgroundColor: Colors.lightBlueAccent,
 //        ),
-        bottomNavigationBar: BottomAppBar(
+          bottomNavigationBar: BottomAppBar(
 //          notchMargin: 5.0,
-          child: Container(
-            padding: EdgeInsets.only(bottom: 5),
+            child: Container(
+              padding: EdgeInsets.only(bottom: 5),
 //            height: SizeConfig.screenHeight * 0.105,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    IconButton(
-                      padding: EdgeInsets.all(0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      IconButton(
+                        padding: EdgeInsets.all(0),
 //                      padding: EdgeInsets.only(
 //                          right: SizeConfig.blockSizeHorizontal * 10),
-                      icon: Icon(
-                        Icons.view_week,
-                        color: kWhite,
-                      ),
-                      iconSize: SizeConfig.screenHeight * 0.045,
-                      onPressed: () {
-                        print("You're already in the week view screen");
-                      },
-                    ),
-                    Text(
-                      'Tasks',
-                      style: TextStyle(
+                        icon: Icon(
+                          Icons.view_week,
                           color: kWhite,
-                          fontSize: SizeConfig.screenHeight * 0.02),
-                    ),
-                  ],
-                ),
-                Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    IconButton(
-                      padding: EdgeInsets.all(0),
-                      icon: Icon(
-                        Icons.format_list_bulleted,
-                        color: kWhite.withOpacity(0.5),
+                        ),
+                        iconSize: SizeConfig.screenHeight * 0.045,
+                        onPressed: () {
+                          print("You're already in the week view screen");
+                        },
                       ),
-                      iconSize: SizeConfig.screenHeight * 0.045,
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => AllTasksScreen()));
-                      },
-                    ),
-                    Text(
-                      'All Tasks',
-                      style: TextStyle(
-                          color: kWhite.withOpacity(0.6),
-                          fontSize: SizeConfig.screenHeight * 0.02),
-                    )
-                  ],
-                ),
-                Column(
+                      Text(
+                        'Tasks',
+                        style: TextStyle(
+                            color: kWhite,
+                            fontSize: SizeConfig.screenHeight * 0.02),
+                      ),
+                    ],
+                  ),
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      IconButton(
+                        padding: EdgeInsets.all(0),
+                        icon: Icon(
+                          Icons.format_list_bulleted,
+                          color: kWhite.withOpacity(0.5),
+                        ),
+                        iconSize: SizeConfig.screenHeight * 0.045,
+                        onPressed: () {
+                          MyApp.pagesOnStack++;
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => AllTasksScreen()));
+                        },
+                      ),
+                      Text(
+                        'All Tasks',
+                        style: TextStyle(
+                            color: kWhite.withOpacity(0.6),
+                            fontSize: SizeConfig.screenHeight * 0.02),
+                      )
+                    ],
+                  ),
+                  Column(
 //                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    IconButton(
-                      padding: EdgeInsets.all(0),
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      IconButton(
+                        padding: EdgeInsets.all(0),
 //                      padding: EdgeInsets.only(
 //                          left: SizeConfig.blockSizeHorizontal * 10),
-                      icon: Icon(
-                        Icons.info_outline,
-                        color: kWhite.withOpacity(0.5),
-                      ),
-                      iconSize: SizeConfig.screenHeight * 0.045,
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => AboutPage()));
-                      },
+                        icon: Icon(
+                          Icons.info_outline,
+                          color: kWhite.withOpacity(0.5),
+                        ),
+                        iconSize: SizeConfig.screenHeight * 0.045,
+                        onPressed: () {
+                          MyApp.pagesOnStack++;
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => AboutPage()));
+                        },
 //                color: kWhite,
-                    ),
-                    Text(
-                      'About',
-                      style: TextStyle(
-                          color: kWhite.withOpacity(0.6),
-                          fontSize: SizeConfig.screenHeight * 0.02),
-                      textAlign: TextAlign.start,
-                    ),
-                  ],
-                ),
-              ],
+                      ),
+                      Text(
+                        'About',
+                        style: TextStyle(
+                            color: kWhite.withOpacity(0.6),
+                            fontSize: SizeConfig.screenHeight * 0.02),
+                        textAlign: TextAlign.start,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
 //          child: Padding(padding: EdgeInsets.only(bottom: 0.5)),
 //          notchMargin: 10.0,
 //          child: Padding(padding: EdgeInsets.all(20.0)),
-          shape: CircularNotchedRectangle(),
-        ),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            WeekView(
-              setStateCallback: () {
-                setState(() {
-                  print('setState has been called in task screen');
-                });
-              },
-            ),
-            Expanded(
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade200,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20.0),
-                  ),
-                ),
-                child: TaskList(),
+            shape: CircularNotchedRectangle(),
+          ),
+          body: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              WeekView(
+                setStateCallback: () {
+                  setState(() {
+                    print('setState has been called in task screen');
+                  });
+                },
               ),
-            ),
-          ],
-        ));
+              Expanded(
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade200,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20.0),
+                    ),
+                  ),
+                  child: TaskList(),
+                ),
+              ),
+            ],
+          )),
+    );
   }
 }
 
