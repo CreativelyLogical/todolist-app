@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'dart:typed_data';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:rxdart/subjects.dart';
+import 'package:my_todo/constants.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
@@ -67,18 +68,21 @@ class TodoNotifications {
     vibrationPattern[3] = 2000;
 
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
-        'your other channel id',
-        'your other channel name',
-        'your other channel description',
-        icon: '@mipmap/ic_launcher',
+      'your other channel id',
+      'your other channel name',
+      'your other channel description',
+      icon: '@mipmap/ic_launcher',
+      priority: Priority.High,
+      importance: Importance.Max,
 //        sound: RawResourceAndroidNotificationSound('slow_spring_board'),
-        largeIcon: DrawableResourceAndroidBitmap('@mipmap/ic_launcher'),
-//        vibrationPattern: vibrationPattern,
-        enableLights: true,
-        color: const Color.fromARGB(255, 255, 0, 0),
-        ledColor: const Color.fromARGB(255, 255, 0, 0),
-        ledOnMs: 1000,
-        ledOffMs: 500);
+      largeIcon: DrawableResourceAndroidBitmap('@mipmap/ic_launcher'),
+      vibrationPattern: vibrationPattern,
+      enableLights: true,
+      color: Colors.blue.shade900,
+//        ledColor: const Color.fromARGB(255, 255, 0, 0),
+//        ledOnMs: 1000,
+//        ledOffMs: 500,
+    );
     var iOSPlatformChannelSpecifics =
         IOSNotificationDetails(sound: 'slow_spring_board.aiff');
     var platformChannelSpecifics = NotificationDetails(
