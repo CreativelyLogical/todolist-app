@@ -33,7 +33,6 @@ dependencies:
   rxdart: ^0.24.1
   auto_size_text: ^2.1.0
   flutter_svg: ^0.18.1
-  double_back_to_close_app: ^1.2.0
 
 
 dev_dependencies:
