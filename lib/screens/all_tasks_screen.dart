@@ -16,6 +16,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'dart:io';
 import 'package:my_todo/main.dart';
 import 'package:flutter/services.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class AllTasksScreen extends StatefulWidget {
   @override
@@ -610,27 +611,33 @@ class VersatileListTile extends StatelessWidget {
 //                      Spacer(),
                           (time == 'no time' || time == null || !task.hasTime)
                               ? Container()
-                              : Container(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal:
-                                          SizeConfig.blockSizeHorizontal * 1.5),
-                                  decoration: BoxDecoration(
+                              : Flexible(
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal:
+                                            SizeConfig.blockSizeHorizontal *
+                                                1.5),
+                                    decoration: BoxDecoration(
 //                                  border: Border.all(color: kBlue, width: 1),
-                                    color: Colors.grey.shade100,
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(20.0)),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey,
-                                        blurRadius: 1.5,
-                                        offset: Offset(0, 1),
-                                      )
-                                    ],
-                                  ),
-                                  child: Text(
-                                    time,
-                                    style: TextStyle(
-                                      color: kBlue,
+                                      color: Colors.grey.shade100,
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(20.0)),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.grey,
+                                          blurRadius: 1.5,
+                                          offset: Offset(0, 1),
+                                        )
+                                      ],
+                                    ),
+                                    child: FittedBox(
+                                      fit: BoxFit.cover,
+                                      child: Text(
+                                        time,
+                                        style: TextStyle(
+                                          color: kBlue,
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ),

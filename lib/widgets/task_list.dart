@@ -12,6 +12,7 @@ import 'dart:io' show Platform;
 import 'package:flutter/cupertino.dart';
 import 'package:my_todo/widgets/edit_task_sheet.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class TaskList extends StatelessWidget {
   @override
@@ -24,6 +25,11 @@ class TaskList extends StatelessWidget {
       return await Provider.of<TaskData>(context)
           .getTaskList(TaskScreen.selectedDay);
     }
+
+    print('the screenHeight is ${SizeConfig.screenHeight}');
+    print('the screenWidth is ${SizeConfig.screenWidth}');
+    print('the blockSizeVertical is ${SizeConfig.blockSizeVertical}');
+    print('the blockSizeHorizontal is ${SizeConfig.blockSizeHorizontal}');
 
     final String allDoneAsset = 'assets/images/tasks-solid.svg';
     final Widget allDoneSvg = SvgPicture.asset(
@@ -249,7 +255,20 @@ class _TaskListTileState extends State<TaskListTile> {
       print('wtf is going on here');
     }
 
+    double screenWidth;
+
+    if (widget.isChecked) {
+      screenWidth =
+          SizeConfig.screenWidth - (16 + SizeConfig.blockSizeVertical * 4);
+    } else {
+      screenWidth = SizeConfig.screenWidth;
+    }
+
+//    double screenWidth = SizeConfig.screenWidth;
+    double blockSizeHorizontal = screenWidth / 100;
+
     SizeConfig().init(context);
+    print('screenWidth of taskListTile is ${SizeConfig.screenWidth}');
     return GestureDetector(
       onTap: () async {
         if (!widget.task.isChecked) {
@@ -340,7 +359,7 @@ class _TaskListTileState extends State<TaskListTile> {
                         widget.taskName,
 //                        softWrap: true,
                         style: TextStyle(
-                          fontSize: SizeConfig.blockSizeHorizontal * 4.5,
+                          fontSize: SizeConfig.blockSizeVertical * 2.5,
                           color: widget.isChecked ? Colors.grey : kBlue,
                           fontWeight: FontWeight.w500,
                           decoration: widget.isChecked
@@ -362,15 +381,14 @@ class _TaskListTileState extends State<TaskListTile> {
                                 Icon(
                                   CustomFlagIcon.flag,
                                   color: returnPriorityColor(),
-                                  size: SizeConfig.blockSizeVertical * 2.5,
+                                  size: blockSizeHorizontal * 5,
                                 ),
                                 SizedBox(
-                                  width: SizeConfig.screenWidth * 0.01,
+                                  width: screenWidth * 0.01,
                                 ),
                                 Container(
                                   padding: EdgeInsets.symmetric(
-                                      horizontal:
-                                          SizeConfig.blockSizeHorizontal * 1.8,
+                                      horizontal: blockSizeHorizontal * 1.8,
                                       vertical:
                                           SizeConfig.blockSizeVertical * 0.5),
                                   decoration: BoxDecoration(
@@ -390,25 +408,27 @@ class _TaskListTileState extends State<TaskListTile> {
                                     children: <Widget>[
                                       Icon(
                                         TaskCategory.tag,
-                                        size: SizeConfig.blockSizeVertical * 2,
+                                        size: blockSizeHorizontal * 3.5,
                                         color: kBlue,
                                       ),
                                       SizedBox(
-                                        width: SizeConfig.screenWidth * 0.01,
+                                        width: screenWidth * 0.01,
                                       ),
-                                      Text(
+                                      AutoSizeText(
                                         widget.category == null
                                             ? 'none'
                                             : widget.category,
+                                        maxLines: 1,
                                         style: TextStyle(
                                           color: kBlue,
+                                          fontSize: blockSizeHorizontal * 3.5,
                                         ),
                                       ),
                                     ],
                                   ),
                                 ), // category
                                 SizedBox(
-                                  width: SizeConfig.screenWidth * 0.02,
+                                  width: screenWidth * 0.02,
                                 ),
                                 widget.alert == 'no reminder'
                                     ? Container()
@@ -429,8 +449,8 @@ class _TaskListTileState extends State<TaskListTile> {
                               ? Container()
                               : Container(
                                   padding: EdgeInsets.symmetric(
-                                      horizontal:
-                                          SizeConfig.blockSizeHorizontal * 1.5),
+                                    horizontal: blockSizeHorizontal * 1.5,
+                                  ),
                                   decoration: BoxDecoration(
 //                                  border: Border.all(color: kBlue, width: 1),
                                     color: Colors.grey.shade100,
@@ -444,10 +464,12 @@ class _TaskListTileState extends State<TaskListTile> {
                                       )
                                     ],
                                   ),
-                                  child: Text(
+                                  child: AutoSizeText(
                                     widget.time,
+                                    maxLines: 1,
                                     style: TextStyle(
                                       color: kBlue,
+                                      fontSize: blockSizeHorizontal * 3.5,
                                     ),
                                   ),
                                 ),

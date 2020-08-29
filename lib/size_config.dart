@@ -13,5 +13,8 @@ class SizeConfig {
     screenHeight = _mediaQueryData.size.height;
     blockSizeHorizontal = screenWidth / 100;
     blockSizeVertical = screenHeight / 100;
+
+//    print('The screenWidth for ${context.toString()} is $screenWidth');
+//    print('The screenHeight for ${context.toString()} is $screenHeight');
   }
 }
