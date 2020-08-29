@@ -154,7 +154,20 @@ class _EditTaskSheetState extends State<EditTaskSheet>
       initialDate: DateTime.now(),
       firstDate: DateTime.now().add(Duration(days: -1)),
       lastDate: DateTime(2101),
-    ).whenComplete(() async {});
+    ).whenComplete(() async {
+      TodoNotifications().cancelNotificationById(notificationId);
+
+      if (remind) {
+        DateTime notificationTimeOfDay = getNotificationDateTime();
+
+        await TodoNotifications().schedule(
+          notificationTitle: _task.taskTitle,
+          notificationBody: "Reminder",
+          notificationId: notificationId,
+          dateTime: notificationTimeOfDay,
+        );
+      }
+    });
     if (picked != null) {
       setState(() {
 //        selectedDate = Date(picked).toString();
