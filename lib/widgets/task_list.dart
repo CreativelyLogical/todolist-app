@@ -345,6 +345,7 @@ class _TaskListTileState extends State<TaskListTile> {
                               size: SizeConfig.blockSizeVertical * 4,
                             )
                           : null,
+                      priorityColor: returnPriorityColor(),
                     ),
                   ),
                 ),
@@ -379,11 +380,11 @@ class _TaskListTileState extends State<TaskListTile> {
                             ),
                             child: Row(
                               children: <Widget>[
-                                Icon(
-                                  CustomFlagIcon.flag,
-                                  color: returnPriorityColor(),
-                                  size: blockSizeHorizontal * 5,
-                                ),
+//                                Icon(
+//                                  CustomFlagIcon.flag,
+//                                  color: returnPriorityColor(),
+//                                  size: blockSizeHorizontal * 5,
+//                                ),
                                 SizedBox(
                                   width: screenWidth * 0.01,
                                 ),
@@ -486,27 +487,35 @@ class _TaskListTileState extends State<TaskListTile> {
 }
 
 class CircleCheckBox extends StatelessWidget {
-  CircleCheckBox({this.icon});
+  CircleCheckBox({this.icon, this.priorityColor});
 
   final icon;
+
+  final priorityColor;
 
   @override
   Widget build(BuildContext context) {
     return Container(
 //      radius: SizeConfig.blockSizeVertical * 2.4,
       decoration: BoxDecoration(
+        border: icon == null
+            ? Border.all(
+                color: priorityColor,
+                width: 2,
+              )
+            : null,
         color: icon == null
             ? Colors.grey.shade400
             : kLightBlueAccent.withOpacity(0.0),
         shape: BoxShape.circle,
-        boxShadow: icon == null
-            ? [
-                BoxShadow(
-                  color: Colors.grey.shade600,
-                  blurRadius: 0.8,
-                )
-              ]
-            : null,
+//        boxShadow: icon == null
+//            ? [
+//                BoxShadow(
+//                  color: priorityColor,
+//                  blurRadius: 0.8,
+//                )
+//              ]
+//            : null,
       ),
       child: CircleAvatar(
         radius: SizeConfig.blockSizeVertical * 2.6,
