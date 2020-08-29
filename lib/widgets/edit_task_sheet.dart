@@ -198,7 +198,21 @@ class _EditTaskSheetState extends State<EditTaskSheet>
           },
         ),
       ),
-    ).whenComplete(() => Provider.of<TaskData>(context).updateTask(_task));
+    ).whenComplete(() async {
+      if (remind) {
+        TodoNotifications().cancelNotificationById(notificationId);
+
+        DateTime notificationTimeOfDay = getNotificationDateTime();
+
+        await TodoNotifications().schedule(
+          notificationTitle: _task.taskTitle,
+          notificationBody: "Reminder",
+          notificationId: notificationId,
+          dateTime: notificationTimeOfDay,
+        );
+      }
+      Provider.of<TaskData>(context).updateTask(_task);
+    });
   }
 
   DateTime getNotificationDateTime() {
