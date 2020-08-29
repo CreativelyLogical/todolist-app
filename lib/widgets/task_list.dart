@@ -13,6 +13,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:my_todo/widgets/edit_task_sheet.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:my_todo/notifications/todo_notifications.dart';
 
 class TaskList extends StatelessWidget {
   @override
@@ -157,6 +158,9 @@ class TaskList extends StatelessWidget {
                                       size: SizeConfig.blockSizeVertical * 4,
                                     ),
                                     onPressed: () {
+                                      TodoNotifications()
+                                          .cancelNotificationById(
+                                              int.parse(task.notificationId));
                                       Provider.of<TaskData>(context)
                                           .deleteTask(task);
                                     },

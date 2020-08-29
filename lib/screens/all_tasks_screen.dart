@@ -16,7 +16,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'dart:io';
 import 'package:my_todo/main.dart';
 import 'package:flutter/services.dart';
-import 'package:auto_size_text/auto_size_text.dart';
+import 'package:my_todo/notifications/todo_notifications.dart';
 
 class AllTasksScreen extends StatefulWidget {
   @override
@@ -279,6 +279,10 @@ class _AllTasksScreenState extends State<AllTasksScreen> {
                                                 ),
                                                 onPressed: () {
                                                   print('IconButton pressed');
+                                                  TodoNotifications()
+                                                      .cancelNotificationById(
+                                                          int.parse(task
+                                                              .notificationId));
                                                   Provider.of<TaskData>(context)
                                                       .deleteTask(task);
                                                 },
