@@ -491,8 +491,11 @@ class _EditTaskSheetState extends State<EditTaskSheet>
               child: TextFormField(
                 controller: taskTitleController,
                 style: TextStyle(
-                  fontSize: 40.0,
+                  fontSize: SizeConfig.blockSizeVertical * 3.5,
                 ),
+                onChanged: (newString) {
+                  _task.taskTitle = newString;
+                },
               ),
             ),
             Padding(

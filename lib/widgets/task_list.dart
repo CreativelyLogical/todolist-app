@@ -296,8 +296,8 @@ class _TaskListTileState extends State<TaskListTile> {
 
           if (widget.task.time == 'no time') {
             widget.task.hasTime = false;
-            Provider.of<TaskData>(context).updateTask(widget.task);
           }
+          Provider.of<TaskData>(context).updateTask(widget.task);
         }
       },
       child: Container(
@@ -360,7 +360,7 @@ class _TaskListTileState extends State<TaskListTile> {
                         widget.taskName,
 //                        softWrap: true,
                         style: TextStyle(
-                          fontSize: SizeConfig.blockSizeVertical * 2.5,
+                          fontSize: SizeConfig.blockSizeVertical * 2.3,
                           color: widget.isChecked ? Colors.grey : kBlue,
                           fontWeight: FontWeight.w500,
                           decoration: widget.isChecked

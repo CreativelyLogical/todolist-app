@@ -61,19 +61,19 @@ class TodoNotifications {
   }) async {
     Duration untilNotification = notificationTime.difference(DateTime.now());
     var scheduledNotificationDateTime = DateTime.now().add(untilNotification);
-    var vibrationPattern = Int64List(4);
+    var vibrationPattern = Int64List(2);
     vibrationPattern[0] = 0;
     vibrationPattern[1] = 1000;
-    vibrationPattern[2] = 5000;
-    vibrationPattern[3] = 2000;
+//    vibrationPattern[2] = 3000;
+//    vibrationPattern[3] = 2000;
 
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
       'your other channel id',
       'your other channel name',
       'your other channel description',
       icon: '@mipmap/ic_launcher',
-      priority: Priority.High,
-      importance: Importance.Max,
+//      priority: Priority.High,
+//      importance: Importance.Max,
 //        sound: RawResourceAndroidNotificationSound('slow_spring_board'),
       largeIcon: DrawableResourceAndroidBitmap('@mipmap/ic_launcher'),
       vibrationPattern: vibrationPattern,
