@@ -136,7 +136,7 @@ class _EditTaskSheetState extends State<EditTaskSheet>
     if (Platform.isIOS) {
       _selectDateCupertino(context);
     } else if (Platform.isAndroid) {
-      print('platform is android');
+      _selectDate(context);
     }
   }
 
@@ -146,6 +146,23 @@ class _EditTaskSheetState extends State<EditTaskSheet>
       padding: EdgeInsets.only(top: 6.0),
       child: picker,
     );
+  }
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now().add(Duration(days: -1)),
+      lastDate: DateTime(2101),
+    ).whenComplete(() async {});
+    if (picked != null) {
+      setState(() {
+//        selectedDate = Date(picked).toString();
+        selectedDateSQL = Date(picked).toStringSQL();
+        print('the selectedDate is $selectedDateSQL');
+        _task.date = selectedDateSQL;
+      });
+    }
   }
 
   Future<Null> _selectDateCupertino(BuildContext context) async {
