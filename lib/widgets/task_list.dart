@@ -368,14 +368,15 @@ class _TaskListTileState extends State<TaskListTile> {
                         ),
                       ),
                       SizedBox(
-                        height: SizeConfig.blockSizeVertical * 0.4,
+                        height: SizeConfig.blockSizeVertical * 0.5,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Container(
                             padding: EdgeInsets.only(
-                                bottom: SizeConfig.screenHeight * 0.003),
+                              bottom: SizeConfig.screenHeight * 0.003,
+                            ),
                             child: Row(
                               children: <Widget>[
                                 Icon(
@@ -421,7 +422,7 @@ class _TaskListTileState extends State<TaskListTile> {
                                         maxLines: 1,
                                         style: TextStyle(
                                           color: kBlue,
-                                          fontSize: blockSizeHorizontal * 3.5,
+                                          fontSize: blockSizeHorizontal * 4,
                                         ),
                                       ),
                                     ],
@@ -436,8 +437,7 @@ class _TaskListTileState extends State<TaskListTile> {
 //                                        NotificationBells.bell,
                                         Icons.notifications_active,
                                         color: kBlue,
-                                        size:
-                                            SizeConfig.blockSizeVertical * 2.5,
+                                        size: blockSizeHorizontal * 5.5,
                                       )
                               ],
                             ),
@@ -469,7 +469,7 @@ class _TaskListTileState extends State<TaskListTile> {
                                     maxLines: 1,
                                     style: TextStyle(
                                       color: kBlue,
-                                      fontSize: blockSizeHorizontal * 3.5,
+                                      fontSize: blockSizeHorizontal * 4,
                                     ),
                                   ),
                                 ),

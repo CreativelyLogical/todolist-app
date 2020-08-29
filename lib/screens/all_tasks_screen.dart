@@ -423,6 +423,17 @@ class VersatileListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth;
+
+    if (task.isChecked) {
+      screenWidth =
+          SizeConfig.screenWidth - (16 + SizeConfig.blockSizeVertical * 4);
+    } else {
+      screenWidth = SizeConfig.screenWidth;
+    }
+
+    double blockSizeHorizontal = screenWidth / 100;
+
     SizeConfig().init(context);
     return GestureDetector(
       onTap: () async {
@@ -531,14 +542,14 @@ class VersatileListTile extends StatelessWidget {
                                 color: DateBeforeOrAfter(taskDate)
                                     ? kBlue
                                     : Colors.red,
-                                fontSize: 15,
+                                fontSize: blockSizeHorizontal * 4,
                               ),
                             ),
                           )
                         ],
                       ),
                       SizedBox(
-                        height: SizeConfig.blockSizeVertical * 0.4,
+                        height: SizeConfig.blockSizeVertical * 0.5,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -551,15 +562,14 @@ class VersatileListTile extends StatelessWidget {
                                 Icon(
                                   CustomFlagIcon.flag,
                                   color: returnPriorityColor(),
-                                  size: SizeConfig.blockSizeVertical * 2.5,
+                                  size: blockSizeHorizontal * 5,
                                 ),
                                 SizedBox(
-                                  width: SizeConfig.screenWidth * 0.01,
+                                  width: screenWidth * 0.01,
                                 ),
                                 Container(
                                   padding: EdgeInsets.symmetric(
-                                      horizontal:
-                                          SizeConfig.blockSizeHorizontal * 1.8,
+                                      horizontal: blockSizeHorizontal * 1.8,
                                       vertical:
                                           SizeConfig.blockSizeVertical * 0.5),
                                   decoration: BoxDecoration(
@@ -579,31 +589,31 @@ class VersatileListTile extends StatelessWidget {
                                     children: <Widget>[
                                       Icon(
                                         TaskCategory.tag,
-                                        size: SizeConfig.blockSizeVertical * 2,
+                                        size: blockSizeHorizontal * 4,
                                         color: kBlue,
                                       ),
                                       SizedBox(
-                                        width: SizeConfig.screenWidth * 0.01,
+                                        width: screenWidth * 0.01,
                                       ),
                                       Text(
                                         category,
                                         style: TextStyle(
                                           color: kBlue,
+                                          fontSize: blockSizeHorizontal * 4,
                                         ),
                                       ),
                                     ],
                                   ),
                                 ),
                                 SizedBox(
-                                  width: SizeConfig.screenWidth * 0.02,
+                                  width: screenWidth * 0.02,
                                 ),
                                 task.alert == 'no reminder'
                                     ? Container()
                                     : Icon(
                                         Icons.notifications,
                                         color: kBlue,
-                                        size:
-                                            SizeConfig.blockSizeVertical * 2.5,
+                                        size: blockSizeHorizontal * 5.5,
                                       ),
                               ],
                             ),
@@ -611,33 +621,28 @@ class VersatileListTile extends StatelessWidget {
 //                      Spacer(),
                           (time == 'no time' || time == null || !task.hasTime)
                               ? Container()
-                              : Flexible(
-                                  child: Container(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal:
-                                            SizeConfig.blockSizeHorizontal *
-                                                1.5),
-                                    decoration: BoxDecoration(
+                              : Container(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal:
+                                          SizeConfig.blockSizeHorizontal * 1.5),
+                                  decoration: BoxDecoration(
 //                                  border: Border.all(color: kBlue, width: 1),
-                                      color: Colors.grey.shade100,
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(20.0)),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.grey,
-                                          blurRadius: 1.5,
-                                          offset: Offset(0, 1),
-                                        )
-                                      ],
-                                    ),
-                                    child: FittedBox(
-                                      fit: BoxFit.cover,
-                                      child: Text(
-                                        time,
-                                        style: TextStyle(
-                                          color: kBlue,
-                                        ),
-                                      ),
+                                    color: Colors.grey.shade100,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(20.0)),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.grey,
+                                        blurRadius: 1.5,
+                                        offset: Offset(0, 1),
+                                      )
+                                    ],
+                                  ),
+                                  child: Text(
+                                    time,
+                                    style: TextStyle(
+                                      color: kBlue,
+                                      fontSize: blockSizeHorizontal * 4,
                                     ),
                                   ),
                                 ),
