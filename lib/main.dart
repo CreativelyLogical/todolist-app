@@ -13,7 +13,7 @@ import 'package:my_todo/notifications/todo_notifications.dart';
 import 'dart:io';
 
 Future<void> main() async {
-  await TodoNotifications().init();
+//  await TodoNotifications().init();
 
   runApp(MaterialApp(
     home: MyApp(),

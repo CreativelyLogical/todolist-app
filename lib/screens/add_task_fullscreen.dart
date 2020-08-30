@@ -277,13 +277,14 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen>
     if (Platform.isAndroid) {
       return Switch(
         value: remind,
-        onChanged: (newValue) {
+        onChanged: (newValue) async {
           if (cannotSetReminder) {
             setState(() {
               attemptToSetReminderWhenCannot = true;
             });
           } else {
             attemptToSetReminderWhenCannot = false;
+            await TodoNotifications().init();
             setState(() {
               remind = newValue;
               controller.value = 0;
@@ -295,13 +296,14 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen>
     } else if (Platform.isIOS) {
       return CupertinoSwitch(
         value: remind,
-        onChanged: (newValue) {
+        onChanged: (newValue) async {
           if (cannotSetReminder) {
             setState(() {
               attemptToSetReminderWhenCannot = true;
             });
           } else {
             attemptToSetReminderWhenCannot = false;
+            await TodoNotifications().init();
             setState(() {
               remind = newValue;
               controller.value = 0;

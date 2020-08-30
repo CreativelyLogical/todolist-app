@@ -238,6 +238,7 @@ class _EditTaskSheetState extends State<EditTaskSheet>
         onChanged: (!taskHasTime || selectedTime == 'no time')
             ? null
             : (newValue) async {
+                await TodoNotifications().init();
                 setState(
                   () {
                     remind = newValue;
@@ -269,6 +270,7 @@ class _EditTaskSheetState extends State<EditTaskSheet>
         onChanged: (!taskHasTime || selectedTime == 'no time')
             ? null
             : (newValue) async {
+                await TodoNotifications().init();
                 setState(
                   () {
                     remind = newValue;
