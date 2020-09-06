@@ -663,9 +663,11 @@ class VersatileListTile extends StatelessWidget {
 }
 
 class CircleCheckBox extends StatelessWidget {
-  CircleCheckBox({this.icon});
+  CircleCheckBox({this.icon, this.priorityColor});
 
   final icon;
+
+  final priorityColor;
 
   @override
   Widget build(BuildContext context) {
