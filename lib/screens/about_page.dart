@@ -121,8 +121,8 @@ class AboutPage extends StatelessWidget {
         ),
         body: SafeArea(
           child: Container(
-            width: SizeConfig.screenWidth,
-            child: Column(
+//            width: SizeConfig.screenWidth,
+            child: ListView(
               children: [
                 Padding(
                   padding: EdgeInsets.symmetric(
@@ -133,6 +133,7 @@ class AboutPage extends StatelessWidget {
                       color: kBlue,
                       fontSize: SizeConfig.blockSizeVertical * 4.5,
                     ),
+                    textAlign: TextAlign.center,
                   ),
                 ),
                 Padding(

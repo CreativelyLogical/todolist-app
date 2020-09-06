@@ -440,7 +440,7 @@ class _TaskListTileState extends State<TaskListTile> {
                                     ? Container()
                                     : Icon(
 //                                        NotificationBells.bell,
-                                        Icons.notifications_active,
+                                        Icons.notifications,
                                         color: kBlue,
                                         size: blockSizeHorizontal * 5.5,
                                       )
