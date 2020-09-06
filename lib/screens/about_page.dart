@@ -164,36 +164,35 @@ class AboutPage extends StatelessWidget {
                             textAlign: TextAlign.center,
                           ),
                         ),
-                        Text(
-                          '🍻',
-                          style: TextStyle(
-                            fontSize: SizeConfig.blockSizeVertical * 4,
+//                        Text(
+////                          '🍻',
+////                          style: TextStyle(
+////                            fontSize: SizeConfig.blockSizeVertical * 4,
+////                          ),
+////                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                            top: SizeConfig.screenHeight * 0.05,
+                          ),
+                          child: Image.asset(
+                            'assets/images/app-logo.png',
+                            width: SizeConfig.screenWidth * 0.6,
+                            height: SizeConfig.screenHeight * 0.1,
                           ),
                         ),
-                        Container(
-                          margin: EdgeInsets.only(
-                            top: SizeConfig.screenHeight * 0.03,
+                        Padding(
+                          padding: EdgeInsets.only(
+                            top: SizeConfig.screenHeight * 0.07,
                           ),
-                          width: SizeConfig.screenWidth * 0.95,
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                                color: kBlue,
-                                width: 1,
-                                style: BorderStyle.solid),
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(20.0),
+                          child: Text(
+                            "Version: 1.0.0",
+                            style: TextStyle(
+                              fontSize: SizeConfig.blockSizeVertical * 2.5,
+                              color: kBlue,
                             ),
+                            textAlign: TextAlign.center,
                           ),
-                          child: FlatButton(
-                              onPressed: () {},
-                              child: Text(
-                                'Rate our app',
-                                style: TextStyle(
-                                  fontSize: SizeConfig.blockSizeVertical * 2.5,
-                                  color: kBlue,
-                                ),
-                              )),
-                        )
+                        ),
                       ],
                     ),
                   ),
