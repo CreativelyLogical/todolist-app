@@ -505,7 +505,7 @@ class CircleCheckBox extends StatelessWidget {
         border: icon == null
             ? Border.all(
                 color: priorityColor,
-                width: 2,
+                width: 3,
               )
             : null,
         color: icon == null
