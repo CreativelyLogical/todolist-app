@@ -161,8 +161,8 @@ class _EditTaskSheetState extends State<EditTaskSheet>
         DateTime notificationTimeOfDay = getNotificationDateTime();
 
         await TodoNotifications().schedule(
-          notificationTitle: _task.taskTitle,
-          notificationBody: "Reminder",
+          notificationTitle: "Reminder",
+          notificationBody: _task.taskTitle,
           notificationId: notificationId,
           dateTime: notificationTimeOfDay,
         );
@@ -205,8 +205,8 @@ class _EditTaskSheetState extends State<EditTaskSheet>
         DateTime notificationTimeOfDay = getNotificationDateTime();
 
         await TodoNotifications().schedule(
-          notificationTitle: _task.taskTitle,
-          notificationBody: "Reminder",
+          notificationTitle: "Reminder",
+          notificationBody: _task.taskTitle,
           notificationId: notificationId,
           dateTime: notificationTimeOfDay,
         );
@@ -255,8 +255,8 @@ class _EditTaskSheetState extends State<EditTaskSheet>
                   DateTime notificationTimeOfDay = getNotificationDateTime();
 
                   await TodoNotifications().schedule(
-                    notificationTitle: _task.taskTitle,
-                    notificationBody: "Reminder",
+                    notificationTitle: "Reminder",
+                    notificationBody: _task.taskTitle,
                     notificationId: notificationId,
                     dateTime: notificationTimeOfDay,
                   );
@@ -291,8 +291,8 @@ class _EditTaskSheetState extends State<EditTaskSheet>
 //                  print(
 //                      'notificationTimeOfDay is ${notificationTimeOfDay.toString()}');
                   await TodoNotifications().schedule(
-                      notificationTitle: _task.taskTitle,
-                      notificationBody: "Reminder",
+                      notificationTitle: "Reminder",
+                      notificationBody: _task.taskTitle,
                       notificationId: notificationId,
                       dateTime: notificationTimeOfDay);
                 }
@@ -335,8 +335,8 @@ class _EditTaskSheetState extends State<EditTaskSheet>
           DateTime notificationTimeOfDay = getNotificationDateTime();
 
           await TodoNotifications().schedule(
-            notificationTitle: _task.taskTitle,
-            notificationBody: "Reminder",
+            notificationTitle: "Reminder",
+            notificationBody: _task.taskTitle,
             notificationId: notificationId,
             dateTime: notificationTimeOfDay,
           );
@@ -373,8 +373,8 @@ class _EditTaskSheetState extends State<EditTaskSheet>
           DateTime notificationTimeOfDay = getNotificationDateTime();
 
           await TodoNotifications().schedule(
-            notificationTitle: _task.taskTitle,
-            notificationBody: "Reminder",
+            notificationTitle: "Reminder",
+            notificationBody: _task.taskTitle,
             notificationId: notificationId,
             dateTime: notificationTimeOfDay,
           );
