@@ -241,10 +241,13 @@ class TaskListTile extends StatefulWidget {
 }
 
 class _TaskListTileState extends State<TaskListTile> {
-  Color returnPriorityColor() {
+  MaterialColor returnPriorityColor() {
     print('in listview, priority is ${widget.priority}');
     if (widget.priority == 'none')
-      return Colors.grey.shade500;
+      return MaterialColor(0xFF9E9E9E, <int, Color>{
+        50: Color(0xFFF0F0F0),
+        200: Color(0xFFD6D6D6),
+      });
     else if (widget.priority == 'low')
       return Colors.green;
     else if (widget.priority == 'medium')
@@ -509,7 +512,7 @@ class CircleCheckBox extends StatelessWidget {
               )
             : null,
         color: icon == null
-            ? Colors.grey.shade400
+            ? priorityColor[50]
             : kLightBlueAccent.withOpacity(0.0),
         shape: BoxShape.circle,
 //        boxShadow: icon == null
