@@ -505,7 +505,7 @@ class CircleCheckBox extends StatelessWidget {
         border: icon == null
             ? Border.all(
                 color: priorityColor,
-                width: 3,
+                width: 2,
               )
             : null,
         color: icon == null
@@ -524,7 +524,7 @@ class CircleCheckBox extends StatelessWidget {
       child: CircleAvatar(
         radius: SizeConfig.blockSizeVertical * 2.6,
         backgroundColor: icon == null
-            ? Colors.grey.shade200
+            ? priorityColor[50]
             : kLightBlueAccent.withOpacity(0.0),
         child: icon,
       ),

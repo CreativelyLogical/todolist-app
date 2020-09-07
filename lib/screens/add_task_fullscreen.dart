@@ -953,9 +953,8 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen>
                                   DateTime notificationTime =
                                       getNotificationDateTime();
                                   await TodoNotifications().schedule(
-                                      notificationTitle:
-                                          taskNameController.text,
-                                      notificationBody: 'Reminder',
+                                      notificationTitle: 'Reminder',
+                                      notificationBody: taskNameController.text,
                                       notificationId: notificationId,
                                       dateTime: notificationTime);
                                 }

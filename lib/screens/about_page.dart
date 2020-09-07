@@ -152,19 +152,19 @@ class AboutPage extends StatelessWidget {
                             fontSize: SizeConfig.blockSizeVertical * 2.5,
                           ),
                         ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                            top: SizeConfig.screenHeight * 0.05,
-                            bottom: SizeConfig.screenHeight * 0.01,
-                          ),
-                          child: Text(
-                            "Here's to a more productive life!",
-                            style: TextStyle(
-                              fontSize: SizeConfig.blockSizeVertical * 2.5,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
+//                        Padding(
+//                          padding: EdgeInsets.only(
+//                            top: SizeConfig.screenHeight * 0.05,
+//                            bottom: SizeConfig.screenHeight * 0.01,
+//                          ),
+//                          child: Text(
+//                            "Here's to a more productive life!",
+//                            style: TextStyle(
+//                              fontSize: SizeConfig.blockSizeVertical * 2.5,
+//                            ),
+//                            textAlign: TextAlign.center,
+//                          ),
+//                        ),
 //                        Text(
 ////                          '🍻',
 ////                          style: TextStyle(
@@ -172,8 +172,8 @@ class AboutPage extends StatelessWidget {
 ////                          ),
 ////                        ),
                         Padding(
-                          padding: EdgeInsets.only(
-                            top: SizeConfig.screenHeight * 0.05,
+                          padding: EdgeInsets.symmetric(
+                            vertical: SizeConfig.screenHeight * 0.1,
                           ),
                           child: Image.asset(
                             'assets/images/app-logo.png',
@@ -181,18 +181,13 @@ class AboutPage extends StatelessWidget {
                             height: SizeConfig.screenHeight * 0.1,
                           ),
                         ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                            top: SizeConfig.screenHeight * 0.07,
+                        Text(
+                          "Version: 1.0.0",
+                          style: TextStyle(
+                            fontSize: SizeConfig.blockSizeVertical * 3.5,
+                            color: kBlue,
                           ),
-                          child: Text(
-                            "Version: 1.0.0",
-                            style: TextStyle(
-                              fontSize: SizeConfig.blockSizeVertical * 2.5,
-                              color: kBlue,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
+                          textAlign: TextAlign.center,
                         ),
                       ],
                     ),
