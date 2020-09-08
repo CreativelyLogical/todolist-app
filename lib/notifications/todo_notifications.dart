@@ -69,13 +69,13 @@ class TodoNotifications {
 
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
       'your other channel id',
-      'your other channel name',
+      'Reminders',
       'your other channel description',
-      icon: '@mipmap/ic_launcher',
-//      priority: Priority.High,
-//      importance: Importance.Max,
+      icon: 'notification_small',
+      priority: Priority.High,
+      importance: Importance.Max,
       sound: RawResourceAndroidNotificationSound('slow_spring_board'),
-      largeIcon: DrawableResourceAndroidBitmap('@mipmap/ic_launcher'),
+      largeIcon: DrawableResourceAndroidBitmap('notification_large'),
       vibrationPattern: vibrationPattern,
       enableLights: true,
       color: Colors.blue.shade900,
