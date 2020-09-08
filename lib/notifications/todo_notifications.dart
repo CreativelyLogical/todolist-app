@@ -70,7 +70,7 @@ class TodoNotifications {
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
       'your other channel id',
       'Reminders',
-      'your other channel description',
+      'Reminders notification channel',
       icon: 'notification_small',
       priority: Priority.High,
       importance: Importance.Max,

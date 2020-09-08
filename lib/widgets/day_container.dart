@@ -35,13 +35,13 @@ class _DayContainerState extends State<DayContainer> {
   };
 
   final Map<int, String> intToWeekday = {
-    1: 'M',
-    2: 'T',
-    3: 'W',
-    4: 'T',
-    5: 'F',
-    6: 'S',
-    0: 'S',
+    1: 'MON',
+    2: 'TUE',
+    3: 'WED',
+    4: 'THU',
+    5: 'FRI',
+    6: 'SAT',
+    0: 'SUN',
   };
 
 //  void showFlutterToast(String toastMsg) {

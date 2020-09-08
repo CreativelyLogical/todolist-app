@@ -60,7 +60,7 @@ class _MyAppState extends State<MyApp> {
           fontFamily: 'ProductSans',
           bottomAppBarColor: kBlue,
         ),
-        title: 'Flutter todo',
+        title: 'Hope',
         home: Scaffold(
           body: TaskScreen(),
         ),
