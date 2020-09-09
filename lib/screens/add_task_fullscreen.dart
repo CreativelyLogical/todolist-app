@@ -168,6 +168,7 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen>
           onDateTimeChanged: (DateTime newDate) {
             setState(() {
               selectedDate = Date(newDate).toString();
+              print('selectedDate now is $selectedDate');
               selectedDateSQL = Date(newDate).toStringSQL();
             });
           },
@@ -177,6 +178,7 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen>
   }
 
   void getDatePickerOS(BuildContext context) {
+    print('the context sent to getDatePickerOS is ${context.toString()}');
     if (Platform.isAndroid) {
       _selectDate(context);
     } else if (Platform.isIOS) {
@@ -201,6 +203,10 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen>
   @override
   void initState() {
     super.initState();
+
+    if (widget.screen == 'AllTasksScreen') {
+      selectedDate = Date(DateTime.now()).toString();
+    }
 
     cannotSetReminder = !taskHasTime || (selectedTime == 'Set time');
 
@@ -371,10 +377,6 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen>
 //      initialTime: TimeOfDay.now(),
 //      context: context,
 //    );
-
-    if (widget.screen == 'AllTasksScreen') {
-      selectedDate = Date(DateTime.now()).toString();
-    }
 
 //    print('now selectedPriority is $selectedPriority');
     SizeConfig().init(context);
