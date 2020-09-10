@@ -324,7 +324,10 @@ class _EditTaskSheetState extends State<EditTaskSheet>
     if (picked.toString() != selectedTime && picked != null) {
       setState(() async {
         selectedTimeOfDay = picked;
-        selectedTime = selectedTimeOfDay.format(context);
+        int hour = picked.hour > 12 ? picked.hour - 12 : picked.hour;
+        int minute = picked.minute;
+        String period = picked.period == DayPeriod.am ? 'AM' : 'PM';
+        selectedTime = '$hour:$minute $period';
         _task.time = selectedTime;
         print('selectedTime is $selectedTime');
 //        _task.time = selectedTime;
