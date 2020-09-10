@@ -19,10 +19,10 @@ class TodoDatabase {
 //  static final TodoDatabase todoDatabase = TodoDatabase();
 
   Future<Database> _initDatabase() async {
-    print('sup');
+//    print('sup');
     var documentsDirectory = await getApplicationDocumentsDirectory();
-    print('hey');
-    print('the documentDirectory is ${documentsDirectory.path}');
+//    print('hey');
+//    print('the documentDirectory is ${documentsDirectory.path}');
     Database database = await openDatabase(
       join(documentsDirectory.path, 'todo_database.db'),
       onCreate: _onCreate,
@@ -69,9 +69,9 @@ class TodoDatabase {
   Future<void> update(Task task) async {
     final Database db = await _initDatabase();
 
-    print(
-        'the tasks id in todo_db is ${task.id} and the tasks name is todo_db is ${task.taskTitle}');
-    print('and the tasks date is ${task.date}');
+//    print(
+//        'the tasks id in todo_db is ${task.id} and the tasks name is todo_db is ${task.taskTitle}');
+//    print('and the tasks date is ${task.date}');
     await db.update(
       'todo_table',
       task.toMap(),
@@ -86,7 +86,7 @@ class TodoDatabase {
     final List<Map<String, dynamic>> maps =
         await db.rawQuery('SELECT * from todo_table WHERE is_checked=0');
 
-    print('there are ${maps.length} uncompleted tasks');
+//    print('there are ${maps.length} uncompleted tasks');
 
     return List.generate(maps.length, (int i) {
       print('in listgenerate, the id is ${maps[i]['id']}');
@@ -137,7 +137,7 @@ class TodoDatabase {
         await db.rawQuery('SELECT * FROM todo_table');
 
     return List.generate(maps.length, (int i) {
-      print('in listgenerate, the id is ${maps[i]['id']}');
+//      print('in listgenerate, the id is ${maps[i]['id']}');
       return Task(
         date: maps[i]['task_date'],
         taskTitle: maps[i]['task_name'],
@@ -179,10 +179,10 @@ class TodoDatabase {
 //    print(
 //        '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ allMaps.length is ${allMaps.length}');
 //
-    print('allMaps is \n');
-    for (var map in allMaps) {
-      print('$map\n');
-    }
+//    print('allMaps is \n');
+//    for (var map in allMaps) {
+//      print('$map\n');
+//    }
 //
 //    print('noDate is \n');
 //    for (var map in noDate) {

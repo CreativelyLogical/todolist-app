@@ -87,9 +87,9 @@ class _DayContainerState extends State<DayContainer> {
 
     Date inputDay = Date(
         widget.today.add(Duration(days: widget.inputWeekday - todayWeekday)));
-    print('selectedDay is ${TaskScreen.selectedDay}\ninputDay is $inputDay');
-
-    print('check ${Date(widget.today).toString()}');
+//    print('selectedDay is ${TaskScreen.selectedDay}\ninputDay is $inputDay');
+//
+//    print('check ${Date(widget.today).toString()}');
 
     SizeConfig().init(context);
     return Container(

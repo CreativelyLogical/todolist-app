@@ -171,7 +171,7 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen>
           onDateTimeChanged: (DateTime newDate) {
             setState(() {
               selectedDate = Date(newDate).toString();
-              print('selectedDate now is $selectedDate');
+//              print('selectedDate now is $selectedDate');
               selectedDateSQL = Date(newDate).toStringSQL();
             });
           },
@@ -181,7 +181,7 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen>
   }
 
   void getDatePickerOS(BuildContext context) {
-    print('the context sent to getDatePickerOS is ${context.toString()}');
+//    print('the context sent to getDatePickerOS is ${context.toString()}');
     if (Platform.isAndroid) {
       _selectDate(context);
     } else if (Platform.isIOS) {
@@ -229,7 +229,7 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen>
           : selectedTimeOfDay,
     );
     if (picked.toString() != selectedTime && picked != null) {
-      print('picked is $picked');
+//      print('picked is $picked');
       setState(() {
         // Check if the user entered time is in the future or has already passed
         selectedTimeOfDay = picked;
@@ -296,7 +296,7 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen>
     Size containerSize = _containerBox.size;
     Offset containerPosition = _containerBox.localToGlobal(Offset.zero);
 
-    print('come on $containerSize $containerPosition');
+//    print('come on $containerSize $containerPosition');
   }
 
   @override
@@ -308,9 +308,9 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen>
 
   Widget getSwitcherOS(BuildContext context) {
     cannotSetReminder = !taskHasTime || (selectedTime == 'Set time');
-    print('taskHasTime is $taskHasTime');
-    print('cannotSetReminder is $cannotSetReminder');
-    print('selectedTime is $selectedTime');
+//    print('taskHasTime is $taskHasTime');
+//    print('cannotSetReminder is $cannotSetReminder');
+//    print('selectedTime is $selectedTime');
     if (Platform.isAndroid) {
       return Switch(
         value: remind,
@@ -396,7 +396,7 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen>
     int month = Date.monthToInt[selectedDate.month];
     int day = selectedDate.day;
 
-    print('selectedTimeOfDay in AddTaskFullScreen is $selectedTimeOfDay');
+//    print('selectedTimeOfDay in AddTaskFullScreen is $selectedTimeOfDay');
 
     return DateTime(
         year, month, day, selectedTimeOfDay.hour, selectedTimeOfDay.minute, 0);
@@ -816,8 +816,8 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen>
                                       GestureDetector(
                                         onTap: () {
                                           if (!remind) {
-                                            print(
-                                                'cant set alert, option deactivated');
+//                                            print(
+//                                                'cant set alert, option deactivated');
                                           }
                                         },
                                         child: Icon(
@@ -956,7 +956,7 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen>
                                 (DateTime.now().millisecondsSinceEpoch / 1000)
                                     .floor();
                             if (taskNameController.text == '') {
-                              print('Please enter a task name');
+//                              print('Please enter a task name');
                             } else {
                               Provider.of<TaskData>(context).addTask(
                                 newTaskTitle: taskNameController.text,

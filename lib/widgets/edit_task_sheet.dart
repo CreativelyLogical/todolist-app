@@ -69,7 +69,7 @@ class _EditTaskSheetState extends State<EditTaskSheet>
 
     controller.addListener(() {
       setState(() {});
-      print(controller.value);
+//      print(controller.value);
     });
 
     setTask();
@@ -87,7 +87,7 @@ class _EditTaskSheetState extends State<EditTaskSheet>
     remind = selectedReminder == 'yes reminder' ? true : false;
 
     if (taskHasTime) {
-      print('hello darkness my old friend');
+//      print('hello darkness my old friend');
       RegExp exp = new RegExp(r"(\d+)");
       Iterable<Match> matches = exp.allMatches(selectedTime);
       List<int> times = [];
@@ -97,13 +97,13 @@ class _EditTaskSheetState extends State<EditTaskSheet>
       }
       RegExp morningOrAfternoon = new RegExp(r"([A-Z]+)");
       String time = morningOrAfternoon.firstMatch(selectedTime).group(0);
-      print('selectedTime in EditTaskSheet is $selectedTime');
-      print('time is $time');
+//      print('selectedTime in EditTaskSheet is $selectedTime');
+//      print('time is $time');
       int hour = time == 'PM' ? times[0] + 12 : times[0];
       selectedTimeOfDay = TimeOfDay(hour: hour, minute: times[1]);
-      print('now selectedTimeOfDay is $selectedTimeOfDay');
+//      print('now selectedTimeOfDay is $selectedTimeOfDay');
     } else {
-      print('selectedTime in EditTaskSheet is $selectedTime');
+//      print('selectedTime in EditTaskSheet is $selectedTime');
     }
 //    if (selectedTime == 'no time' || selectedTime == 'Set time') {
 //      print('task.name for this is ${_task.taskTitle}');
@@ -172,7 +172,7 @@ class _EditTaskSheetState extends State<EditTaskSheet>
       setState(() {
 //        selectedDate = Date(picked).toString();
         selectedDateSQL = Date(picked).toStringSQL();
-        print('the selectedDate is $selectedDateSQL');
+//        print('the selectedDate is $selectedDateSQL');
         _task.date = selectedDateSQL;
       });
     }
@@ -230,8 +230,8 @@ class _EditTaskSheetState extends State<EditTaskSheet>
   }
 
   Widget getSwitcherOS(BuildContext context) {
-    print('taskHasTime is $taskHasTime');
-    print('selectedTime is $selectedTime');
+//    print('taskHasTime is $taskHasTime');
+//    print('selectedTime is $selectedTime');
     if (Platform.isAndroid) {
       return Switch(
         value: remind,
@@ -279,13 +279,13 @@ class _EditTaskSheetState extends State<EditTaskSheet>
                   },
                 );
                 if (!remind) {
-                  print('cancelling notifications');
+//                  print('cancelling notifications');
                   _task.alert = 'no reminder';
                   await TodoNotifications()
                       .cancelNotificationById(notificationId);
                 } else if (remind) {
-                  print('selectedTimeOfDay is $selectedTimeOfDay');
-                  print('notificationId is $notificationId');
+//                  print('selectedTimeOfDay is $selectedTimeOfDay');
+//                  print('notificationId is $notificationId');
                   _task.alert = 'yes reminder';
                   DateTime notificationTimeOfDay = getNotificationDateTime();
 //                  print(
@@ -334,7 +334,7 @@ class _EditTaskSheetState extends State<EditTaskSheet>
         String period = picked.period == DayPeriod.am ? 'AM' : 'PM';
         selectedTime = '$hour:$minute $period';
         _task.time = selectedTime;
-        print('selectedTime is $selectedTime');
+//        print('selectedTime is $selectedTime');
 //        _task.time = selectedTime;
 //        Provider.of<TaskData>(context).updateTask(_task);
         await TodoNotifications().cancelNotificationById(notificationId);
@@ -454,7 +454,7 @@ class _EditTaskSheetState extends State<EditTaskSheet>
 
   @override
   Widget build(BuildContext context) {
-    print('for the task ${_task.taskTitle}, task.HasTime is ${_task.hasTime}');
+//    print('for the task ${_task.taskTitle}, task.HasTime is ${_task.hasTime}');
 //    if (_task.time == 'no time') {
 //      _task.hasTime = false;
 //      Provider.of<TaskData>(context).updateTask(_task);
@@ -487,7 +487,7 @@ class _EditTaskSheetState extends State<EditTaskSheet>
                     context: context,
                     builder: (BuildContext context) => DeleteTaskDialog(
                       onDeleteTaskCallback: () {
-                        print('delete button pressed');
+//                        print('delete button pressed');
                         if (notificationId != null) {
                           TodoNotifications()
                               .cancelNotificationById(notificationId);
@@ -509,7 +509,7 @@ class _EditTaskSheetState extends State<EditTaskSheet>
                 ),
                 buttonText: 'Mark as done',
                 onPressed: () {
-                  print('mark as done button pressed');
+//                  print('mark as done button pressed');
                   if (_task.isChecked) {
                   } else {
                     _task.toggleChecked();
@@ -555,6 +555,7 @@ class _EditTaskSheetState extends State<EditTaskSheet>
                 ),
                 onChanged: (newString) {
                   _task.taskTitle = newString;
+//                  print('task title is changed');
                 },
               ),
             ),
@@ -742,7 +743,7 @@ class _EditTaskSheetState extends State<EditTaskSheet>
                   if (taskHasTime) {
                     getTimePickerOS(context);
                   }
-                  print('time selector pressed');
+//                  print('time selector pressed');
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

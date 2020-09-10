@@ -363,7 +363,7 @@ class VersatileListTile extends StatelessWidget {
   final Task task;
 
   MaterialColor returnPriorityColor() {
-    print('in listview, priority is $priority');
+//    print('in listview, priority is $priority');
     if (priority == 'none')
       return MaterialColor(0xFF9E9E9E, <int, Color>{
         50: Color(0xFFF0F0F0),

@@ -117,9 +117,9 @@ class CategorySelection extends StatelessWidget {
       ),
       child: InkWell(
         onTap: () {
-          print('$selection pressed');
+//          print('$selection pressed');
           callback(selection);
-          print('context is: ${context.toString()}');
+//          print('context is: ${context.toString()}');
           Navigator.pop(context);
         },
         child: Container(

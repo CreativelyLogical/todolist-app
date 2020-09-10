@@ -22,15 +22,15 @@ class TaskList extends StatelessWidget {
 //      print('**********************');
       List<Task> taskList = await Provider.of<TaskData>(context)
           .getTaskList(TaskScreen.selectedDay);
-      print('********************** taskList.length is ${taskList.length}');
+//      print('********************** taskList.length is ${taskList.length}');
       return await Provider.of<TaskData>(context)
           .getTaskList(TaskScreen.selectedDay);
     }
 
-    print('the screenHeight is ${SizeConfig.screenHeight}');
-    print('the screenWidth is ${SizeConfig.screenWidth}');
-    print('the blockSizeVertical is ${SizeConfig.blockSizeVertical}');
-    print('the blockSizeHorizontal is ${SizeConfig.blockSizeHorizontal}');
+//    print('the screenHeight is ${SizeConfig.screenHeight}');
+//    print('the screenWidth is ${SizeConfig.screenWidth}');
+//    print('the blockSizeVertical is ${SizeConfig.blockSizeVertical}');
+//    print('the blockSizeHorizontal is ${SizeConfig.blockSizeHorizontal}');
 
     final String allDoneAsset = 'assets/images/tasks-solid.svg';
     final Widget allDoneSvg = SvgPicture.asset(
@@ -98,7 +98,7 @@ class TaskList extends StatelessWidget {
                         ),
                         iconSize: SizeConfig.screenHeight * 0.05,
                         onPressed: () {
-                          print('add icon pressed');
+//                          print('add icon pressed');
                           Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -144,9 +144,9 @@ class TaskList extends StatelessWidget {
                       padding: EdgeInsets.only(top: 10.0),
                       itemBuilder: (BuildContext context, int index) {
                         final task = snapshot.data[index];
-                        print('so the title is ${task.taskTitle}');
-                        print('the task id in taskList is ${task.id}');
-                        print('the task is checked? ${task.isChecked}');
+//                        print('so the title is ${task.taskTitle}');
+//                        print('the task id in taskList is ${task.id}');
+//                        print('the task is checked? ${task.isChecked}');
                         return Row(
                           mainAxisSize: MainAxisSize.max,
                           children: [
@@ -242,7 +242,7 @@ class TaskListTile extends StatefulWidget {
 
 class _TaskListTileState extends State<TaskListTile> {
   MaterialColor returnPriorityColor() {
-    print('in listview, priority is ${widget.priority}');
+//    print('in listview, priority is ${widget.priority}');
     if (widget.priority == 'none')
       return MaterialColor(0xFF9E9E9E, <int, Color>{
         50: Color(0xFFF0F0F0),
@@ -259,7 +259,7 @@ class _TaskListTileState extends State<TaskListTile> {
   @override
   Widget build(BuildContext context) {
     if (widget.task.isChecked == true) {
-      print('wtf is going on here');
+//      print('wtf is going on here');
     }
 
     double screenWidth;
@@ -275,7 +275,7 @@ class _TaskListTileState extends State<TaskListTile> {
     double blockSizeHorizontal = screenWidth / 100;
 
     SizeConfig().init(context);
-    print('screenWidth of taskListTile is ${SizeConfig.screenWidth}');
+//    print('screenWidth of taskListTile is ${SizeConfig.screenWidth}');
     return GestureDetector(
       onTap: () async {
         if (!widget.task.isChecked) {

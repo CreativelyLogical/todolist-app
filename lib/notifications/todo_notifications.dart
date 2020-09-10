@@ -102,7 +102,7 @@ class TodoNotifications {
     int notificationId,
     DateTime dateTime,
   }) async {
-    print('the notification id of $notificationTitle was $notificationId');
+//    print('the notification id of $notificationTitle was $notificationId');
     if (dateTime.isAfter(DateTime.now())) {
       await _scheduleNotification(
           title: notificationTitle,
@@ -113,7 +113,7 @@ class TodoNotifications {
   }
 
   Future<void> cancelNotificationById(int id) async {
-    print('for deletion, the notification id is $id');
+//    print('for deletion, the notification id is $id');
     await flutterLocalNotificationsPlugin.cancel(id);
   }
 }

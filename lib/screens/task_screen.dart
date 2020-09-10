@@ -49,7 +49,7 @@ class _TaskScreenState extends State<TaskScreen> {
 
   void setStateCallback() {
     setState(() {
-      print('this is called');
+//      print('this is called');
     });
   }
 
@@ -57,13 +57,13 @@ class _TaskScreenState extends State<TaskScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print(context);
+//    print(context);
     SizeConfig().init(context);
-    print('The height of this device is ${SizeConfig.screenHeight}');
-    print('The width of this device is ${SizeConfig.screenWidth}');
-    getDate();
-    print('blockSizeVertical is ${SizeConfig.blockSizeVertical}');
-    print('blockSizeHorizontal is ${SizeConfig.blockSizeHorizontal}');
+//    print('The height of this device is ${SizeConfig.screenHeight}');
+//    print('The width of this device is ${SizeConfig.screenWidth}');
+//    getDate();
+//    print('blockSizeVertical is ${SizeConfig.blockSizeVertical}');
+//    print('blockSizeHorizontal is ${SizeConfig.blockSizeHorizontal}');
 
     int tasksRemaining = 4;
 
@@ -78,7 +78,7 @@ class _TaskScreenState extends State<TaskScreen> {
 
     return WillPopScope(
       onWillPop: () async {
-        print('back button has been pressed');
+//        print('back button has been pressed');
         for (var i = 0; i < MyApp.pagesOnStack; i++) {
           SystemNavigator.pop();
         }
@@ -142,7 +142,7 @@ class _TaskScreenState extends State<TaskScreen> {
                         ),
                         iconSize: SizeConfig.screenHeight * 0.045,
                         onPressed: () {
-                          print("You're already in the week view screen");
+//                          print("You're already in the week view screen");
                         },
                       ),
                       Text(
@@ -225,7 +225,7 @@ class _TaskScreenState extends State<TaskScreen> {
               WeekView(
                 setStateCallback: () {
                   setState(() {
-                    print('setState has been called in task screen');
+//                    print('setState has been called in task screen');
                   });
                 },
               ),
