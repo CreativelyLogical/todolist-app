@@ -363,7 +363,11 @@ class _EditTaskSheetState extends State<EditTaskSheet>
             onDateTimeChanged: (DateTime picked) {
               setState(() {
                 selectedTimeOfDay = TimeOfDay.fromDateTime(picked);
-                selectedTime = selectedTimeOfDay.format(context);
+                int hour = picked.hour > 12 ? picked.hour - 12 : picked.hour;
+                int minute = picked.minute;
+                String period =
+                    selectedTimeOfDay.period == DayPeriod.am ? 'AM' : 'PM';
+                selectedTime = '$hour:$minute $period';
                 _task.time = selectedTime;
               });
             },
