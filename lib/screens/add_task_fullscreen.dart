@@ -83,6 +83,8 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen>
 
   String selectedPriority = 'none';
 
+  Date selectedDateObject = TaskScreen.selectedDay;
+
   static String selectedCategory = 'Personal';
 
   TextEditingController taskNameController = TextEditingController();
@@ -143,11 +145,12 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen>
     final DateTime picked = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
-      firstDate: DateTime.now().add(Duration(days: -1)),
+      firstDate: DateTime.now().add(Duration(days: 0)),
       lastDate: DateTime(2101),
     );
     if (picked != null) {
       setState(() {
+        selectedDateObject = Date(picked);
         selectedDate = Date(picked).toString();
         selectedDateSQL = Date(picked).toStringSQL();
       });
@@ -186,23 +189,11 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen>
     }
   }
 
-  Future<Null> _selectTime(BuildContext context) async {
-    final TimeOfDay picked = await showTimePicker(
-      context: context,
-      initialTime:
-          selectedTime == 'Set time' ? TimeOfDay.now() : selectedTimeOfDay,
-    );
-    if (picked.toString() != selectedTime && picked != null) {
-      print('picked is $picked');
-      setState(() {
-        selectedTimeOfDay = picked;
-        int hour = picked.hour > 12 ? picked.hour - 12 : picked.hour;
-        int minute = picked.minute;
-        String period = picked.period == DayPeriod.am ? 'AM' : 'PM';
-        selectedTime = '$hour:$minute $period';
-//        selectedTime = selectedTimeOfDay.format(context);
-//        print('whereas selectedTime is $selectedTime');
-      });
+  DateTime getMinimumTime() {
+    if (selectedDateSQL == Date(DateTime.now()).toStringSQL()) {
+      return DateTime.now();
+    } else {
+      return null;
     }
   }
 
@@ -230,6 +221,33 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen>
     });
   }
 
+  Future<Null> _selectTime(BuildContext context) async {
+    final TimeOfDay picked = await showTimePicker(
+      context: context,
+      initialTime: selectedTime == 'Set time'
+          ? TimeOfDay.fromDateTime(DateTime.now().add(Duration(minutes: 5)))
+          : selectedTimeOfDay,
+    );
+    if (picked.toString() != selectedTime && picked != null) {
+      print('picked is $picked');
+      setState(() {
+        // Check if the user entered time is in the future or has already passed
+        selectedTimeOfDay = picked;
+        int hour = picked.hourOfPeriod;
+        if (hour == 0) {
+          hour = 12;
+        }
+        String minute =
+            picked.minute < 10 ? '0${picked.minute}' : '${picked.minute}';
+        String period = picked.period == DayPeriod.am ? 'AM' : 'PM';
+        selectedTime = '$hour:$minute $period';
+
+//        selectedTime = selectedTimeOfDay.format(context);
+//        print('whereas selectedTime is $selectedTime');
+      });
+    }
+  }
+
   void getTimePickerOS(context) {
     if (Platform.isAndroid) {
       _selectTime(context);
@@ -240,12 +258,15 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen>
           CupertinoDatePicker(
             mode: CupertinoDatePickerMode.time,
             backgroundColor: Colors.white,
-            initialDateTime: DateTime.now().add(Duration(minutes: 1)),
+            minimumDate: getMinimumTime(),
+            initialDateTime: DateTime.now().add(Duration(minutes: 5)),
             onDateTimeChanged: (DateTime picked) {
               setState(() {
                 selectedTimeOfDay = TimeOfDay.fromDateTime(picked);
                 int hour = picked.hour > 12 ? picked.hour - 12 : picked.hour;
-                int minute = picked.minute;
+                String minute = picked.minute < 10
+                    ? '0${picked.minute}'
+                    : '${picked.minute}';
                 String period =
                     selectedTimeOfDay.period == DayPeriod.am ? 'AM' : 'PM';
                 selectedTime = '$hour:$minute $period';

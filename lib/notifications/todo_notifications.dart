@@ -103,11 +103,13 @@ class TodoNotifications {
     DateTime dateTime,
   }) async {
     print('the notification id of $notificationTitle was $notificationId');
-    await _scheduleNotification(
-        title: notificationTitle,
-        body: notificationBody,
-        id: notificationId,
-        notificationTime: dateTime);
+    if (dateTime.isAfter(DateTime.now())) {
+      await _scheduleNotification(
+          title: notificationTitle,
+          body: notificationBody,
+          id: notificationId,
+          notificationTime: dateTime);
+    }
   }
 
   Future<void> cancelNotificationById(int id) async {

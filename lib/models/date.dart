@@ -4,6 +4,7 @@ class Date {
   int day;
   int year;
   String weekday;
+  int monthInt;
 
   static final Map<int, String> intToMonth = {
     1: 'Jan',
@@ -53,6 +54,7 @@ class Date {
 
   void setDate() {
     month = intToMonth[dateTime.month];
+    monthInt = dateTime.month;
     day = dateTime.day;
     year = dateTime.year;
     weekday = intToWeekday[dateTime.weekday];

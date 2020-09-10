@@ -152,7 +152,7 @@ class _EditTaskSheetState extends State<EditTaskSheet>
     final DateTime picked = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
-      firstDate: DateTime.now().add(Duration(days: -1)),
+      firstDate: DateTime.now(),
       lastDate: DateTime(2101),
     ).whenComplete(() async {
       TodoNotifications().cancelNotificationById(notificationId);
@@ -315,8 +315,9 @@ class _EditTaskSheetState extends State<EditTaskSheet>
   Future<Null> _selectTime(BuildContext context) async {
     final TimeOfDay picked = await showTimePicker(
       context: context,
-      initialTime:
-          selectedTime == 'no time' ? TimeOfDay.now() : selectedTimeOfDay,
+      initialTime: selectedTime == 'no time'
+          ? TimeOfDay.fromDateTime(DateTime.now().add(Duration(minutes: 5)))
+          : selectedTimeOfDay,
     ).whenComplete(() async {
       Provider.of<TaskData>(context).updateTask(_task);
     });
@@ -324,8 +325,12 @@ class _EditTaskSheetState extends State<EditTaskSheet>
     if (picked.toString() != selectedTime && picked != null) {
       setState(() async {
         selectedTimeOfDay = picked;
-        int hour = picked.hour > 12 ? picked.hour - 12 : picked.hour;
-        int minute = picked.minute;
+        int hour = picked.hourOfPeriod;
+        if (hour == 0) {
+          hour = 12;
+        }
+        String minute =
+            picked.minute < 10 ? '0${picked.minute}' : '${picked.minute}';
         String period = picked.period == DayPeriod.am ? 'AM' : 'PM';
         selectedTime = '$hour:$minute $period';
         _task.time = selectedTime;
@@ -359,12 +364,14 @@ class _EditTaskSheetState extends State<EditTaskSheet>
             backgroundColor: Colors.white,
             mode: CupertinoDatePickerMode.time,
             minimumDate: getMinimumTime(),
-            initialDateTime: DateTime.now().add(Duration(minutes: 1)),
+            initialDateTime: DateTime.now().add(Duration(minutes: 5)),
             onDateTimeChanged: (DateTime picked) {
               setState(() {
                 selectedTimeOfDay = TimeOfDay.fromDateTime(picked);
                 int hour = picked.hour > 12 ? picked.hour - 12 : picked.hour;
-                int minute = picked.minute;
+                String minute = picked.minute < 10
+                    ? '0${picked.minute}'
+                    : '${picked.minute}';
                 String period =
                     selectedTimeOfDay.period == DayPeriod.am ? 'AM' : 'PM';
                 selectedTime = '$hour:$minute $period';
