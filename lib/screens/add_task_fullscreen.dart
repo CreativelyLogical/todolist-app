@@ -193,9 +193,15 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen>
           selectedTime == 'Set time' ? TimeOfDay.now() : selectedTimeOfDay,
     );
     if (picked.toString() != selectedTime && picked != null) {
+      print('picked is $picked');
       setState(() {
         selectedTimeOfDay = picked;
-        selectedTime = selectedTimeOfDay.format(context);
+        int hour = picked.hour > 12 ? picked.hour - 12 : picked.hour;
+        int minute = picked.minute;
+        String period = picked.period == DayPeriod.am ? 'AM' : 'PM';
+        selectedTime = '$hour:$minute $period';
+//        selectedTime = selectedTimeOfDay.format(context);
+//        print('whereas selectedTime is $selectedTime');
       });
     }
   }
