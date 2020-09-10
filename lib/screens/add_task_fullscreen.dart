@@ -263,7 +263,10 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen>
             onDateTimeChanged: (DateTime picked) {
               setState(() {
                 selectedTimeOfDay = TimeOfDay.fromDateTime(picked);
-                int hour = picked.hour > 12 ? picked.hour - 12 : picked.hour;
+                int hour = selectedTimeOfDay.hourOfPeriod;
+                if (hour == 0) {
+                  hour = 12;
+                }
                 String minute = picked.minute < 10
                     ? '0${picked.minute}'
                     : '${picked.minute}';

@@ -368,7 +368,10 @@ class _EditTaskSheetState extends State<EditTaskSheet>
             onDateTimeChanged: (DateTime picked) {
               setState(() {
                 selectedTimeOfDay = TimeOfDay.fromDateTime(picked);
-                int hour = picked.hour > 12 ? picked.hour - 12 : picked.hour;
+                int hour = selectedTimeOfDay.hourOfPeriod;
+                if (hour == 0) {
+                  hour = 12;
+                }
                 String minute = picked.minute < 10
                     ? '0${picked.minute}'
                     : '${picked.minute}';
@@ -555,6 +558,7 @@ class _EditTaskSheetState extends State<EditTaskSheet>
                 ),
                 onChanged: (newString) {
                   _task.taskTitle = newString;
+                  Provider.of<TaskData>(context).updateTask(_task);
 //                  print('task title is changed');
                 },
               ),

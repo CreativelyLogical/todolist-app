@@ -303,8 +303,9 @@ class _TaskListTileState extends State<TaskListTile> {
 
           if (widget.task.time == 'no time') {
             widget.task.hasTime = false;
+            Provider.of<TaskData>(context).updateTask(widget.task);
           }
-          Provider.of<TaskData>(context).updateTask(widget.task);
+          print('now the name of the task is ${widget.task.taskTitle}');
         }
       },
       child: Container(
