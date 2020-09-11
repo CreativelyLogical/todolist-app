@@ -33,7 +33,7 @@ class TodoDatabase {
   }
 
   void _onCreate(Database db, int version) async {
-    print(getDatabasesPath());
+    // print(getDatabasesPath());
     await db.execute(
       '''
           CREATE TABLE IF NOT EXISTS todo_table(
@@ -89,7 +89,7 @@ class TodoDatabase {
 //    print('there are ${maps.length} uncompleted tasks');
 
     return List.generate(maps.length, (int i) {
-      print('in listgenerate, the id is ${maps[i]['id']}');
+      // print('in listgenerate, the id is ${maps[i]['id']}');
       return Task(
         date: maps[i]['task_date'],
         taskTitle: maps[i]['task_name'],

@@ -305,7 +305,7 @@ class _TaskListTileState extends State<TaskListTile> {
             widget.task.hasTime = false;
             Provider.of<TaskData>(context).updateTask(widget.task);
           }
-          print('now the name of the task is ${widget.task.taskTitle}');
+          // print('now the name of the task is ${widget.task.taskTitle}');
         }
       },
       child: Container(
