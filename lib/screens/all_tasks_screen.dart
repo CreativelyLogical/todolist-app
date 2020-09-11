@@ -444,6 +444,7 @@ class VersatileListTile extends StatelessWidget {
     SizeConfig().init(context);
     return GestureDetector(
       onTap: () async {
+        String initialTaskTitle = task.taskTitle;
         if (!task.isChecked) {
           await showModalBottomSheet(
             context: context,
@@ -469,8 +470,13 @@ class VersatileListTile extends StatelessWidget {
 
           if (task.time == 'no time') {
             task.hasTime = false;
-            Provider.of<TaskData>(context).updateTask(task);
           }
+
+          if (task.taskTitle.isEmpty) {
+            task.taskTitle = initialTaskTitle;
+          }
+
+          Provider.of<TaskData>(context).updateTask(task);
         }
       },
       child: Container(

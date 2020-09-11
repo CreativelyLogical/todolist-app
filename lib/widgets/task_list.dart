@@ -278,6 +278,8 @@ class _TaskListTileState extends State<TaskListTile> {
 //    print('screenWidth of taskListTile is ${SizeConfig.screenWidth}');
     return GestureDetector(
       onTap: () async {
+        String initialTaskTitle = widget.task.taskTitle;
+
         if (!widget.task.isChecked) {
           await showModalBottomSheet<String>(
             context: context,
@@ -303,9 +305,12 @@ class _TaskListTileState extends State<TaskListTile> {
 
           if (widget.task.time == 'no time') {
             widget.task.hasTime = false;
-            Provider.of<TaskData>(context).updateTask(widget.task);
+          }
+          if (widget.task.taskTitle.isEmpty) {
+            widget.task.taskTitle = initialTaskTitle;
           }
           // print('now the name of the task is ${widget.task.taskTitle}');
+          Provider.of<TaskData>(context).updateTask(widget.task);
         }
       },
       child: Container(
