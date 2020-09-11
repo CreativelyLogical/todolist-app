@@ -683,7 +683,7 @@ class _EditTaskSheetState extends State<EditTaskSheet>
                       style: TextStyle(
                         color: kBlue,
                         fontSize: SizeConfig.blockSizeVertical * 3.0,
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.w400,
                       ),
                     )
                   ],
@@ -714,7 +714,7 @@ class _EditTaskSheetState extends State<EditTaskSheet>
                       style: TextStyle(
                         color: kWhite,
                         fontSize: SizeConfig.blockSizeVertical * 3.0,
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.w400,
                       ),
                     ),
                     color: getCategoryColor(_task.category),
@@ -769,7 +769,7 @@ class _EditTaskSheetState extends State<EditTaskSheet>
                             decoration:
                                 taskHasTime ? null : TextDecoration.lineThrough,
                             fontSize: SizeConfig.blockSizeVertical * 3.0,
-                            fontWeight: FontWeight.w500,
+                            fontWeight: FontWeight.w400,
                           ),
                         ),
                       ],
@@ -844,7 +844,7 @@ class _EditTaskSheetState extends State<EditTaskSheet>
                       style: TextStyle(
                         color: remind ? kBlue : Colors.grey.shade400,
                         fontSize: SizeConfig.blockSizeVertical * 3.0,
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.w400,
                         decoration: remind ? null : TextDecoration.lineThrough,
                       ),
                     ),

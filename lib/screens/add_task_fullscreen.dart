@@ -484,7 +484,7 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen>
                       color: kWhite,
                     ),
                     validator: (String value) {
-                      return value.isEmpty ? 'Pleas enter a name' : null;
+                      return value.isEmpty ? 'Please enter a name' : null;
                     },
                     decoration: InputDecoration(
                       hintText: 'eg. Read for 1 hour',
@@ -498,8 +498,9 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen>
                         color: kWhite,
                       ),
                       errorStyle: TextStyle(
-                        color: Colors.orange,
+                        color: Colors.orangeAccent,
                         fontSize: SizeConfig.blockSizeVertical * 2,
+                        fontWeight: FontWeight.bold,
                       ),
 //          fillColor: Colors.blue,
                       enabledBorder: OutlineInputBorder(
@@ -512,12 +513,12 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen>
                       ),
                       errorBorder: OutlineInputBorder(
                         borderSide:
-                            BorderSide(color: Colors.orange, width: 4.0),
+                            BorderSide(color: Colors.orangeAccent, width: 4.0),
                         borderRadius: BorderRadius.circular(10.0),
                       ),
                       focusedErrorBorder: OutlineInputBorder(
                         borderSide:
-                            BorderSide(color: Colors.orange, width: 4.0),
+                            BorderSide(color: Colors.orangeAccent, width: 4.0),
                         borderRadius: BorderRadius.circular(10.0),
                       ),
                     ),

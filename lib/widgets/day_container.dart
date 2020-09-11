@@ -76,8 +76,8 @@ class _DayContainerState extends State<DayContainer> {
       color: dayColor(selectedDay, inputDay),
       fontSize: SizeConfig.blockSizeVertical * 3,
       fontWeight: inputDay.dateCompare(Date(DateTime.now()))
-          ? FontWeight.w600
-          : FontWeight.w500,
+          ? FontWeight.w800
+          : FontWeight.w400,
     );
   }
 

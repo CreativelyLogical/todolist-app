@@ -375,7 +375,7 @@ class _TaskListTileState extends State<TaskListTile> {
                         style: TextStyle(
                           fontSize: SizeConfig.blockSizeVertical * 2.3,
                           color: widget.isChecked ? Colors.grey : kBlue,
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.w400,
                           decoration: widget.isChecked
                               ? TextDecoration.lineThrough
                               : null,

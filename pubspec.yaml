@@ -46,10 +46,21 @@ dev_dependencies:
 # The following section is specific to Flutter.
 flutter:
   fonts:
-    - family: ProductSans
+    - family: Rubik
       fonts:
-        - asset: fonts/ProductSans/Product-Sans-Regular.ttf
-        - asset: fonts/ProductSans/Product-Sans-Bold.ttf
+        - asset: fonts/Rubik/static/Rubik-Regular.ttf
+#        - asset: fonts/Rubik/static/Rubik-Medium.ttf
+        - asset: fonts/Rubik/static/Rubik-Bold.ttf
+    - family: Quicksand
+      fonts:
+#        - asset: fonts/Quicksand/static/Quicksand-Regular.ttf
+#        - asset: fonts/Quicksand/static/Quicksand-Medium.ttf
+        - asset: fonts/Quicksand/static/Quicksand-Bold.ttf
+    - family: NunitoSans
+      fonts:
+        - asset: fonts/Nunito_Sans/NunitoSans-SemiBold.ttf
+        - asset: fonts/Nunito_Sans/NunitoSans-Bold.ttf
+        - asset: fonts/Nunito_Sans/NunitoSans-ExtraBold.ttf
     - family: Muli
       fonts:
         - asset: fonts/Muli/Muli-Bold.ttf

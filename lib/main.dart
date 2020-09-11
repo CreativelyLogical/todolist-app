@@ -57,7 +57,7 @@ class _MyAppState extends State<MyApp> {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          fontFamily: 'ProductSans',
+          fontFamily: 'Rubik',
           bottomAppBarColor: kBlue,
         ),
         title: 'Hope',
