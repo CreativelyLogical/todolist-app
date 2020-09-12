@@ -105,7 +105,7 @@ class _DayContainerState extends State<DayContainer> {
                 color: inputDay.dateCompare(Date(DateTime.now()))
                     ? kWhite
                     : kWhite.withOpacity(0.6),
-                fontWeight: FontWeight.w600,
+                fontWeight: FontWeight.w500,
               ),
             ),
           ),
