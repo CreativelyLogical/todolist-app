@@ -1,6 +1,7 @@
-# my_todo
+# Hope: To-do List & Reminders
 
-An aesthetic and UI friendly To-do list App
+An aesthetic and UI friendly To-do list app that delivers reminders for tasks using local notifications
+Link (App Store): https://apps.apple.com/us/app/id1531065845
 
 ## Getting Started
 
