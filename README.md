@@ -2,7 +2,7 @@
 
 An aesthetic and UI friendly To-do list app that delivers reminders for tasks using local notifications
 
-Links:
+**Links**:
 
 (App Store): https://apps.apple.com/us/app/id1531065845 
 
