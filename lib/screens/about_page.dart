@@ -142,20 +142,20 @@ class AboutPage extends StatelessWidget {
                   child: Container(
                     child: Column(
                       children: [
-                        Text(
-                          'Hi, this is Umutjan, creator of the Hope todo-list. Thank you for using my app. It is my hope that '
-                          'this app will prove useful to you and in the very least, help you stay on top of your tasks'
-                          ' and responsibilities. \n\nPlease forgive the apparent lack of features of this app, since this is the very'
-                          ' first version of Hope, I am hoping to upgrade it in my spare time, which is unfortunately'
-                          ' hard to come by since I am still in university.'
-                          '\n\nIn the meanwhile, '
-                          'if you are enjoying the app, '
-                          'please give it a rating. If not, please leave a review'
-                          ' containing suggestions on how it can be improved.',
-                          style: TextStyle(
-                            fontSize: SizeConfig.blockSizeVertical * 2.5,
-                          ),
-                        ),
+//                        Text(
+//                          'Hi, this is Umutjan, creator of the Hope todo-list. Thank you for using my app. It is my hope that '
+//                          'this app will prove useful to you and in the very least, help you stay on top of your tasks'
+//                          ' and responsibilities. \n\nPlease forgive the apparent lack of features of this app, since this is the very'
+//                          ' first version of Hope, I am hoping to upgrade it in my spare time, which is unfortunately'
+//                          ' hard to come by since I am still in university.'
+//                          '\n\nIn the meanwhile, '
+//                          'if you are enjoying the app, '
+//                          'please give it a rating. If not, please leave a review'
+//                          ' containing suggestions on how it can be improved.',
+//                          style: TextStyle(
+//                            fontSize: SizeConfig.blockSizeVertical * 2.5,
+//                          ),
+//                        ),
 //                        Padding(
 //                          padding: EdgeInsets.only(
 //                            top: SizeConfig.screenHeight * 0.05,
@@ -177,7 +177,7 @@ class AboutPage extends StatelessWidget {
 ////                        ),
                         Padding(
                           padding: EdgeInsets.only(
-                            top: SizeConfig.screenHeight * 0.1,
+                            top: SizeConfig.screenHeight * 0.05,
                             bottom: SizeConfig.screenHeight * 0.05,
                           ),
                           child: Image.asset(
@@ -190,7 +190,7 @@ class AboutPage extends StatelessWidget {
                           padding: EdgeInsets.only(
                               bottom: SizeConfig.screenHeight * 0.05),
                           child: Text(
-                            "Version: 1.0.0",
+                            "Version: 1.0.1",
                             style: TextStyle(
                               fontSize: SizeConfig.blockSizeVertical * 3.5,
                               color: kBlue,

@@ -154,6 +154,30 @@ class TodoDatabase {
     });
   }
 
+  Future<List<Task>> getTasksByPriority(String priority) async {
+    final Database db = await _initDatabase();
+
+    final List<Map<String, dynamic>> maps = await db
+        .rawQuery('SELECT * FROM todo_table WHERE priority=?', [priority]);
+
+    return List.generate(
+      maps.length,
+      (i) => Task(
+        date: maps[i]['task_date'],
+        taskTitle: maps[i]['task_name'],
+        isChecked: maps[i]['is_checked'] == 0 ? false : true,
+        priority: maps[i]['priority'],
+        notes: maps[i]['notes'],
+        category: maps[i]['category'],
+        alert: maps[i]['alert'],
+        time: maps[i]['task_time'],
+        id: maps[i]['id'],
+        hasTime: maps[i]['has_time'] == 0 ? false : true,
+        notificationId: maps[i]['notification_id'],
+      ),
+    );
+  }
+
   Future<List<Task>> getTaskList(Date inputDay) async {
     final Database db = await _initDatabase();
 

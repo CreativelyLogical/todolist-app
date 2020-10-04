@@ -8,6 +8,7 @@ import 'all_tasks_screen.dart';
 import 'about_page.dart';
 import 'package:my_todo/main.dart';
 import 'package:flutter/services.dart';
+import 'overview_screen.dart';
 
 class TaskScreen extends StatefulWidget {
   @override
@@ -129,6 +130,35 @@ class _TaskScreenState extends State<TaskScreen> {
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      IconButton(
+                        padding: EdgeInsets.all(0),
+//                      padding: EdgeInsets.only(
+//                          right: SizeConfig.blockSizeHorizontal * 10),
+                        icon: Icon(
+                          Icons.home,
+                          color: kWhite.withOpacity(0.5),
+                        ),
+                        iconSize: SizeConfig.screenHeight * 0.045,
+                        onPressed: () {
+                          MyApp.pagesOnStack++;
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => OverviewScreen()));
+//                          print("You're already in the week view screen");
+                        },
+                      ),
+                      Text(
+                        'Home',
+                        style: TextStyle(
+                            color: kWhite.withOpacity(0.6),
+                            fontSize: SizeConfig.screenHeight * 0.02),
+                      ),
+                    ],
+                  ),
                   Column(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
