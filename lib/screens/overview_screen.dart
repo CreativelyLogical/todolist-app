@@ -245,116 +245,153 @@ class _OverviewScreenState extends State<OverviewScreen> {
 //          child: Padding(padding: EdgeInsets.all(20.0)),
         shape: CircularNotchedRectangle(),
       ),
-      body: SafeArea(
-        child: Column(
-          children: [
-            Row(
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(
-                    top: SizeConfig.screenHeight * 0.03,
-                    left: SizeConfig.screenWidth * 0.03,
-                    bottom: SizeConfig.screenHeight * 0.03,
-                  ),
-                  child: Text(
-                    'Priority',
-                    style: TextStyle(
-                      color: kBlue,
-                      fontSize: SizeConfig.blockSizeVertical * 4,
-                    ),
-                    textAlign: TextAlign.right,
-                  ),
-                ),
-              ],
+      body: Column(
+        children: [
+          Container(
+            margin: EdgeInsets.only(
+              bottom: SizeConfig.screenHeight * 0.01,
             ),
-            Expanded(
-              child: GridView.count(
-                padding: EdgeInsets.all(10),
-                crossAxisCount: 2,
-                mainAxisSpacing: 15,
-                crossAxisSpacing: 15,
-                children: List.generate(
-                  4,
-                  (index) => Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(15),
-                      ),
-                      color: Colors.white,
-//                      gradient: getContainerColor(index),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.3),
-                          spreadRadius: 2,
-                          blurRadius: 3,
-                          offset: Offset(0, 3), // changes position of shadow
-                        ),
-                      ],
+            decoration: BoxDecoration(
+                color: kBlue,
+                borderRadius: BorderRadius.only(
+                  bottomRight: Radius.circular(30),
+                  bottomLeft: Radius.circular(30),
+                )),
+            child: SafeArea(
+              child: Row(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(
+                      top: SizeConfig.screenHeight * 0.03,
+                      left: SizeConfig.screenWidth * 0.03,
+                      bottom: SizeConfig.screenHeight * 0.03,
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(
-                            top: 16,
-                            left: 16,
-                          ),
-                          child: Text(
-                            capitalize(priorities[index]),
-                            style: TextStyle(
-                              fontFamily: 'NunitoSans',
-                              fontSize: SizeConfig.blockSizeHorizontal * 8,
-                              fontWeight: FontWeight.bold,
-                              color: getColorByPriority(index),
-                            ),
+                    child: Container(
+                      padding: EdgeInsets.symmetric(
+                        vertical: SizeConfig.blockSizeHorizontal * 1,
+                        horizontal: SizeConfig.blockSizeHorizontal * 3,
+                      ),
+                      decoration: BoxDecoration(
+                          color: kWhite,
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(15),
+                          )),
+                      child: Text(
+                        'Priority',
+                        style: TextStyle(
+                          color: kBlue,
+                          fontSize: SizeConfig.blockSizeHorizontal * 7.5,
+                        ),
+                        textAlign: TextAlign.right,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      top: SizeConfig.screenHeight * 0.03,
+                      left: SizeConfig.screenWidth * 0.03,
+                      bottom: SizeConfig.screenHeight * 0.03,
+                    ),
+                    child: Text(
+                      'Category',
+                      style: TextStyle(
+                        color: kWhite.withOpacity(0.5),
+                        fontSize: SizeConfig.blockSizeHorizontal * 7.5,
+                      ),
+                      textAlign: TextAlign.right,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Expanded(
+            child: GridView.count(
+              padding: EdgeInsets.all(10),
+              crossAxisCount: 2,
+              mainAxisSpacing: 15,
+              crossAxisSpacing: 15,
+              children: List.generate(
+                4,
+                (index) => Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(15),
+                    ),
+                    color: Colors.white,
+//                      gradient: getContainerColor(index),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.3),
+                        spreadRadius: 2,
+                        blurRadius: 3,
+                        offset: Offset(0, 3), // changes position of shadow
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(
+                          top: 16,
+                          left: 16,
+                        ),
+                        child: Text(
+                          capitalize(priorities[index]),
+                          style: TextStyle(
+                            fontFamily: 'NunitoSans',
+                            fontSize: SizeConfig.blockSizeHorizontal * 8,
+                            fontWeight: FontWeight.bold,
+                            color: getColorByPriority(index),
                           ),
                         ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                            top: 8,
-                            left: 16,
-                          ),
-                          child: Text(
-                            getNumTasksByPriority(index)[0].toString(),
-                            style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: SizeConfig.blockSizeHorizontal * 4.5,
-                            ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                          top: 8,
+                          left: 16,
+                        ),
+                        child: Text(
+                          getNumTasksByPriority(index)[0].toString(),
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: SizeConfig.blockSizeHorizontal * 4.5,
                           ),
                         ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                            top: 8.0,
-                            left: 16,
-                          ),
-                          child: Row(
-                            children: [
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                          top: 8.0,
+                          left: 16,
+                        ),
+                        child: Row(
+                          children: [
 //                              new LinearPercentIndicator(
 //                                width: 150,
 //                                lineHeight: 8.0,
 //                                percent: getNumTasksByPriority(index)[1],
 //                                progressColor: Colors.blue,
 //                              )
-                              new CircularPercentIndicator(
-                                animation: true,
-                                circularStrokeCap: CircularStrokeCap.round,
-                                radius: SizeConfig.blockSizeHorizontal * 10,
-                                lineWidth: 7.0,
-                                percent: getNumTasksByPriority(index)[1],
-                                backgroundColor: Colors.grey[300],
-                                progressColor: getColorByPriority(index),
-                              )
-                            ],
-                          ),
+                            new CircularPercentIndicator(
+                              animation: true,
+                              circularStrokeCap: CircularStrokeCap.round,
+                              radius: SizeConfig.blockSizeHorizontal * 10,
+                              lineWidth: 7.0,
+                              percent: getNumTasksByPriority(index)[1],
+                              backgroundColor: Colors.grey[300],
+                              progressColor: getColorByPriority(index),
+                            )
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               ),
-            )
-          ],
-        ),
+            ),
+          )
+        ],
       ),
     );
   }
