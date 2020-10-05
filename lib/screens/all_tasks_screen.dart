@@ -17,6 +17,7 @@ import 'dart:io';
 import 'package:my_todo/main.dart';
 import 'package:flutter/services.dart';
 import 'package:my_todo/notifications/todo_notifications.dart';
+import 'overview_screen.dart';
 
 class AllTasksScreen extends StatefulWidget {
   @override
@@ -66,94 +67,81 @@ class _AllTasksScreenState extends State<AllTasksScreen> {
         bottomNavigationBar: BottomAppBar(
 //          notchMargin: 5.0,
           child: Container(
-            padding: EdgeInsets.only(bottom: 5),
+            padding: EdgeInsets.only(
+              bottom: 5,
+              top: 10,
+            ),
 //            height: SizeConfig.screenHeight * 0.105,
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
-                Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    IconButton(
-                      padding: EdgeInsets.all(0),
+                IconButton(
+                  padding: EdgeInsets.all(0),
 //                      padding: EdgeInsets.only(
 //                          right: SizeConfig.blockSizeHorizontal * 10),
-                      icon: Icon(
-                        Icons.view_week,
-                        color: kWhite.withOpacity(0.5),
-                      ),
-                      iconSize: SizeConfig.screenHeight * 0.045,
-                      onPressed: () {
-                        MyApp.pagesOnStack++;
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => TaskScreen()));
-                      },
-                    ),
-                    Text(
-                      'Tasks',
-                      style: TextStyle(
-                          color: kWhite.withOpacity(0.6),
-                          fontSize: SizeConfig.screenHeight * 0.02),
-                    ),
-                  ],
+                  icon: Icon(
+                    Icons.home,
+                    color: kWhite.withOpacity(0.5),
+                  ),
+                  iconSize: SizeConfig.screenHeight * 0.035,
+                  onPressed: () {
+                    MyApp.pagesOnStack++;
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => OverviewScreen()));
+//                          print("You're already in the week view screen");
+                  },
                 ),
-                Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    IconButton(
-                      padding: EdgeInsets.all(0),
-                      icon: Icon(
-                        Icons.format_list_bulleted,
-                        color: kWhite,
-                      ),
-                      iconSize: SizeConfig.screenHeight * 0.045,
-                      onPressed: () {
-                        print("You're already in the all tasks page");
-                      },
-                    ),
-                    Text(
-                      'All Tasks',
-                      style: TextStyle(
-                          color: kWhite,
-                          fontSize: SizeConfig.screenHeight * 0.02),
-                    )
-                  ],
+                IconButton(
+                  padding: EdgeInsets.all(0),
+//                      padding: EdgeInsets.only(
+//                          right: SizeConfig.blockSizeHorizontal * 10),
+                  icon: Icon(
+                    Icons.view_week,
+                    color: kWhite.withOpacity(0.5),
+                  ),
+                  iconSize: SizeConfig.screenHeight * 0.035,
+                  onPressed: () {
+                    MyApp.pagesOnStack++;
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => TaskScreen()));
+                  },
                 ),
-                Column(
-//                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    IconButton(
-                      padding: EdgeInsets.all(0),
+                Container(
+                  padding: EdgeInsets.symmetric(
+                    vertical: 0,
+                    horizontal: 10,
+                  ),
+                  decoration: BoxDecoration(
+                    color: kWhite,
+                    borderRadius: BorderRadius.circular(
+                      20.0,
+                    ),
+                  ),
+                  child: Icon(
+                    Icons.format_list_bulleted,
+                    color: kBlue,
+                    size: SizeConfig.screenHeight * 0.035,
+                  ),
+                ),
+                IconButton(
+                  padding: EdgeInsets.all(0),
 //                      padding: EdgeInsets.only(
 //                          left: SizeConfig.blockSizeHorizontal * 10),
-                      icon: Icon(
-                        Icons.info_outline,
-                        color: kWhite.withOpacity(0.5),
-                      ),
-                      iconSize: SizeConfig.screenHeight * 0.045,
-                      onPressed: () {
-                        MyApp.pagesOnStack++;
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => AboutPage()));
-                      },
+                  icon: Icon(
+                    Icons.info,
+                    color: kWhite.withOpacity(0.5),
+                  ),
+                  iconSize: SizeConfig.screenHeight * 0.035,
+                  onPressed: () {
+                    MyApp.pagesOnStack++;
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => AboutPage()));
+                  },
 //                color: kWhite,
-                    ),
-                    Text(
-                      'About',
-                      style: TextStyle(
-                          color: kWhite.withOpacity(0.6),
-                          fontSize: SizeConfig.screenHeight * 0.02),
-                      textAlign: TextAlign.start,
-                    ),
-                  ],
                 ),
               ],
             ),

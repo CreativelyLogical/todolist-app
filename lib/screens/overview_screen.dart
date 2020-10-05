@@ -151,120 +151,78 @@ class _OverviewScreenState extends State<OverviewScreen> {
       bottomNavigationBar: BottomAppBar(
 //          notchMargin: 5.0,
         child: Container(
-          padding: EdgeInsets.only(bottom: 5),
+          padding: EdgeInsets.only(
+            bottom: 5,
+            top: 10,
+          ),
 //            height: SizeConfig.screenHeight * 0.105,
           child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  IconButton(
-                    padding: EdgeInsets.all(0),
+              Container(
+                padding: EdgeInsets.symmetric(
+                  vertical: 0,
+                  horizontal: 10,
+                ),
+                decoration: BoxDecoration(
+                  color: kWhite,
+                  borderRadius: BorderRadius.circular(
+                    20.0,
+                  ),
+                ),
+                child: Icon(
+                  Icons.home,
+                  size: SizeConfig.screenHeight * 0.035,
+                  color: kBlue,
+                ),
+              ),
+              IconButton(
+                padding: EdgeInsets.all(0),
 //                      padding: EdgeInsets.only(
 //                          right: SizeConfig.blockSizeHorizontal * 10),
-                    icon: Icon(
-                      Icons.home,
-                      color: kWhite,
-                    ),
-                    iconSize: SizeConfig.screenHeight * 0.045,
-                    onPressed: () {
-//                      print("You're already in the overview screen");
-                    },
-                  ),
-                  Text(
-                    'Home',
-                    style: TextStyle(
-                        color: kWhite,
-                        fontSize: SizeConfig.screenHeight * 0.02),
-                  ),
-                ],
+                icon: Icon(
+                  Icons.view_week,
+                  color: kWhite.withOpacity(0.5),
+                ),
+                iconSize: SizeConfig.screenHeight * 0.035,
+                onPressed: () {
+                  MyApp.pagesOnStack++;
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => TaskScreen()));
+                },
               ),
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  IconButton(
-                    padding: EdgeInsets.all(0),
-//                      padding: EdgeInsets.only(
-//                          right: SizeConfig.blockSizeHorizontal * 10),
-                    icon: Icon(
-                      Icons.view_week,
-                      color: kWhite.withOpacity(0.5),
-                    ),
-                    iconSize: SizeConfig.screenHeight * 0.045,
-                    onPressed: () {
-                      MyApp.pagesOnStack++;
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => TaskScreen()));
-                    },
-                  ),
-                  Text(
-                    'Tasks',
-                    style: TextStyle(
-                        color: kWhite.withOpacity(0.6),
-                        fontSize: SizeConfig.screenHeight * 0.02),
-                  ),
-                ],
+              IconButton(
+                padding: EdgeInsets.all(0),
+                icon: Icon(
+                  Icons.format_list_bulleted,
+                  color: kWhite.withOpacity(0.5),
+                ),
+                iconSize: SizeConfig.screenHeight * 0.035,
+                onPressed: () {
+                  MyApp.pagesOnStack++;
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => AllTasksScreen()));
+                },
               ),
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  IconButton(
-                    padding: EdgeInsets.all(0),
-                    icon: Icon(
-                      Icons.format_list_bulleted,
-                      color: kWhite.withOpacity(0.5),
-                    ),
-                    iconSize: SizeConfig.screenHeight * 0.045,
-                    onPressed: () {
-                      MyApp.pagesOnStack++;
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => AllTasksScreen()));
-                    },
-                  ),
-                  Text(
-                    'All Tasks',
-                    style: TextStyle(
-                        color: kWhite.withOpacity(0.6),
-                        fontSize: SizeConfig.screenHeight * 0.02),
-                  )
-                ],
-              ),
-              Column(
-//                  crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  IconButton(
-                    padding: EdgeInsets.all(0),
+              IconButton(
+                padding: EdgeInsets.all(0),
 //                      padding: EdgeInsets.only(
 //                          left: SizeConfig.blockSizeHorizontal * 10),
-                    icon: Icon(
-                      Icons.info_outline,
-                      color: kWhite.withOpacity(0.5),
-                    ),
-                    iconSize: SizeConfig.screenHeight * 0.045,
-                    onPressed: () {
-                      MyApp.pagesOnStack++;
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => AboutPage()));
-                    },
+                icon: Icon(
+                  Icons.info,
+                  color: kWhite.withOpacity(0.5),
+                ),
+                iconSize: SizeConfig.screenHeight * 0.035,
+                onPressed: () {
+                  MyApp.pagesOnStack++;
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => AboutPage()));
+                },
 //                color: kWhite,
-                  ),
-                  Text(
-                    'About',
-                    style: TextStyle(
-                        color: kWhite.withOpacity(0.6),
-                        fontSize: SizeConfig.screenHeight * 0.02),
-                    textAlign: TextAlign.start,
-                  ),
-                ],
               ),
             ],
           ),
@@ -295,83 +253,110 @@ class _OverviewScreenState extends State<OverviewScreen> {
               bottom: SizeConfig.screenHeight * 0.01,
             ),
             decoration: BoxDecoration(
-                color: kBlue,
+//                color: kBlue,
+                gradient: LinearGradient(
+                  colors: [
+                    const Color(0xff007ed4),
+                    const Color(0xff1a8ddb),
+                    const Color(0xff3ba5ed),
+                  ],
+                ),
                 borderRadius: BorderRadius.only(
-                  bottomRight: Radius.circular(30),
-                  bottomLeft: Radius.circular(30),
+//                  bottomRight: Radius.circular(30),
+                  bottomLeft: Radius.circular(40),
                 )),
-            child: SafeArea(
-              child: Row(
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        userViewState = PRIORITY;
-                      });
-                    },
-                    child: Container(
-                      margin: EdgeInsets.only(
-                        top: SizeConfig.screenHeight * 0.03,
-                        left: SizeConfig.screenWidth * 0.03,
-                        bottom: SizeConfig.screenHeight * 0.03,
-                      ),
-                      padding: EdgeInsets.symmetric(
-                        vertical: SizeConfig.blockSizeHorizontal * 1,
-                        horizontal: SizeConfig.blockSizeHorizontal * 3,
-                      ),
-                      decoration: userViewState == PRIORITY
-                          ? BoxDecoration(
-                              color: kWhite,
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(15),
-                              ),
-                            )
-                          : null,
-                      child: Text(
-                        'Priority',
-                        style: TextStyle(
-                          color: userViewState == PRIORITY
-                              ? kBlue
-                              : kWhite.withOpacity(0.6),
-                          fontSize: SizeConfig.blockSizeHorizontal * 7.5,
-                        ),
-                        textAlign: TextAlign.right,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SafeArea(
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      top: SizeConfig.screenHeight * 0.03,
+                      left: SizeConfig.screenWidth * 0.03,
+                    ),
+                    child: Text(
+                      'Oct 4th, 2020',
+                      style: TextStyle(
+                        color: kWhite,
+                        fontSize: SizeConfig.blockSizeHorizontal * 10,
                       ),
                     ),
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        userViewState = CATEGORY;
-                      });
-                    },
-                    child: Container(
-                      padding: EdgeInsets.symmetric(
-                        vertical: SizeConfig.blockSizeHorizontal * 1,
-                        horizontal: SizeConfig.blockSizeHorizontal * 3,
-                      ),
-                      decoration: userViewState == CATEGORY
-                          ? BoxDecoration(
-                              color: kWhite,
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(15),
-                              ),
-                            )
-                          : null,
-                      child: Text(
-                        'Category',
-                        style: TextStyle(
-                          color: userViewState == PRIORITY
-                              ? kWhite.withOpacity(0.6)
-                              : kBlue,
-                          fontSize: SizeConfig.blockSizeHorizontal * 7.5,
+                ),
+                Row(
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          userViewState = PRIORITY;
+                        });
+                      },
+                      child: Container(
+                        margin: EdgeInsets.only(
+                          top: SizeConfig.screenHeight * 0.03,
+                          left: SizeConfig.screenWidth * 0.03,
+                          bottom: SizeConfig.screenHeight * 0.03,
                         ),
-                        textAlign: TextAlign.right,
+                        padding: EdgeInsets.symmetric(
+                          vertical: SizeConfig.blockSizeHorizontal * 1,
+                          horizontal: SizeConfig.blockSizeHorizontal * 3,
+                        ),
+//                        decoration: userViewState == PRIORITY
+//                            ? BoxDecoration(
+//                                color: kWhite,
+//                                borderRadius: BorderRadius.all(
+//                                  Radius.circular(15),
+//                                ),
+//                              )
+//                            : null,
+                        child: Text(
+                          'Priority',
+                          style: TextStyle(
+                            color: userViewState == PRIORITY
+                                ? kWhite
+                                : kWhite.withOpacity(0.6),
+                            fontSize: SizeConfig.blockSizeHorizontal * 7.5,
+//                            fontWeight: FontWeight.bold,
+                          ),
+                          textAlign: TextAlign.right,
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          userViewState = CATEGORY;
+                        });
+                      },
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                          vertical: SizeConfig.blockSizeHorizontal * 1,
+                          horizontal: SizeConfig.blockSizeHorizontal * 3,
+                        ),
+//                        decoration: userViewState == CATEGORY
+//                            ? BoxDecoration(
+//                                color: kWhite,
+//                                borderRadius: BorderRadius.all(
+//                                  Radius.circular(15),
+//                                ),
+//                              )
+//                            : null,
+                        child: Text(
+                          'Category',
+                          style: TextStyle(
+                            color: userViewState == PRIORITY
+                                ? kWhite.withOpacity(0.6)
+                                : kWhite,
+                            fontSize: SizeConfig.blockSizeHorizontal * 7.5,
+//                            fontWeight: FontWeight.bold,
+                          ),
+                          textAlign: TextAlign.right,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
           Expanded(
