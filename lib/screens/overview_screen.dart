@@ -9,6 +9,10 @@ import 'package:my_todo/models/task_data_holder.dart';
 import 'package:my_todo/models/task.dart';
 import 'package:provider/provider.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'add_task_fullscreen.dart';
+
+const PRIORITY = 'PRIORITY';
+const CATEGORY = 'CATEGORY';
 
 class OverviewScreen extends StatefulWidget {
   @override
@@ -23,6 +27,8 @@ class _OverviewScreenState extends State<OverviewScreen> {
     setState(() {});
   }
 
+  String userViewState = PRIORITY;
+
   @override
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
@@ -32,6 +38,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
   }
 
   var priorities = ["high", "medium", "low", "none"];
+  var categories = ["School", "Business", "Personal", "Work"];
 
   Color getColorByPriority(index) {
     if (priorities[index] == 'high') {
@@ -42,6 +49,18 @@ class _OverviewScreenState extends State<OverviewScreen> {
       return Colors.green;
     } else {
       return Colors.blue;
+    }
+  }
+
+  Color getColorsByCategory(index) {
+    if (categories[index] == 'Personal') {
+      return Colors.green;
+    } else if (categories[index] == 'Work') {
+      return Colors.blue;
+    } else if (categories[index] == 'School') {
+      return Colors.red;
+    } else {
+      return Colors.orange;
     }
   }
 
@@ -85,18 +104,28 @@ class _OverviewScreenState extends State<OverviewScreen> {
 //    }
 //  }
 
-  dynamic getNumTasksByPriority(int index) {
+  dynamic getNumTasksByPriorityOrCategory(int index) {
     String priority = priorities[index];
+    String category = categories[index];
     int numTasks = 0;
     int doneTasks = 0;
     if (allTasksList.length == 0) {
       return [0, 0.0];
     } else {
       for (int i = 0; i < allTasksList.length; i++) {
-        if (allTasksList[i].priority == priority) {
-          numTasks++;
-          if (allTasksList[i].isChecked) {
-            doneTasks++;
+        if (userViewState == PRIORITY) {
+          if (allTasksList[i].priority == priority) {
+            numTasks++;
+            if (allTasksList[i].isChecked) {
+              doneTasks++;
+            }
+          }
+        } else {
+          if (allTasksList[i].category == category) {
+            numTasks++;
+            if (allTasksList[i].isChecked) {
+              doneTasks++;
+            }
           }
         }
       }
@@ -245,6 +274,20 @@ class _OverviewScreenState extends State<OverviewScreen> {
 //          child: Padding(padding: EdgeInsets.all(20.0)),
         shape: CircularNotchedRectangle(),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AddTaskFullScreen(),
+            ),
+          );
+        },
+        child: Icon(
+          Icons.add,
+          size: SizeConfig.blockSizeHorizontal * 7,
+        ),
+      ),
       body: Column(
         children: [
           Container(
@@ -260,45 +303,71 @@ class _OverviewScreenState extends State<OverviewScreen> {
             child: SafeArea(
               child: Row(
                 children: [
-                  Padding(
-                    padding: EdgeInsets.only(
-                      top: SizeConfig.screenHeight * 0.03,
-                      left: SizeConfig.screenWidth * 0.03,
-                      bottom: SizeConfig.screenHeight * 0.03,
-                    ),
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        userViewState = PRIORITY;
+                      });
+                    },
                     child: Container(
+                      margin: EdgeInsets.only(
+                        top: SizeConfig.screenHeight * 0.03,
+                        left: SizeConfig.screenWidth * 0.03,
+                        bottom: SizeConfig.screenHeight * 0.03,
+                      ),
                       padding: EdgeInsets.symmetric(
                         vertical: SizeConfig.blockSizeHorizontal * 1,
                         horizontal: SizeConfig.blockSizeHorizontal * 3,
                       ),
-                      decoration: BoxDecoration(
-                          color: kWhite,
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(15),
-                          )),
+                      decoration: userViewState == PRIORITY
+                          ? BoxDecoration(
+                              color: kWhite,
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(15),
+                              ),
+                            )
+                          : null,
                       child: Text(
                         'Priority',
                         style: TextStyle(
-                          color: kBlue,
+                          color: userViewState == PRIORITY
+                              ? kBlue
+                              : kWhite.withOpacity(0.6),
                           fontSize: SizeConfig.blockSizeHorizontal * 7.5,
                         ),
                         textAlign: TextAlign.right,
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      top: SizeConfig.screenHeight * 0.03,
-                      left: SizeConfig.screenWidth * 0.03,
-                      bottom: SizeConfig.screenHeight * 0.03,
-                    ),
-                    child: Text(
-                      'Category',
-                      style: TextStyle(
-                        color: kWhite.withOpacity(0.5),
-                        fontSize: SizeConfig.blockSizeHorizontal * 7.5,
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        userViewState = CATEGORY;
+                      });
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(
+                        vertical: SizeConfig.blockSizeHorizontal * 1,
+                        horizontal: SizeConfig.blockSizeHorizontal * 3,
                       ),
-                      textAlign: TextAlign.right,
+                      decoration: userViewState == CATEGORY
+                          ? BoxDecoration(
+                              color: kWhite,
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(15),
+                              ),
+                            )
+                          : null,
+                      child: Text(
+                        'Category',
+                        style: TextStyle(
+                          color: userViewState == PRIORITY
+                              ? kWhite.withOpacity(0.6)
+                              : kBlue,
+                          fontSize: SizeConfig.blockSizeHorizontal * 7.5,
+                        ),
+                        textAlign: TextAlign.right,
+                      ),
                     ),
                   ),
                 ],
@@ -338,7 +407,9 @@ class _OverviewScreenState extends State<OverviewScreen> {
                           left: 16,
                         ),
                         child: Text(
-                          capitalize(priorities[index]),
+                          userViewState == PRIORITY
+                              ? capitalize(priorities[index])
+                              : categories[index],
                           style: TextStyle(
                             fontFamily: 'NunitoSans',
                             fontSize: SizeConfig.blockSizeHorizontal * 8,
@@ -353,7 +424,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
                           left: 16,
                         ),
                         child: Text(
-                          getNumTasksByPriority(index)[0].toString(),
+                          getNumTasksByPriorityOrCategory(index)[0].toString(),
                           style: TextStyle(
                             color: Colors.grey,
                             fontSize: SizeConfig.blockSizeHorizontal * 4.5,
@@ -378,7 +449,8 @@ class _OverviewScreenState extends State<OverviewScreen> {
                               circularStrokeCap: CircularStrokeCap.round,
                               radius: SizeConfig.blockSizeHorizontal * 10,
                               lineWidth: 7.0,
-                              percent: getNumTasksByPriority(index)[1],
+                              percent:
+                                  getNumTasksByPriorityOrCategory(index)[1],
                               backgroundColor: Colors.grey[300],
                               progressColor: getColorByPriority(index),
                             )
