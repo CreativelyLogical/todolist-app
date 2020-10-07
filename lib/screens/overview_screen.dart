@@ -155,6 +155,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
             bottom: 5,
             top: 10,
           ),
+
 //            height: SizeConfig.screenHeight * 0.105,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -254,17 +255,18 @@ class _OverviewScreenState extends State<OverviewScreen> {
             ),
             decoration: BoxDecoration(
 //                color: kBlue,
-                gradient: LinearGradient(
-                  colors: [
-                    const Color(0xff007ed4),
-                    const Color(0xff1a8ddb),
-                    const Color(0xff3ba5ed),
-                  ],
-                ),
-                borderRadius: BorderRadius.only(
+              gradient: LinearGradient(
+                colors: [
+                  const Color(0xff007ed4),
+                  const Color(0xff1a8ddb),
+                  const Color(0xff3ba5ed),
+                ],
+              ),
+              borderRadius: BorderRadius.only(
 //                  bottomRight: Radius.circular(30),
-                  bottomLeft: Radius.circular(40),
-                )),
+                bottomLeft: Radius.circular(40),
+              ),
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

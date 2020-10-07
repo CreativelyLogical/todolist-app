@@ -17,7 +17,13 @@ class WeekView extends StatelessWidget {
     return Container(
       padding: EdgeInsets.only(top: SizeConfig.screenHeight * 0.04),
       decoration: BoxDecoration(
-        color: Colors.blue,
+        gradient: LinearGradient(
+          colors: [
+            const Color(0xff007ed4),
+            const Color(0xff1a8ddb),
+            const Color(0xff3ba5ed),
+          ],
+        ),
         borderRadius: BorderRadius.only(
             bottomLeft: Radius.circular(15.0),
             bottomRight: Radius.circular(15.0)),

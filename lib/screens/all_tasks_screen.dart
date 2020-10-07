@@ -151,167 +151,180 @@ class _AllTasksScreenState extends State<AllTasksScreen> {
 //          child: Padding(padding: EdgeInsets.all(20.0)),
           shape: CircularNotchedRectangle(),
         ),
-        body: SafeArea(
-          child: Container(
-            margin: EdgeInsets.only(top: SizeConfig.screenHeight * 0.02),
+        body: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                const Color(0xff007ed4),
+                const Color(0xff1a8ddb),
+                const Color(0xff3ba5ed),
+              ],
+            ),
+          ),
+          child: SafeArea(
+            child: Container(
+              margin: EdgeInsets.only(top: SizeConfig.screenHeight * 0.02),
 //        color: kWhite,
 //          width: SizeConfig.screenWidth,
 //          height: SizeConfig.screenHeight,
 
-            child: allTasksList == null
-                ? Container(
-                    child: Center(
-                      child: Text(
-                        'Loading Tasks...',
-                      ),
-                    ),
-                  )
-                : Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.only(
-                                left: SizeConfig.screenWidth * 0.03,
-                                bottom: SizeConfig.screenHeight * 0.01),
-                            child: Text(
-                              "All Tasks",
-                              style: TextStyle(
-                                fontSize: SizeConfig.blockSizeVertical * 4,
-                                color: kWhite,
-                              ),
-                            ),
-                          ),
-                          IconButton(
-                            icon: Icon(
-                              Icons.add_circle,
-                              size: SizeConfig.blockSizeVertical * 4,
-                              color: kWhite,
-                            ),
-                            padding: EdgeInsets.only(
-                              right: SizeConfig.screenWidth * 0.04,
-                              bottom: SizeConfig.screenHeight * 0.01,
-                            ),
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => AddTaskFullScreen(
-                                    screen: 'AllTasksScreen',
-                                  ),
-                                ),
-                              );
-                            },
-                          )
-                        ],
-                      ),
-                      Expanded(
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: Colors.grey.shade200,
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(20.0),
-                                  topRight: Radius.circular(20.0))),
-                          padding: EdgeInsets.only(
-                            top: SizeConfig.screenHeight * 0.03,
-                            left: SizeConfig.screenWidth * 0.03,
-                            right: SizeConfig.screenWidth * 0.03,
-                          ),
-                          child: allTasksList.length == 0
-                              ? Container(
-                                  child: Center(
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        allDoneSvg,
-                                        Padding(
-                                          padding: EdgeInsets.symmetric(
-                                            vertical:
-                                                SizeConfig.screenHeight * 0.02,
-                                            horizontal:
-                                                SizeConfig.screenWidth * 0.01,
-                                          ),
-                                          child: Text(
-                                            "Looks like you're all done. Tap + to add a new task",
-                                            style: TextStyle(
-                                              fontSize:
-                                                  SizeConfig.blockSizeVertical *
-                                                      2.5,
-                                              color: kGrey,
-                                            ),
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                )
-                              : ListView.separated(
-//                reverse: true,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    final task = allTasksList[index];
-//                  print('the type here is ${widget.type}');
-                                    return Row(
-                                      children: [
-                                        task.isChecked
-                                            ? IconButton(
-                                                icon: Icon(
-                                                  Icons.delete,
-                                                  color: Colors.red,
-                                                  size: SizeConfig
-                                                          .blockSizeVertical *
-                                                      4,
-                                                ),
-                                                onPressed: () {
-                                                  print('IconButton pressed');
-                                                  TodoNotifications()
-                                                      .cancelNotificationById(
-                                                          int.parse(task
-                                                              .notificationId));
-                                                  Provider.of<TaskData>(context)
-                                                      .deleteTask(task);
-                                                },
-                                              )
-                                            : Container(),
-                                        Expanded(
-                                          child: VersatileListTile(
-                                            taskName: task.taskTitle,
-                                            priority: task.priority,
-                                            notes: task.notes,
-                                            category: task.category,
-                                            time: task.time,
-                                            checkBoxCallback: () {
-                                              if (!task.isChecked) {
-                                                task.isChecked = true;
-                                              } else {
-                                                task.isChecked = false;
-                                              }
-                                              Provider.of<TaskData>(context)
-                                                  .updateTask(task);
-                                            },
-                                            isChecked: task.isChecked,
-                                            taskDate: task.date,
-                                            task: task,
-                                          ),
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                  separatorBuilder:
-                                      (BuildContext context, int index) {
-                                    return Divider(
-                                      height: SizeConfig.screenHeight * 0.01,
-                                      color: Color.fromRGBO(234, 234, 234, 1),
-                                    );
-                                  },
-                                  itemCount: allTasksList.length),
+              child: allTasksList == null
+                  ? Container(
+                      child: Center(
+                        child: Text(
+                          'Loading Tasks...',
                         ),
                       ),
-                    ],
-                  ),
+                    )
+                  : Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  left: SizeConfig.screenWidth * 0.03,
+                                  bottom: SizeConfig.screenHeight * 0.01),
+                              child: Text(
+                                "All Tasks",
+                                style: TextStyle(
+                                  fontSize: SizeConfig.blockSizeVertical * 4,
+                                  color: kWhite,
+                                ),
+                              ),
+                            ),
+                            IconButton(
+                              icon: Icon(
+                                Icons.add_circle,
+                                size: SizeConfig.blockSizeVertical * 4,
+                                color: kWhite,
+                              ),
+                              padding: EdgeInsets.only(
+                                right: SizeConfig.screenWidth * 0.04,
+                                bottom: SizeConfig.screenHeight * 0.01,
+                              ),
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => AddTaskFullScreen(
+                                      screen: 'AllTasksScreen',
+                                    ),
+                                  ),
+                                );
+                              },
+                            )
+                          ],
+                        ),
+                        Expanded(
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: Colors.grey.shade200,
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(20.0),
+                                    topRight: Radius.circular(20.0))),
+                            padding: EdgeInsets.only(
+                              top: SizeConfig.screenHeight * 0.03,
+                              left: SizeConfig.screenWidth * 0.03,
+                              right: SizeConfig.screenWidth * 0.03,
+                            ),
+                            child: allTasksList.length == 0
+                                ? Container(
+                                    child: Center(
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          allDoneSvg,
+                                          Padding(
+                                            padding: EdgeInsets.symmetric(
+                                              vertical:
+                                                  SizeConfig.screenHeight *
+                                                      0.02,
+                                              horizontal:
+                                                  SizeConfig.screenWidth * 0.01,
+                                            ),
+                                            child: Text(
+                                              "Looks like you're all done. Tap + to add a new task",
+                                              style: TextStyle(
+                                                fontSize: SizeConfig
+                                                        .blockSizeVertical *
+                                                    2.5,
+                                                color: kGrey,
+                                              ),
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  )
+                                : ListView.separated(
+//                reverse: true,
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      final task = allTasksList[index];
+//                  print('the type here is ${widget.type}');
+                                      return Row(
+                                        children: [
+                                          task.isChecked
+                                              ? IconButton(
+                                                  icon: Icon(
+                                                    Icons.delete,
+                                                    color: Colors.red,
+                                                    size: SizeConfig
+                                                            .blockSizeVertical *
+                                                        4,
+                                                  ),
+                                                  onPressed: () {
+                                                    print('IconButton pressed');
+                                                    TodoNotifications()
+                                                        .cancelNotificationById(
+                                                            int.parse(task
+                                                                .notificationId));
+                                                    Provider.of<TaskData>(
+                                                            context)
+                                                        .deleteTask(task);
+                                                  },
+                                                )
+                                              : Container(),
+                                          Expanded(
+                                            child: VersatileListTile(
+                                              taskName: task.taskTitle,
+                                              priority: task.priority,
+                                              notes: task.notes,
+                                              category: task.category,
+                                              time: task.time,
+                                              checkBoxCallback: () {
+                                                if (!task.isChecked) {
+                                                  task.isChecked = true;
+                                                } else {
+                                                  task.isChecked = false;
+                                                }
+                                                Provider.of<TaskData>(context)
+                                                    .updateTask(task);
+                                              },
+                                              isChecked: task.isChecked,
+                                              taskDate: task.date,
+                                              task: task,
+                                            ),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                    separatorBuilder:
+                                        (BuildContext context, int index) {
+                                      return Divider(
+                                        height: SizeConfig.screenHeight * 0.01,
+                                        color: Color.fromRGBO(234, 234, 234, 1),
+                                      );
+                                    },
+                                    itemCount: allTasksList.length),
+                          ),
+                        ),
+                      ],
+                    ),
+            ),
           ),
         ),
       ),
