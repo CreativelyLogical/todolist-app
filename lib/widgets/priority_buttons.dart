@@ -17,7 +17,7 @@ class PriorityButtons extends StatelessWidget {
 
   Color getPriorityColor() {
     if (priority == 'none')
-      return Colors.grey.shade500;
+      return Colors.blue;
     else if (priority == 'low')
       return Colors.green;
     else if (priority == 'medium')

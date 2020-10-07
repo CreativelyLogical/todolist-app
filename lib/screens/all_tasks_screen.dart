@@ -366,10 +366,11 @@ class VersatileListTile extends StatelessWidget {
   MaterialColor returnPriorityColor() {
 //    print('in listview, priority is $priority');
     if (priority == 'none')
-      return MaterialColor(0xFF9E9E9E, <int, Color>{
-        50: Color(0xFFF0F0F0),
-        200: Color(0xFFD6D6D6),
-      });
+      return Colors.blue;
+//      return MaterialColor(0xFF9E9E9E, <int, Color>{
+//        50: Color(0xFFF0F0F0),
+//        200: Color(0xFFD6D6D6),
+//      });
     else if (priority == 'low')
       return Colors.green;
     else if (priority == 'medium')
@@ -491,7 +492,7 @@ class VersatileListTile extends StatelessWidget {
 //          color: Colors.grey.shade200,
 //          border: Border.all(color: kBlue, width: 2),
             borderRadius: BorderRadius.all(Radius.circular(10.0)),
-            color: kWhite,
+            color: returnPriorityColor().shade400,
             boxShadow: [
               BoxShadow(
                 color: Colors.grey,
@@ -542,7 +543,7 @@ class VersatileListTile extends StatelessWidget {
                               softWrap: true,
                               style: TextStyle(
                                 fontSize: SizeConfig.blockSizeHorizontal * 4.5,
-                                color: isChecked ? Colors.grey : kBlue,
+                                color: isChecked ? kWhite : kWhite,
                                 decoration: isChecked
                                     ? TextDecoration.lineThrough
                                     : null,
