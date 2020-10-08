@@ -11,6 +11,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:rxdart/subjects.dart';
 import 'package:my_todo/notifications/todo_notifications.dart';
 import 'dart:io';
+import 'screens/overview_screen.dart';
 
 Future<void> main() async {
 //  await TodoNotifications().init();
@@ -28,6 +29,7 @@ class MyApp extends StatefulWidget {
   _MyAppState createState() => _MyAppState();
 
   static var pagesOnStack = 0;
+  static String userViewState = 'PRIORITY';
 }
 
 class _MyAppState extends State<MyApp> {

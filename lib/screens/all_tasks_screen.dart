@@ -492,7 +492,17 @@ class VersatileListTile extends StatelessWidget {
 //          color: Colors.grey.shade200,
 //          border: Border.all(color: kBlue, width: 2),
             borderRadius: BorderRadius.all(Radius.circular(10.0)),
+//            color: returnPriorityColor().shade300,
             color: returnPriorityColor().shade400,
+//            gradient: LinearGradient(
+//              colors: [
+////                returnPriorityColor().shade600,
+//                returnPriorityColor().shade400,
+//                returnPriorityColor().shade300,
+//              ],
+//              begin: Alignment.topCenter,
+//              end: Alignment.bottomCenter,
+//            ),
             boxShadow: [
               BoxShadow(
                 color: Colors.grey,

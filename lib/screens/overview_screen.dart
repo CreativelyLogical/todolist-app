@@ -27,7 +27,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
     setState(() {});
   }
 
-  String userViewState = PRIORITY;
+  String userViewState = MyApp.userViewState;
 
   @override
   void didChangeDependencies() {
@@ -291,6 +291,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
                       onTap: () {
                         setState(() {
                           userViewState = PRIORITY;
+                          MyApp.userViewState = userViewState;
                         });
                       },
                       child: Container(
@@ -328,6 +329,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
                       onTap: () {
                         setState(() {
                           userViewState = CATEGORY;
+                          MyApp.userViewState = userViewState;
                         });
                       },
                       child: Container(
