@@ -133,24 +133,6 @@ class _TaskScreenState extends State<TaskScreen> {
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
-                  IconButton(
-                    padding: EdgeInsets.all(0),
-//                      padding: EdgeInsets.only(
-//                          right: SizeConfig.blockSizeHorizontal * 10),
-                    icon: Icon(
-                      Icons.home,
-                      color: kWhite.withOpacity(0.5),
-                    ),
-                    iconSize: SizeConfig.screenHeight * 0.035,
-                    onPressed: () {
-                      MyApp.pagesOnStack++;
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => OverviewScreen()));
-//                          print("You're already in the week view screen");
-                    },
-                  ),
                   Container(
                     padding: EdgeInsets.symmetric(
                       vertical: 0,
@@ -181,6 +163,24 @@ class _TaskScreenState extends State<TaskScreen> {
                           context,
                           MaterialPageRoute(
                               builder: (context) => AllTasksScreen()));
+                    },
+                  ),
+                  IconButton(
+                    padding: EdgeInsets.all(0),
+//                      padding: EdgeInsets.only(
+//                          right: SizeConfig.blockSizeHorizontal * 10),
+                    icon: Icon(
+                      Icons.dashboard,
+                      color: kWhite.withOpacity(0.5),
+                    ),
+                    iconSize: SizeConfig.screenHeight * 0.035,
+                    onPressed: () {
+                      MyApp.pagesOnStack++;
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => OverviewScreen()));
+//                          print("You're already in the week view screen");
                     },
                   ),
                   IconButton(

@@ -162,23 +162,6 @@ class _OverviewScreenState extends State<OverviewScreen> {
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
-              Container(
-                padding: EdgeInsets.symmetric(
-                  vertical: 0,
-                  horizontal: 10,
-                ),
-                decoration: BoxDecoration(
-                  color: kWhite,
-                  borderRadius: BorderRadius.circular(
-                    20.0,
-                  ),
-                ),
-                child: Icon(
-                  Icons.home,
-                  size: SizeConfig.screenHeight * 0.035,
-                  color: kBlue,
-                ),
-              ),
               IconButton(
                 padding: EdgeInsets.all(0),
 //                      padding: EdgeInsets.only(
@@ -208,6 +191,23 @@ class _OverviewScreenState extends State<OverviewScreen> {
                       MaterialPageRoute(
                           builder: (context) => AllTasksScreen()));
                 },
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(
+                  vertical: 0,
+                  horizontal: 10,
+                ),
+                decoration: BoxDecoration(
+                  color: kWhite,
+                  borderRadius: BorderRadius.circular(
+                    20.0,
+                  ),
+                ),
+                child: Icon(
+                  Icons.dashboard,
+                  size: SizeConfig.screenHeight * 0.035,
+                  color: kBlue,
+                ),
               ),
               IconButton(
                 padding: EdgeInsets.all(0),

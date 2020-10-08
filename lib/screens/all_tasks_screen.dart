@@ -82,24 +82,6 @@ class _AllTasksScreenState extends State<AllTasksScreen> {
 //                      padding: EdgeInsets.only(
 //                          right: SizeConfig.blockSizeHorizontal * 10),
                   icon: Icon(
-                    Icons.home,
-                    color: kWhite.withOpacity(0.5),
-                  ),
-                  iconSize: SizeConfig.screenHeight * 0.035,
-                  onPressed: () {
-                    MyApp.pagesOnStack++;
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => OverviewScreen()));
-//                          print("You're already in the week view screen");
-                  },
-                ),
-                IconButton(
-                  padding: EdgeInsets.all(0),
-//                      padding: EdgeInsets.only(
-//                          right: SizeConfig.blockSizeHorizontal * 10),
-                  icon: Icon(
                     Icons.view_week,
                     color: kWhite.withOpacity(0.5),
                   ),
@@ -126,6 +108,24 @@ class _AllTasksScreenState extends State<AllTasksScreen> {
                     color: kBlue,
                     size: SizeConfig.screenHeight * 0.035,
                   ),
+                ),
+                IconButton(
+                  padding: EdgeInsets.all(0),
+//                      padding: EdgeInsets.only(
+//                          right: SizeConfig.blockSizeHorizontal * 10),
+                  icon: Icon(
+                    Icons.dashboard,
+                    color: kWhite.withOpacity(0.5),
+                  ),
+                  iconSize: SizeConfig.screenHeight * 0.035,
+                  onPressed: () {
+                    MyApp.pagesOnStack++;
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => OverviewScreen()));
+//                          print("You're already in the week view screen");
+                  },
                 ),
                 IconButton(
                   padding: EdgeInsets.all(0),
@@ -493,7 +493,7 @@ class VersatileListTile extends StatelessWidget {
 //          border: Border.all(color: kBlue, width: 2),
             borderRadius: BorderRadius.all(Radius.circular(10.0)),
 //            color: returnPriorityColor().shade300,
-            color: returnPriorityColor().shade400,
+            color: returnPriorityColor()[400],
 //            gradient: LinearGradient(
 //              colors: [
 ////                returnPriorityColor().shade600,
@@ -528,7 +528,7 @@ class VersatileListTile extends StatelessWidget {
                       icon: isChecked
                           ? Icon(
                               Icons.check,
-                              color: kBlue,
+                              color: kWhite,
                               size: SizeConfig.blockSizeVertical * 4,
                             )
                           : null,
@@ -565,9 +565,10 @@ class VersatileListTile extends StatelessWidget {
                             child: Text(
                               dateParser(),
                               style: TextStyle(
-                                color: DateBeforeOrAfter(taskDate)
-                                    ? kBlue
-                                    : Colors.red,
+                                color: kWhite,
+//                                color: DateBeforeOrAfter(taskDate)
+//                                    ? kBlue
+//                                    : Colors.red,
                                 fontSize: blockSizeHorizontal * 4,
                               ),
                             ),
@@ -638,7 +639,7 @@ class VersatileListTile extends StatelessWidget {
                                     ? Container()
                                     : Icon(
                                         Icons.notifications,
-                                        color: kBlue,
+                                        color: kWhite,
                                         size: blockSizeHorizontal * 5.5,
                                       ),
                               ],
