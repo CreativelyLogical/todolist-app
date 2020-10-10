@@ -244,10 +244,7 @@ class _TaskListTileState extends State<TaskListTile> {
   MaterialColor returnPriorityColor() {
 //    print('in listview, priority is ${widget.priority}');
     if (widget.priority == 'none')
-      return MaterialColor(0xFF9E9E9E, <int, Color>{
-        50: Color(0xFFF0F0F0),
-        200: Color(0xFFD6D6D6),
-      });
+      return Colors.blue;
     else if (widget.priority == 'low')
       return Colors.green;
     else if (widget.priority == 'medium')
@@ -328,7 +325,10 @@ class _TaskListTileState extends State<TaskListTile> {
 //          color: Colors.grey.shade200,
 //          border: Border.all(color: kBlue, width: 2),
             borderRadius: BorderRadius.all(Radius.circular(10.0)),
-            color: kWhite,
+//            color: kWhite,
+            color: widget.task.isChecked
+                ? returnPriorityColor()[200]
+                : returnPriorityColor()[400],
             boxShadow: [
               BoxShadow(
                 color: Colors.grey,
@@ -354,7 +354,7 @@ class _TaskListTileState extends State<TaskListTile> {
                       icon: widget.isChecked
                           ? Icon(
                               Icons.check,
-                              color: kBlue,
+                              color: kWhite,
                               size: SizeConfig.blockSizeVertical * 4,
                             )
                           : null,
@@ -374,7 +374,8 @@ class _TaskListTileState extends State<TaskListTile> {
 //                        softWrap: true,
                         style: TextStyle(
                           fontSize: SizeConfig.blockSizeVertical * 2.3,
-                          color: widget.isChecked ? Colors.grey : kBlue,
+//                          color: widget.isChecked ? Colors.grey : kBlue,
+                          color: kWhite,
                           fontWeight: FontWeight.w400,
                           decoration: widget.isChecked
                               ? TextDecoration.lineThrough
@@ -419,12 +420,14 @@ class _TaskListTileState extends State<TaskListTile> {
                                       )
                                     ],
                                   ),
+                                  // category tag
                                   child: Row(
                                     children: <Widget>[
                                       Icon(
                                         TaskCategory.tag,
                                         size: blockSizeHorizontal * 3.5,
-                                        color: kBlue,
+//                                        color: kBlue,
+                                        color: returnPriorityColor()[800],
                                       ),
                                       SizedBox(
                                         width: screenWidth * 0.01,
@@ -435,7 +438,8 @@ class _TaskListTileState extends State<TaskListTile> {
                                             : widget.category,
                                         maxLines: 1,
                                         style: TextStyle(
-                                          color: kBlue,
+//                                          color: kBlue,
+                                          color: returnPriorityColor()[900],
                                           fontSize: blockSizeHorizontal * 4,
                                         ),
                                       ),
@@ -450,7 +454,7 @@ class _TaskListTileState extends State<TaskListTile> {
                                     : Icon(
 //                                        NotificationBells.bell,
                                         Icons.notifications,
-                                        color: kBlue,
+                                        color: kWhite,
                                         size: blockSizeHorizontal * 5.5,
                                       )
                               ],
@@ -472,7 +476,8 @@ class _TaskListTileState extends State<TaskListTile> {
                                         BorderRadius.all(Radius.circular(20.0)),
                                     boxShadow: [
                                       BoxShadow(
-                                        color: Colors.grey,
+//                                        color: Colors.grey,
+                                        color: returnPriorityColor()[200],
                                         blurRadius: 1.5,
                                         offset: Offset(0, 1),
                                       )
@@ -482,7 +487,8 @@ class _TaskListTileState extends State<TaskListTile> {
                                     widget.time,
                                     maxLines: 1,
                                     style: TextStyle(
-                                      color: kBlue,
+//                                      color: kBlue,
+                                      color: returnPriorityColor()[800],
                                       fontSize: blockSizeHorizontal * 4,
                                     ),
                                   ),

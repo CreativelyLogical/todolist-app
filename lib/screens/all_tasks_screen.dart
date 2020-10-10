@@ -366,7 +366,7 @@ class VersatileListTile extends StatelessWidget {
   MaterialColor returnPriorityColor() {
 //    print('in listview, priority is $priority');
     if (priority == 'none')
-      return Colors.blue;
+      return kBlue;
 //      return MaterialColor(0xFF9E9E9E, <int, Color>{
 //        50: Color(0xFFF0F0F0),
 //        200: Color(0xFFD6D6D6),
@@ -493,7 +493,9 @@ class VersatileListTile extends StatelessWidget {
 //          border: Border.all(color: kBlue, width: 2),
             borderRadius: BorderRadius.all(Radius.circular(10.0)),
 //            color: returnPriorityColor().shade300,
-            color: returnPriorityColor()[400],
+            color: task.isChecked
+                ? returnPriorityColor()[200]
+                : returnPriorityColor()[400],
 //            gradient: LinearGradient(
 //              colors: [
 ////                returnPriorityColor().shade600,
@@ -596,9 +598,10 @@ class VersatileListTile extends StatelessWidget {
                                 ),
                                 Container(
                                   padding: EdgeInsets.symmetric(
-                                      horizontal: blockSizeHorizontal * 1.8,
-                                      vertical:
-                                          SizeConfig.blockSizeVertical * 0.5),
+                                    horizontal: blockSizeHorizontal * 1.8,
+                                    vertical:
+                                        SizeConfig.blockSizeVertical * 0.5,
+                                  ),
                                   decoration: BoxDecoration(
 //                                  border: Border.all(color: kBlue, width: 1),
                                     color: Colors.grey.shade100,
@@ -612,12 +615,13 @@ class VersatileListTile extends StatelessWidget {
                                       )
                                     ],
                                   ),
+                                  // Category tag
                                   child: Row(
                                     children: <Widget>[
                                       Icon(
                                         TaskCategory.tag,
                                         size: blockSizeHorizontal * 4,
-                                        color: kBlue,
+                                        color: returnPriorityColor()[800],
                                       ),
                                       SizedBox(
                                         width: screenWidth * 0.01,
@@ -625,7 +629,7 @@ class VersatileListTile extends StatelessWidget {
                                       Text(
                                         category,
                                         style: TextStyle(
-                                          color: kBlue,
+                                          color: returnPriorityColor()[900],
                                           fontSize: blockSizeHorizontal * 4,
                                         ),
                                       ),
@@ -659,7 +663,7 @@ class VersatileListTile extends StatelessWidget {
                                         BorderRadius.all(Radius.circular(20.0)),
                                     boxShadow: [
                                       BoxShadow(
-                                        color: Colors.grey,
+                                        color: returnPriorityColor()[200],
                                         blurRadius: 1.5,
                                         offset: Offset(0, 1),
                                       )
@@ -668,7 +672,7 @@ class VersatileListTile extends StatelessWidget {
                                   child: Text(
                                     time,
                                     style: TextStyle(
-                                      color: kBlue,
+                                      color: returnPriorityColor()[800],
                                       fontSize: blockSizeHorizontal * 4,
                                     ),
                                   ),
