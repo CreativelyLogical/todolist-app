@@ -148,91 +148,91 @@ class _OverviewScreenState extends State<OverviewScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey.shade200,
-      bottomNavigationBar: BottomAppBar(
-//          notchMargin: 5.0,
-        child: Container(
-          padding: EdgeInsets.only(
-            bottom: 5,
-            top: 10,
-          ),
-
-//            height: SizeConfig.screenHeight * 0.105,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              IconButton(
-                padding: EdgeInsets.all(0),
-//                      padding: EdgeInsets.only(
-//                          right: SizeConfig.blockSizeHorizontal * 10),
-                icon: Icon(
-                  Icons.view_week,
-                  color: kWhite.withOpacity(0.5),
-                ),
-                iconSize: SizeConfig.screenHeight * 0.035,
-                onPressed: () {
-                  MyApp.pagesOnStack++;
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => TaskScreen()));
-                },
-              ),
-              IconButton(
-                padding: EdgeInsets.all(0),
-                icon: Icon(
-                  Icons.format_list_bulleted,
-                  color: kWhite.withOpacity(0.5),
-                ),
-                iconSize: SizeConfig.screenHeight * 0.035,
-                onPressed: () {
-                  MyApp.pagesOnStack++;
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => AllTasksScreen()));
-                },
-              ),
-              Container(
-                padding: EdgeInsets.symmetric(
-                  vertical: 0,
-                  horizontal: 10,
-                ),
-                decoration: BoxDecoration(
-                  color: kWhite,
-                  borderRadius: BorderRadius.circular(
-                    20.0,
-                  ),
-                ),
-                child: Icon(
-                  Icons.dashboard,
-                  size: SizeConfig.screenHeight * 0.035,
-                  color: kBlue,
-                ),
-              ),
-              IconButton(
-                padding: EdgeInsets.all(0),
-//                      padding: EdgeInsets.only(
-//                          left: SizeConfig.blockSizeHorizontal * 10),
-                icon: Icon(
-                  Icons.info,
-                  color: kWhite.withOpacity(0.5),
-                ),
-                iconSize: SizeConfig.screenHeight * 0.035,
-                onPressed: () {
-                  MyApp.pagesOnStack++;
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => AboutPage()));
-                },
-//                color: kWhite,
-              ),
-            ],
-          ),
-        ),
-//          child: Padding(padding: EdgeInsets.only(bottom: 0.5)),
-//          notchMargin: 10.0,
-//          child: Padding(padding: EdgeInsets.all(20.0)),
-        shape: CircularNotchedRectangle(),
-      ),
+//      bottomNavigationBar: BottomAppBar(
+////          notchMargin: 5.0,
+//        child: Container(
+//          padding: EdgeInsets.only(
+//            bottom: 5,
+//            top: 10,
+//          ),
+//
+////            height: SizeConfig.screenHeight * 0.105,
+//          child: Row(
+//            crossAxisAlignment: CrossAxisAlignment.center,
+//            mainAxisSize: MainAxisSize.max,
+//            mainAxisAlignment: MainAxisAlignment.spaceAround,
+//            children: <Widget>[
+//              IconButton(
+//                padding: EdgeInsets.all(0),
+////                      padding: EdgeInsets.only(
+////                          right: SizeConfig.blockSizeHorizontal * 10),
+//                icon: Icon(
+//                  Icons.view_week,
+//                  color: kWhite.withOpacity(0.5),
+//                ),
+//                iconSize: SizeConfig.screenHeight * 0.035,
+//                onPressed: () {
+//                  MyApp.pagesOnStack++;
+//                  Navigator.push(context,
+//                      MaterialPageRoute(builder: (context) => TaskScreen()));
+//                },
+//              ),
+//              IconButton(
+//                padding: EdgeInsets.all(0),
+//                icon: Icon(
+//                  Icons.format_list_bulleted,
+//                  color: kWhite.withOpacity(0.5),
+//                ),
+//                iconSize: SizeConfig.screenHeight * 0.035,
+//                onPressed: () {
+//                  MyApp.pagesOnStack++;
+//                  Navigator.push(
+//                      context,
+//                      MaterialPageRoute(
+//                          builder: (context) => AllTasksScreen()));
+//                },
+//              ),
+//              Container(
+//                padding: EdgeInsets.symmetric(
+//                  vertical: 0,
+//                  horizontal: 10,
+//                ),
+//                decoration: BoxDecoration(
+//                  color: kWhite,
+//                  borderRadius: BorderRadius.circular(
+//                    20.0,
+//                  ),
+//                ),
+//                child: Icon(
+//                  Icons.dashboard,
+//                  size: SizeConfig.screenHeight * 0.035,
+//                  color: kBlue,
+//                ),
+//              ),
+//              IconButton(
+//                padding: EdgeInsets.all(0),
+////                      padding: EdgeInsets.only(
+////                          left: SizeConfig.blockSizeHorizontal * 10),
+//                icon: Icon(
+//                  Icons.info,
+//                  color: kWhite.withOpacity(0.5),
+//                ),
+//                iconSize: SizeConfig.screenHeight * 0.035,
+//                onPressed: () {
+//                  MyApp.pagesOnStack++;
+//                  Navigator.push(context,
+//                      MaterialPageRoute(builder: (context) => AboutPage()));
+//                },
+////                color: kWhite,
+//              ),
+//            ],
+//          ),
+//        ),
+////          child: Padding(padding: EdgeInsets.only(bottom: 0.5)),
+////          notchMargin: 10.0,
+////          child: Padding(padding: EdgeInsets.all(20.0)),
+//        shape: CircularNotchedRectangle(),
+//      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(

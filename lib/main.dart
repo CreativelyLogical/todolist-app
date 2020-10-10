@@ -12,6 +12,9 @@ import 'package:rxdart/subjects.dart';
 import 'package:my_todo/notifications/todo_notifications.dart';
 import 'dart:io';
 import 'screens/overview_screen.dart';
+import 'screens/all_tasks_screen.dart';
+import 'screens/about_page.dart';
+import 'screens/bottom_nav_screen.dart';
 
 Future<void> main() async {
 //  await TodoNotifications().init();
@@ -64,7 +67,17 @@ class _MyAppState extends State<MyApp> {
         ),
         title: 'Hope',
         home: Scaffold(
-          body: TaskScreen(),
+          body: BottomNavScreen(),
+//          body: TaskScreen(),
+//          body: PageView(
+//            pageSnapping: true,
+//            children: [
+//              TaskScreen(),
+//              AllTasksScreen(),
+//              OverviewScreen(),
+//              AboutPage(),
+//            ],
+//          ),
         ),
       ),
     );

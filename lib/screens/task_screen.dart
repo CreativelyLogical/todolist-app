@@ -86,9 +86,8 @@ class _TaskScreenState extends State<TaskScreen> {
         return Future.value(true);
       },
       child: Scaffold(
-          floatingActionButton: Padding(
-            padding:
-                EdgeInsets.only(bottom: SizeConfig.blockSizeVertical * 1.5),
+        floatingActionButton: Padding(
+          padding: EdgeInsets.only(bottom: SizeConfig.blockSizeVertical * 1.5),
 //          child: FloatingActionButton(
 //            onPressed: () {
 //              Navigator.push(context,
@@ -112,102 +111,112 @@ class _TaskScreenState extends State<TaskScreen> {
 //            backgroundColor: kBlue,
 //            child: Icon(Icons.add, color: Colors.white),
 //          ),
-          ),
+        ),
 //        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
 //        backgroundColor: Color.fromRGBO(66, 99, 236, 1.0),
 //        appBar: AppBar(
 //          title: Text('Todo'),
-          backgroundColor: kBlue,
+        backgroundColor: kBlue,
 //        backgroundColor: Colors.lightBlueAccent,
 //        ),
-          bottomNavigationBar: BottomAppBar(
-//          notchMargin: 5.0,
-            child: Container(
-              padding: EdgeInsets.only(
-                bottom: 5,
-                top: 10,
-              ),
-//            height: SizeConfig.screenHeight * 0.105,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.symmetric(
-                      vertical: 0,
-                      horizontal: 10,
-                    ),
-                    decoration: BoxDecoration(
-                      color: kWhite,
-                      borderRadius: BorderRadius.circular(
-                        20.0,
-                      ),
-                    ),
-                    child: Icon(
-                      Icons.view_week,
-                      color: kBlue,
-                      size: SizeConfig.screenHeight * 0.035,
-                    ),
-                  ),
-                  IconButton(
-                    padding: EdgeInsets.all(0),
-                    icon: Icon(
-                      Icons.format_list_bulleted,
-                      color: kWhite.withOpacity(0.5),
-                    ),
-                    iconSize: SizeConfig.screenHeight * 0.035,
-                    onPressed: () {
-                      MyApp.pagesOnStack++;
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => AllTasksScreen()));
-                    },
-                  ),
-                  IconButton(
-                    padding: EdgeInsets.all(0),
-//                      padding: EdgeInsets.only(
-//                          right: SizeConfig.blockSizeHorizontal * 10),
-                    icon: Icon(
-                      Icons.dashboard,
-                      color: kWhite.withOpacity(0.5),
-                    ),
-                    iconSize: SizeConfig.screenHeight * 0.035,
-                    onPressed: () {
-                      MyApp.pagesOnStack++;
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => OverviewScreen()));
-//                          print("You're already in the week view screen");
-                    },
-                  ),
-                  IconButton(
-                    padding: EdgeInsets.all(0),
-//                      padding: EdgeInsets.only(
-//                          left: SizeConfig.blockSizeHorizontal * 10),
-                    icon: Icon(
-                      Icons.info,
-                      color: kWhite.withOpacity(0.5),
-                    ),
-                    iconSize: SizeConfig.screenHeight * 0.035,
-                    onPressed: () {
-                      MyApp.pagesOnStack++;
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => AboutPage()));
-                    },
-//                color: kWhite,
-                  ),
-                ],
-              ),
+//        bottomNavigationBar: BottomAppBar(
+////          notchMargin: 5.0,
+//          child: Container(
+//            padding: EdgeInsets.only(
+//              bottom: 5,
+//              top: 10,
+//            ),
+////            height: SizeConfig.screenHeight * 0.105,
+//            child: Row(
+//              crossAxisAlignment: CrossAxisAlignment.center,
+//              mainAxisSize: MainAxisSize.max,
+//              mainAxisAlignment: MainAxisAlignment.spaceAround,
+//              children: <Widget>[
+//                Container(
+//                  padding: EdgeInsets.symmetric(
+//                    vertical: 0,
+//                    horizontal: 10,
+//                  ),
+//                  decoration: BoxDecoration(
+//                    color: kWhite,
+//                    borderRadius: BorderRadius.circular(
+//                      20.0,
+//                    ),
+//                  ),
+//                  child: Icon(
+//                    Icons.view_week,
+//                    color: kBlue,
+//                    size: SizeConfig.screenHeight * 0.035,
+//                  ),
+//                ),
+//                IconButton(
+//                  padding: EdgeInsets.all(0),
+//                  icon: Icon(
+//                    Icons.format_list_bulleted,
+//                    color: kWhite.withOpacity(0.5),
+//                  ),
+//                  iconSize: SizeConfig.screenHeight * 0.035,
+//                  onPressed: () {
+//                    MyApp.pagesOnStack++;
+//                    Navigator.push(
+//                        context,
+//                        MaterialPageRoute(
+//                            builder: (context) => AllTasksScreen()));
+//                  },
+//                ),
+//                IconButton(
+//                  padding: EdgeInsets.all(0),
+////                      padding: EdgeInsets.only(
+////                          right: SizeConfig.blockSizeHorizontal * 10),
+//                  icon: Icon(
+//                    Icons.dashboard,
+//                    color: kWhite.withOpacity(0.5),
+//                  ),
+//                  iconSize: SizeConfig.screenHeight * 0.035,
+//                  onPressed: () {
+//                    MyApp.pagesOnStack++;
+//                    Navigator.push(
+//                        context,
+//                        MaterialPageRoute(
+//                            builder: (context) => OverviewScreen()));
+////                          print("You're already in the week view screen");
+//                  },
+//                ),
+//                IconButton(
+//                  padding: EdgeInsets.all(0),
+////                      padding: EdgeInsets.only(
+////                          left: SizeConfig.blockSizeHorizontal * 10),
+//                  icon: Icon(
+//                    Icons.info,
+//                    color: kWhite.withOpacity(0.5),
+//                  ),
+//                  iconSize: SizeConfig.screenHeight * 0.035,
+//                  onPressed: () {
+//                    MyApp.pagesOnStack++;
+//                    Navigator.push(context,
+//                        MaterialPageRoute(builder: (context) => AboutPage()));
+//                  },
+////                color: kWhite,
+//                ),
+//              ],
+//            ),
+//          ),
+////          child: Padding(padding: EdgeInsets.only(bottom: 0.5)),
+////          notchMargin: 10.0,
+////          child: Padding(padding: EdgeInsets.all(20.0)),
+//          shape: CircularNotchedRectangle(),
+//        ),
+        body: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                const Color(0xff007ed4),
+                const Color(0xff1a8ddb),
+                const Color(0xff3ba5ed),
+              ],
             ),
-//          child: Padding(padding: EdgeInsets.only(bottom: 0.5)),
-//          notchMargin: 10.0,
-//          child: Padding(padding: EdgeInsets.all(20.0)),
-            shape: CircularNotchedRectangle(),
           ),
-          body: Column(
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               WeekView(
@@ -229,7 +238,9 @@ class _TaskScreenState extends State<TaskScreen> {
                 ),
               ),
             ],
-          )),
+          ),
+        ),
+      ),
     );
   }
 }
