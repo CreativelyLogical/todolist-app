@@ -29,6 +29,10 @@ class TaskData extends ChangeNotifier {
     return await todoDB.getTasksByPriority(priority);
   }
 
+  Future<List<Task>> getTasksByCategory(String category) async {
+    return await todoDB.getTasksByCategory(category);
+  }
+
   Future<Task> getTaskById(int id) async {
     return await todoDB.getTaskById(id);
   }

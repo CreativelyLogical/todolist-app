@@ -10,6 +10,7 @@ import 'package:my_todo/models/task.dart';
 import 'package:provider/provider.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'add_task_fullscreen.dart';
+import 'view_by_tasks_screen.dart';
 
 const PRIORITY = 'PRIORITY';
 const CATEGORY = 'CATEGORY';
@@ -148,91 +149,6 @@ class _OverviewScreenState extends State<OverviewScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey.shade200,
-//      bottomNavigationBar: BottomAppBar(
-////          notchMargin: 5.0,
-//        child: Container(
-//          padding: EdgeInsets.only(
-//            bottom: 5,
-//            top: 10,
-//          ),
-//
-////            height: SizeConfig.screenHeight * 0.105,
-//          child: Row(
-//            crossAxisAlignment: CrossAxisAlignment.center,
-//            mainAxisSize: MainAxisSize.max,
-//            mainAxisAlignment: MainAxisAlignment.spaceAround,
-//            children: <Widget>[
-//              IconButton(
-//                padding: EdgeInsets.all(0),
-////                      padding: EdgeInsets.only(
-////                          right: SizeConfig.blockSizeHorizontal * 10),
-//                icon: Icon(
-//                  Icons.view_week,
-//                  color: kWhite.withOpacity(0.5),
-//                ),
-//                iconSize: SizeConfig.screenHeight * 0.035,
-//                onPressed: () {
-//                  MyApp.pagesOnStack++;
-//                  Navigator.push(context,
-//                      MaterialPageRoute(builder: (context) => TaskScreen()));
-//                },
-//              ),
-//              IconButton(
-//                padding: EdgeInsets.all(0),
-//                icon: Icon(
-//                  Icons.format_list_bulleted,
-//                  color: kWhite.withOpacity(0.5),
-//                ),
-//                iconSize: SizeConfig.screenHeight * 0.035,
-//                onPressed: () {
-//                  MyApp.pagesOnStack++;
-//                  Navigator.push(
-//                      context,
-//                      MaterialPageRoute(
-//                          builder: (context) => AllTasksScreen()));
-//                },
-//              ),
-//              Container(
-//                padding: EdgeInsets.symmetric(
-//                  vertical: 0,
-//                  horizontal: 10,
-//                ),
-//                decoration: BoxDecoration(
-//                  color: kWhite,
-//                  borderRadius: BorderRadius.circular(
-//                    20.0,
-//                  ),
-//                ),
-//                child: Icon(
-//                  Icons.dashboard,
-//                  size: SizeConfig.screenHeight * 0.035,
-//                  color: kBlue,
-//                ),
-//              ),
-//              IconButton(
-//                padding: EdgeInsets.all(0),
-////                      padding: EdgeInsets.only(
-////                          left: SizeConfig.blockSizeHorizontal * 10),
-//                icon: Icon(
-//                  Icons.info,
-//                  color: kWhite.withOpacity(0.5),
-//                ),
-//                iconSize: SizeConfig.screenHeight * 0.035,
-//                onPressed: () {
-//                  MyApp.pagesOnStack++;
-//                  Navigator.push(context,
-//                      MaterialPageRoute(builder: (context) => AboutPage()));
-//                },
-////                color: kWhite,
-//              ),
-//            ],
-//          ),
-//        ),
-////          child: Padding(padding: EdgeInsets.only(bottom: 0.5)),
-////          notchMargin: 10.0,
-////          child: Padding(padding: EdgeInsets.all(20.0)),
-//        shape: CircularNotchedRectangle(),
-//      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
@@ -371,82 +287,101 @@ class _OverviewScreenState extends State<OverviewScreen> {
               crossAxisSpacing: 15,
               children: List.generate(
                 4,
-                (index) => Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(15),
-                    ),
-                    color: Colors.white,
+                (index) => GestureDetector(
+                  onTap: () {
+                    String direction = userViewState.toLowerCase();
+                    String detail = userViewState == PRIORITY
+                        ? priorities[index]
+                        : categories[index];
+//                    print('direction is $direction and detail is $detail');
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ViewByTasksScreen(
+                          direction: direction,
+                          detail: detail,
+                        ),
+                      ),
+                    );
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(15),
+                      ),
+                      color: Colors.white,
 //                      gradient: getContainerColor(index),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.3),
-                        spreadRadius: 2,
-                        blurRadius: 3,
-                        offset: Offset(0, 3), // changes position of shadow
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(
-                          top: 16,
-                          left: 16,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.3),
+                          spreadRadius: 2,
+                          blurRadius: 3,
+                          offset: Offset(0, 3), // changes position of shadow
                         ),
-                        child: Text(
-                          userViewState == PRIORITY
-                              ? capitalize(priorities[index])
-                              : categories[index],
-                          style: TextStyle(
-                            fontFamily: 'NunitoSans',
-                            fontSize: SizeConfig.blockSizeHorizontal * 8,
-                            fontWeight: FontWeight.bold,
-                            color: getColorByPriority(index),
+                      ],
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(
+                            top: 16,
+                            left: 16,
+                          ),
+                          child: Text(
+                            userViewState == PRIORITY
+                                ? capitalize(priorities[index])
+                                : categories[index],
+                            style: TextStyle(
+                              fontFamily: 'NunitoSans',
+                              fontSize: SizeConfig.blockSizeHorizontal * 8,
+                              fontWeight: FontWeight.bold,
+                              color: getColorByPriority(index),
+                            ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                          top: 8,
-                          left: 16,
-                        ),
-                        child: Text(
-                          getNumTasksByPriorityOrCategory(index)[0].toString(),
-                          style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: SizeConfig.blockSizeHorizontal * 4.5,
+                        Padding(
+                          padding: EdgeInsets.only(
+                            top: 8,
+                            left: 16,
+                          ),
+                          child: Text(
+                            getNumTasksByPriorityOrCategory(index)[0]
+                                .toString(),
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: SizeConfig.blockSizeHorizontal * 4.5,
+                            ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                          top: 8.0,
-                          left: 16,
-                        ),
-                        child: Row(
-                          children: [
+                        Padding(
+                          padding: EdgeInsets.only(
+                            top: 8.0,
+                            left: 16,
+                          ),
+                          child: Row(
+                            children: [
 //                              new LinearPercentIndicator(
 //                                width: 150,
 //                                lineHeight: 8.0,
 //                                percent: getNumTasksByPriority(index)[1],
 //                                progressColor: Colors.blue,
 //                              )
-                            new CircularPercentIndicator(
-                              animation: true,
-                              circularStrokeCap: CircularStrokeCap.round,
-                              radius: SizeConfig.blockSizeHorizontal * 10,
-                              lineWidth: 7.0,
-                              percent:
-                                  getNumTasksByPriorityOrCategory(index)[1],
-                              backgroundColor: Colors.grey[300],
-                              progressColor: getColorByPriority(index),
-                            )
-                          ],
+                              new CircularPercentIndicator(
+                                animation: true,
+                                circularStrokeCap: CircularStrokeCap.round,
+                                radius: SizeConfig.blockSizeHorizontal * 10,
+                                lineWidth: 7.0,
+                                percent:
+                                    getNumTasksByPriorityOrCategory(index)[1],
+                                backgroundColor: Colors.grey[300],
+                                progressColor: getColorByPriority(index),
+                              )
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),

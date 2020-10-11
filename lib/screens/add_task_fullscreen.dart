@@ -22,49 +22,6 @@ class AddTaskFullScreen extends StatefulWidget {
 
 class _AddTaskFullScreenState extends State<AddTaskFullScreen>
     with SingleTickerProviderStateMixin {
-//  List<DropdownMenuItem> categoriesList = [
-//    DropdownMenuItem(
-//      child: Text(
-//        'Personal',
-//        style: TextStyle(
-//          fontSize: SizeConfig.blockSizeVertical * 3,
-//          color: kGrey,
-//        ),
-//      ),
-//      value: 'Personal',
-//    ),
-//    DropdownMenuItem(
-//      child: Text(
-//        'Work',
-//        style: TextStyle(
-//          fontSize: SizeConfig.blockSizeVertical * 3,
-//          color: kGrey,
-//        ),
-//      ),
-//      value: 'Work',
-//    ),
-//    DropdownMenuItem(
-//      child: Text(
-//        'School',
-//        style: TextStyle(
-//          fontSize: SizeConfig.blockSizeVertical * 3,
-//          color: kGrey,
-//        ),
-//      ),
-//      value: 'School',
-//    ),
-//    DropdownMenuItem(
-//      child: Text(
-//        'Business',
-//        style: TextStyle(
-//          fontSize: SizeConfig.blockSizeVertical * 3,
-//          color: kGrey,
-//        ),
-//      ),
-//      value: 'Business',
-//    ),
-//  ];
-
   AnimationController controller;
 
   String _selectedPriority = 'None';
