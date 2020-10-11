@@ -7,6 +7,7 @@ import 'package:my_todo/models/task_data_holder.dart';
 import 'package:my_todo/widgets/edit_task_sheet.dart';
 import 'package:my_todo/models/task.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'add_task_fullscreen.dart';
 import 'package:my_todo/notifications/todo_notifications.dart';
 
 class ViewByTasksScreen extends StatefulWidget {
@@ -65,6 +66,20 @@ class _ViewByTasksScreenState extends State<ViewByTasksScreen> {
     );
 
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AddTaskFullScreen(),
+            ),
+          );
+        },
+        child: Icon(
+          Icons.add,
+          size: SizeConfig.blockSizeHorizontal * 7,
+        ),
+      ),
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -96,13 +111,14 @@ class _ViewByTasksScreenState extends State<ViewByTasksScreen> {
                             },
                             child: Padding(
                               padding: EdgeInsets.only(
+                                top: SizeConfig.screenHeight * 0.01,
                                 left: SizeConfig.screenWidth * 0.02,
                                 right: SizeConfig.screenWidth * 0.02,
                               ),
                               child: Icon(
-                                Icons.close,
+                                Icons.arrow_back,
                                 color: kWhite,
-                                size: SizeConfig.blockSizeVertical * 4,
+                                size: SizeConfig.blockSizeVertical * 4.5,
                               ),
                             ),
                           ),
