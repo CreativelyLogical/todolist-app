@@ -24,7 +24,8 @@ class _OverviewScreenState extends State<OverviewScreen> {
   List<Task> allTasksList = [];
 
   Future _getAllTasksList() async {
-    allTasksList = await Provider.of<TaskData>(context).getAllTaskList();
+    allTasksList =
+        await Provider.of<TaskData>(context, listen: false).getAllTaskList();
     setState(() {});
   }
 
@@ -147,6 +148,8 @@ class _OverviewScreenState extends State<OverviewScreen> {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
+
     return Scaffold(
       backgroundColor: Colors.grey.shade200,
       floatingActionButton: FloatingActionButton(

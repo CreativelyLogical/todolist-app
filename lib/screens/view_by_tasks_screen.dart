@@ -218,7 +218,8 @@ class _ViewByTasksScreenState extends State<ViewByTasksScreen> {
                                                       .cancelNotificationById(
                                                           int.parse(task
                                                               .notificationId));
-                                                  Provider.of<TaskData>(context)
+                                                  Provider.of<TaskData>(context,
+                                                          listen: false)
                                                       .deleteTask(task);
                                                 },
                                               )
@@ -236,7 +237,8 @@ class _ViewByTasksScreenState extends State<ViewByTasksScreen> {
                                               } else {
                                                 task.isChecked = false;
                                               }
-                                              Provider.of<TaskData>(context)
+                                              Provider.of<TaskData>(context,
+                                                      listen: false)
                                                   .updateTask(task);
                                             },
                                             isChecked: task.isChecked,
@@ -392,7 +394,7 @@ class VersatileListTile extends StatelessWidget {
 //              dateChangedCallback: (String newSelectedDate) {
 //                setState(() {
 //                  widget.task.date = newSelectedDate;
-//                  Provider.of<TaskData>(context).updateTask(widget.task);
+//                  Provider.of<TaskData>(context, listen: false).updateTask(widget.task);
 //                });
 //              },
               ),
@@ -413,7 +415,7 @@ class VersatileListTile extends StatelessWidget {
             task.taskTitle = initialTaskTitle;
           }
 
-          Provider.of<TaskData>(context).updateTask(task);
+          Provider.of<TaskData>(context, listen: false).updateTask(task);
         }
       },
       child: Container(

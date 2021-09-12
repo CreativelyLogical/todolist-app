@@ -72,6 +72,7 @@ class TodoDatabase {
 //    print(
 //        'the tasks id in todo_db is ${task.id} and the tasks name is todo_db is ${task.taskTitle}');
 //    print('and the tasks date is ${task.date}');
+//    print('-----------the task is ${task.toMap()}');
     await db.update(
       'todo_table',
       task.toMap(),

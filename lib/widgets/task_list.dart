@@ -20,17 +20,19 @@ class TaskList extends StatelessWidget {
   Widget build(BuildContext context) {
     Future<List<Task>> getTaskList() async {
 //      print('**********************');
-      List<Task> taskList = await Provider.of<TaskData>(context)
-          .getTaskList(TaskScreen.selectedDay);
+//      List<Task> taskList = await Provider.of<TaskData>(context, listen: false)
+//          .getTaskList(TaskScreen.selectedDay);
 //      print('********************** taskList.length is ${taskList.length}');
       return await Provider.of<TaskData>(context)
           .getTaskList(TaskScreen.selectedDay);
     }
 
-//    print('the screenHeight is ${SizeConfig.screenHeight}');
-//    print('the screenWidth is ${SizeConfig.screenWidth}');
-//    print('the blockSizeVertical is ${SizeConfig.blockSizeVertical}');
-//    print('the blockSizeHorizontal is ${SizeConfig.blockSizeHorizontal}');
+    bool snapshotIsEmpty(AsyncSnapshot<List<Task>> snapshot) {
+      var initialData = [Task(taskTitle: 'nothing', isChecked: false)];
+
+      print('snapshot.data in this function is ${snapshot.data}');
+      return snapshot.data == initialData || snapshot.data.isEmpty;
+    }
 
     final String allDoneAsset = 'assets/images/tasks-solid.svg';
     final Widget allDoneSvg = SvgPicture.asset(
@@ -48,6 +50,9 @@ class TaskList extends StatelessWidget {
       initialData: [Task(taskTitle: 'nothing', isChecked: false)],
       future: getTaskList(),
       builder: (BuildContext context, AsyncSnapshot<List<Task>> snapshot) {
+        print('so snapshot.data.length is ${snapshot.data.length}');
+        print('ok, snapshot.data  is ${snapshot.data}');
+
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -112,11 +117,8 @@ class TaskList extends StatelessWidget {
                 ),
               ],
             ),
-//            SizedBox(
-//              height: SizeConfig.screenHeight * 0.01,
-//            ),
             Expanded(
-              child: (snapshot.data.length == 0)
+              child: (snapshotIsEmpty(snapshot))
                   ? Container(
                       child: Center(
                         child: Column(
@@ -161,7 +163,8 @@ class TaskList extends StatelessWidget {
                                       TodoNotifications()
                                           .cancelNotificationById(
                                               int.parse(task.notificationId));
-                                      Provider.of<TaskData>(context)
+                                      Provider.of<TaskData>(context,
+                                              listen: false)
                                           .deleteTask(task);
                                     },
                                   )
@@ -176,7 +179,7 @@ class TaskList extends StatelessWidget {
                                   } else {
                                     task.isChecked = false;
                                   }
-                                  Provider.of<TaskData>(context)
+                                  Provider.of<TaskData>(context, listen: false)
                                       .updateTask(task);
                                 },
                                 priority: task.priority,
@@ -287,7 +290,7 @@ class _TaskListTileState extends State<TaskListTile> {
 //              dateChangedCallback: (String newSelectedDate) {
 //                setState(() {
 //                  widget.task.date = newSelectedDate;
-//                  Provider.of<TaskData>(context).updateTask(widget.task);
+//                  Provider.of<TaskData>(context, listen: false).updateTask(widget.task);
 //                });
 //              },
               ),

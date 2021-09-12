@@ -374,7 +374,7 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen>
 //    print('now selectedPriority is $selectedPriority');
     SizeConfig().init(context);
     return Scaffold(
-        resizeToAvoidBottomPadding: false,
+//        resizeToAvoidBottomPadding: false,
         backgroundColor: kBlue,
         body: Container(
           decoration: BoxDecoration(
@@ -960,7 +960,8 @@ class _AddTaskFullScreenState extends State<AddTaskFullScreen>
                                       (DateTime.now().millisecondsSinceEpoch /
                                               1000)
                                           .floor();
-                                  Provider.of<TaskData>(context).addTask(
+                                  Provider.of<TaskData>(context, listen: false)
+                                      .addTask(
                                     newTaskTitle: taskNameController.text,
                                     taskDate: selectedDateSQL,
                                     priority: selectedPriority,

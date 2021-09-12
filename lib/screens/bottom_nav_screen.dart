@@ -12,9 +12,9 @@ class BottomNavScreen extends StatefulWidget {
 
 class _BottomNavScreenState extends State<BottomNavScreen> {
   var _screens = [
+    OverviewScreen(),
     TaskScreen(),
     AllTasksScreen(),
-    OverviewScreen(),
     AboutPage(),
   ];
 
@@ -70,9 +70,9 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
           unselectedItemColor: kWhite.withOpacity(0.6),
           elevation: 0.0,
           items: [
+            Icons.dashboard,
             Icons.view_week,
             Icons.format_list_bulleted,
-            Icons.dashboard,
             Icons.info,
           ]
               .asMap()

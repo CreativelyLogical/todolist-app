@@ -211,7 +211,7 @@ class _EditTaskSheetState extends State<EditTaskSheet>
           dateTime: notificationTimeOfDay,
         );
       }
-      Provider.of<TaskData>(context).updateTask(_task);
+      Provider.of<TaskData>(context, listen: false).updateTask(_task);
     });
   }
 
@@ -261,7 +261,7 @@ class _EditTaskSheetState extends State<EditTaskSheet>
                     dateTime: notificationTimeOfDay,
                   );
                 }
-                Provider.of<TaskData>(context).updateTask(_task);
+                Provider.of<TaskData>(context, listen: false).updateTask(_task);
               },
       );
     } else if (Platform.isIOS) {
@@ -296,7 +296,7 @@ class _EditTaskSheetState extends State<EditTaskSheet>
                       notificationId: notificationId,
                       dateTime: notificationTimeOfDay);
                 }
-                Provider.of<TaskData>(context).updateTask(_task);
+                Provider.of<TaskData>(context, listen: false).updateTask(_task);
               },
       );
     } else {
@@ -319,7 +319,7 @@ class _EditTaskSheetState extends State<EditTaskSheet>
           ? TimeOfDay.fromDateTime(DateTime.now().add(Duration(minutes: 5)))
           : selectedTimeOfDay,
     ).whenComplete(() async {
-      Provider.of<TaskData>(context).updateTask(_task);
+      Provider.of<TaskData>(context, listen: false).updateTask(_task);
     });
 
     if (picked.toString() != selectedTime && picked != null) {
@@ -336,7 +336,7 @@ class _EditTaskSheetState extends State<EditTaskSheet>
         _task.time = selectedTime;
 //        print('selectedTime is $selectedTime');
 //        _task.time = selectedTime;
-//        Provider.of<TaskData>(context).updateTask(_task);
+//        Provider.of<TaskData>(context, listen: false).updateTask(_task);
         await TodoNotifications().cancelNotificationById(notificationId);
 
         if (remind) {
@@ -396,7 +396,7 @@ class _EditTaskSheetState extends State<EditTaskSheet>
             dateTime: notificationTimeOfDay,
           );
         }
-        Provider.of<TaskData>(context).updateTask(_task);
+        Provider.of<TaskData>(context, listen: false).updateTask(_task);
       });
     }
   }
@@ -460,10 +460,10 @@ class _EditTaskSheetState extends State<EditTaskSheet>
 //    print('for the task ${_task.taskTitle}, task.HasTime is ${_task.hasTime}');
 //    if (_task.time == 'no time') {
 //      _task.hasTime = false;
-//      Provider.of<TaskData>(context).updateTask(_task);
+//      Provider.of<TaskData>(context, listen: false).updateTask(_task);
 //    } else {
 //      _task.hasTime = true;
-//      Provider.of<TaskData>(context).updateTask(_task);
+//      Provider.of<TaskData>(context, listen: false).updateTask(_task);
 //    }
 
     return Scaffold(
@@ -499,7 +499,8 @@ class _EditTaskSheetState extends State<EditTaskSheet>
                     ),
                   );
                   if (status == 'deleted') {
-                    Provider.of<TaskData>(context).deleteTask(_task);
+                    Provider.of<TaskData>(context, listen: false)
+                        .deleteTask(_task);
                     Navigator.pop(context);
                   }
                 },
@@ -516,7 +517,8 @@ class _EditTaskSheetState extends State<EditTaskSheet>
                   if (_task.isChecked) {
                   } else {
                     _task.toggleChecked();
-                    Provider.of<TaskData>(context).updateTask(_task);
+                    Provider.of<TaskData>(context, listen: false)
+                        .updateTask(_task);
                     Navigator.pop(context);
                   }
                 },
@@ -558,7 +560,8 @@ class _EditTaskSheetState extends State<EditTaskSheet>
                 ),
                 onChanged: (newString) {
                   _task.taskTitle = newString;
-                  Provider.of<TaskData>(context).updateTask(_task);
+                  Provider.of<TaskData>(context, listen: false)
+                      .updateTask(_task);
 //                  print('task title is changed');
                 },
               ),
@@ -595,7 +598,7 @@ class _EditTaskSheetState extends State<EditTaskSheet>
                               setState(() {
                                 selectedPriority = 'none';
                                 _task.priority = selectedPriority;
-                                Provider.of<TaskData>(context)
+                                Provider.of<TaskData>(context, listen: false)
                                     .updateTask(_task);
                               });
                             },
@@ -611,7 +614,7 @@ class _EditTaskSheetState extends State<EditTaskSheet>
                               setState(() {
                                 selectedPriority = 'low';
                                 _task.priority = selectedPriority;
-                                Provider.of<TaskData>(context)
+                                Provider.of<TaskData>(context, listen: false)
                                     .updateTask(_task);
                               });
                             },
@@ -627,7 +630,7 @@ class _EditTaskSheetState extends State<EditTaskSheet>
                               setState(() {
                                 selectedPriority = 'medium';
                                 _task.priority = selectedPriority;
-                                Provider.of<TaskData>(context)
+                                Provider.of<TaskData>(context, listen: false)
                                     .updateTask(_task);
                               });
                             },
@@ -643,7 +646,7 @@ class _EditTaskSheetState extends State<EditTaskSheet>
                               setState(() {
                                 selectedPriority = 'high';
                                 _task.priority = selectedPriority;
-                                Provider.of<TaskData>(context)
+                                Provider.of<TaskData>(context, listen: false)
                                     .updateTask(_task);
                               });
                             },
@@ -666,7 +669,7 @@ class _EditTaskSheetState extends State<EditTaskSheet>
                   getDateEditorOS(context);
 //                    setState(() {
 //                      _task.date = selectedDateSQL;
-////                        Provider.of<TaskData>(context).updateTask(_task);
+////                        Provider.of<TaskData>(context, listen: false).updateTask(_task);
 //                    });
                 },
                 child: Row(
@@ -730,7 +733,8 @@ class _EditTaskSheetState extends State<EditTaskSheet>
                           },
                         ),
                       ).whenComplete(() =>
-                          Provider.of<TaskData>(context).updateTask(_task));
+                          Provider.of<TaskData>(context, listen: false)
+                              .updateTask(_task));
                     },
                   )
                 ],
@@ -797,10 +801,11 @@ class _EditTaskSheetState extends State<EditTaskSheet>
                             await TodoNotifications()
                                 .cancelNotificationById(notificationId);
                           }
-                          Provider.of<TaskData>(context).updateTask(_task);
+                          Provider.of<TaskData>(context, listen: false)
+                              .updateTask(_task);
 //                          if (taskHasTime == true) {
 //                            taskHasTime = false;
-//                            Provider.of<TaskData>(context).updateTask(_task);
+//                            Provider.of<TaskData>(context, listen: false).updateTask(_task);
 //                          } else {
 //                            taskHasTime = true;
 //                          }
