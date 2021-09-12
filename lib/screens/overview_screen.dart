@@ -112,7 +112,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
     int numTasks = 0;
     int doneTasks = 0;
     if (allTasksList.length == 0) {
-      return ['No tasks', 0.0];
+      return ['No tasks', 0];
     } else {
       for (int i = 0; i < allTasksList.length; i++) {
         if (userViewState == PRIORITY) {
@@ -131,6 +131,10 @@ class _OverviewScreenState extends State<OverviewScreen> {
           }
         }
       }
+    }
+
+    if (numTasks == 0) {
+      return ['No tasks', 0.0];
     }
 
     return ["$doneTasks of $numTasks completed", (doneTasks / numTasks)];
