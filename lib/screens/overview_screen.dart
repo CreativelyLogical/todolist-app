@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'add_task_fullscreen.dart';
 import 'view_by_tasks_screen.dart';
+import 'package:my_todo/models/date.dart';
 
 const PRIORITY = 'PRIORITY';
 const CATEGORY = 'CATEGORY';
@@ -24,8 +25,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
   List<Task> allTasksList = [];
 
   Future _getAllTasksList() async {
-    allTasksList =
-        await Provider.of<TaskData>(context, listen: false).getAllTaskList();
+    allTasksList = await Provider.of<TaskData>(context).getAllTaskList();
     setState(() {});
   }
 
@@ -146,8 +146,34 @@ class _OverviewScreenState extends State<OverviewScreen> {
     return string[0].toUpperCase() + string.substring(1);
   }
 
+  Date today = new Date(DateTime.now());
+
+  String todayOverview() {
+    final Map<int, String> daySuffix = {
+      1: 'st',
+      2: 'nd',
+      3: 'rd',
+    };
+
+    String month = today.month;
+    int day = today.day;
+    int year = today.year;
+
+    String dayString = '$day';
+
+    if (day <= 10 || day >= 20) {
+      dayString += daySuffix[day] ?? 'th';
+    } else {
+      dayString += 'th';
+    }
+
+    return '$month $dayString, $year';
+  }
+
   @override
   Widget build(BuildContext context) {
+    print('today is ${today.toString()}');
+
     SizeConfig().init(context);
 
     return Scaffold(
@@ -196,7 +222,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
                       left: SizeConfig.screenWidth * 0.03,
                     ),
                     child: Text(
-                      'Oct 4th, 2020',
+                      todayOverview(),
                       style: TextStyle(
                         color: kWhite,
                         fontSize: SizeConfig.blockSizeHorizontal * 10,
